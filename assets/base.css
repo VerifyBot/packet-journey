@@ -270,3 +270,16 @@ details.raw .body{margin:11px 0 0}
 .dig a b{display:block;font-family:var(--mono);font-size:13.5px;font-weight:700;color:var(--c);
   direction:ltr;text-align:right;margin-bottom:3px}
 .dig a span{display:block;font-size:14px;color:var(--mute);line-height:1.5}
+
+.qwrap{position:relative}
+.qwrap textarea{padding-bottom:46px}
+.qgo{position:absolute;inset-block-end:10px;left:10px;
+  font:inherit;font-weight:700;font-size:14.5px;line-height:1;
+  padding:9px 18px;border-radius:999px;border:0;cursor:pointer;
+  background:var(--c);color:#0B1020;
+  transition:opacity .15s ease,transform .12s ease}
+.qgo:hover:not(:disabled){transform:translateY(-1px)}
+.qgo:active:not(:disabled){transform:translateY(0)}
+.qgo:focus-visible{outline:2px solid var(--c);outline-offset:3px}
+.qgo:disabled{opacity:.35;cursor:default}
+@media (prefers-reduced-motion:reduce){.qgo{transition:none}.qgo:hover:not(:disabled){transform:none}}
