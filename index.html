@@ -16,7 +16,6 @@
   <header class="masthead">
     <h1 class="display">המסע<br>של הפקטה</h1>
     <p class="sub">ארבע תחנות. כל אחת בערך חמש דקות. אפשר לעצור באמצע ולחזור מתי שבא לכם.</p>
-    <p class="deal">זה <strong>לא שיעורי בית</strong>. אין ציון, אין מי שבודק, ואף אחד לא רואה מה עשיתם פה. הבקשה היחידה: תביאו <strong>שאלה אחת</strong> למפגש הבא. זהו. 😊</p>
   </header>
 
   <div class="meter">
@@ -78,13 +77,26 @@
 
   <section class="ask">
     <h2 class="display">השאלה שלי</h2>
-    <p>משהו שלא הסתדר לכם פה, או סתם משהו שבא לכם לדעת. תכתבו עכשיו לפני שתשכחו.</p>
+    <p>משהו שלא הסתדר לכם פה, או סתם משהו שבא לכם לדעת.</p>
     <textarea id="q" placeholder="למשל: איך הראוטר יודע לאיזה מכשיר להחזיר את התשובה?"></textarea>
+    <button id="qgo" class="qgo" disabled>חפשו את זה</button>
     <p class="tiny" id="shot" hidden>עכשיו תצלמו את זה כדי שלא תשכחו למפגש הבא <span dir="ltr">:)</span></p>
   </section>
 
 </div>
 <script src="assets/core.js"></script>
+<script>
+(function(){
+  var t=document.getElementById('q'), b=document.getElementById('qgo');
+  if(!t||!b) return;
+  function sync(){ b.disabled = !t.value.trim(); }
+  t.addEventListener('input', sync); sync();
+  b.addEventListener('click', function(){
+    var v=t.value.trim(); if(!v) return;
+    window.open('https://www.google.com/search?q='+encodeURIComponent(v), '_blank', 'noopener');
+  });
+})();
+</script>
 <script>
 (function(){
   var stops=[].slice.call(document.querySelectorAll('.stop[data-n]'));
