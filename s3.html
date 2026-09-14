@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#151C3B">
+<title>מפרק הפקטה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Karantina:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/base.css">
+<style>
+:root{--c:var(--l3)}
+.fields{list-style:none;margin:0;padding:0}
+.fields li{border-bottom:1px solid rgba(48,59,120,.55)}
+.fields li:last-child{border-bottom:0}
+.fields button{width:100%;appearance:none;background:none;border:0;color:inherit;font-family:inherit;
+  display:grid;grid-template-columns:5.6ch 1fr auto;gap:10px;align-items:baseline;
+  padding:10px 2px;text-align:start;cursor:pointer;font-size:15px}
+.fields button:hover .nm,.fields button[aria-current=true] .nm{color:var(--c)}
+.fields .ofs{font-family:var(--mono);font-size:10.5px;color:#7C86BE;direction:ltr;text-align:left}
+.fields .nm{font-weight:500}
+.fields .vl{font-family:var(--mono);font-size:13.5px;direction:ltr;color:var(--mute);white-space:nowrap}
+.fields button[aria-current=true] .vl{color:var(--ink);font-weight:700}
+.fields button:focus-visible{outline:2px solid var(--c);outline-offset:-2px;border-radius:8px}
+.hint{font-size:14px;color:var(--mute);margin:0 0 11px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0 0;font-family:var(--mono);font-size:10.5px}
+.legend span{display:flex;align-items:center;gap:5px;color:var(--mute)}
+.legend i{width:9px;height:9px;border-radius:2px;display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="bar">
+    <a href="./">המפה</a>
+    <a href="s2.html">תחנה 2</a>
+    <span class="tag">תחנה 3</span>
+  </nav>
+
+  <div class="gate">
+    <header class="head"><h1>עוד לא נפתחה</h1>
+    <p class="lede">צריך לסיים קודם את תחנה <span class="prev">2</span>. זה לוקח חמש דקות.</p></header>
+    <div class="rule"></div>
+    <a class="btn" href="s2.html">לתחנה 2</a>
+  </div>
+
+  <main class="body-main">
+  <header class="head">
+    <h1>מפרק הפקטה</h1>
+    <p class="lede">131 בייטים שיצאו ממחשב אמיתי בדרך לשרת של ynet. זה כל מה שעבר בכבל, בלי שום קיצור. תקלפו שכבה ותראו מי אחראי על מה.</p>
+  </header>
+  <div class="rule"></div>
+
+  <div class="peels">
+    <button class="peel" data-i="0" aria-pressed="false" style="--c:var(--l5)">Ethernet<small>0 - 13</small></button>
+    <button class="peel" data-i="1" aria-pressed="false" style="--c:var(--l1)">IP<small>14 - 33</small></button>
+    <button class="peel" data-i="2" aria-pressed="false" style="--c:var(--l2)">TCP<small>34 - 53</small></button>
+    <button class="peel" data-i="3" aria-pressed="false" style="--c:var(--l3)">HTTP<small>54 - 130</small></button>
+  </div>
+
+  <div class="panel">
+    <div class="dump" id="dump"></div>
+    <div class="legend">
+      <span><i style="background:#B08CF0"></i>Ethernet</span>
+      <span><i style="background:#F5A524"></i>IP</span>
+      <span><i style="background:#3FD2CE"></i>TCP</span>
+      <span><i style="background:#FF7A5E"></i>HTTP</span>
+    </div>
+  </div>
+
+  <div class="panel" id="info">
+    <p class="hint">כל צבע הוא שכבה אחרת. תלחצו על אחת מארבע השכבות למעלה כדי לפתוח אותה.</p>
+  </div>
+
+  <div class="panel">
+    <h2>אתגר ראשון: לאן זה הולך</h2>
+    <p>לפקטה הזאת יש יותר מכתובת יעד אחת, והן לא באותה שכבה. תמצאו את כתובת ה-IP של היעד.</p>
+    <div class="row" style="margin-top:11px">
+      <input class="grow" type="text" id="ip" dir="ltr" placeholder="0.0.0.0" autocapitalize="off" spellcheck="false">
+      <button class="btn" id="goip">בדקו</button>
+    </div>
+    <div class="fb" id="fb1" hidden></div>
+  </div>
+
+  <div class="panel">
+    <h2>אתגר שני: מי מחזיק את 80</h2>
+    <p>איפשהו בפקטה מסתתר המספר 80. איזו שכבה מחזיקה אותו?</p>
+    <div class="opts" id="opts">
+      <button class="opt" data-k="eth">Ethernet</button>
+      <button class="opt" data-k="ip">IP</button>
+      <button class="opt" data-k="tcp">TCP</button>
+      <button class="opt" data-k="http">HTTP</button>
+    </div>
+    <div class="fb" id="fb2" hidden></div>
+  </div>
+
+  <div class="fb" id="done" hidden></div>
+
+  <section class="dig">
+    <h2>לחפור יותר</h2>
+    <p class="sub">אותה פקטה, רק שבכלים האמיתיים. נפתח בלשונית חדשה.</p>
+    <a href="https://www.wireshark.org/" target="_blank" rel="noopener">
+      <b>wireshark.org</b><span>התוכנה שמראה לכם כל פקטה שנכנסת ויוצאת מהמחשב שלכם, בזמן אמת. חינמית. תתקינו ותפתחו, זה מכור.</span></a>
+    <a href="https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml" target="_blank" rel="noopener">
+      <b>iana.org</b><span>הרשימה הרשמית של כל הפורטים בעולם. 80 ו-443 זה רק ההתחלה, יש שם אלפים.</span></a>
+    <a href="https://packetlife.net/library/cheat-sheets/" target="_blank" rel="noopener">
+      <b>packetlife.net</b><span>דפי עזר מודפסים למבנה של כל כותרת פרוטוקול. בדיוק אותם שדות שקילפתם, בשרטוט אחד.</span></a>
+  </section>
+
+  </main>
+
+</div>
+<script src="assets/core.js"></script>
+<script src="assets/code.js"></script>
+<script>
+J.gate(3);
+(function(){
+  var hex='8416f90b2c1d3c22fb7d4ea90800450000751c4640004006ca20c0a80125d437be17'+
+          'c87200509c4a1f033b7e20d5501801f6b18c0000'+
+          '474554202f20485454502f312e310d0a486f73743a207777772e796e65742e636f2e696c0d0a'+
+          '557365722d4167656e743a206375726c2f382e352e300d0a4163636570743a202a2f2a0d0a0d0a';
+  var B=[];for(var i=0;i<hex.length;i+=2)B.push(hex.substr(i,2));
+
+  var layers=[
+    {k:'eth',n:'Ethernet',c:'#B08CF0',a:0,b:13,
+     say:'השכבה שמדברת רק עם הראוטר הבא בכבל. היא לא יודעת מה זה ynet, וגם לא אכפת לה.',
+     f:[[0,5,'כתובת יעד פיזית','84:16:f9:0b:2c:1d'],
+        [6,11,'כתובת מקור פיזית','3c:22:fb:7d:4e:a9'],
+        [12,13,'מה עטוף בפנים','0x0800 = IPv4']]},
+    {k:'ip',n:'IP',c:'#F5A524',a:14,b:33,
+     say:'השכבה שיודעת לאן בעולם זה הולך. אם זה יגיע או לא, זה כבר לא הסיפור שלה.',
+     f:[[14,14,'גרסה ואורך כותרת','0x45 = IPv4, 20 בייט'],
+        [16,17,'אורך כולל','0x0075 = 117 בייט'],
+        [22,22,'TTL','0x40 = 64 קפיצות'],
+        [23,23,'מה בשכבה הבאה','0x06 = TCP'],
+        [26,29,'כתובת מקור','192.168.1.37'],
+        [30,33,'כתובת יעד','212.55.190.23']]},
+    {k:'tcp',n:'TCP',c:'#3FD2CE',a:34,b:53,
+     say:'השכבה שדואגת שהכל יגיע, בסדר הנכון, ולתוכנה הנכונה בצד השני.',
+     f:[[34,35,'פורט מקור','0xc872 = 51314'],
+        [36,37,'פורט יעד','0x0050 = 80'],
+        [38,41,'מספר סידורי','0x9c4a1f03'],
+        [42,45,'אישור קבלה','0x3b7e20d5'],
+        [47,47,'דגלים','0x18 = PSH, ACK'],
+        [48,49,'גודל חלון','0x01f6 = 502'],
+        [50,51,'בדיקת תקינות','0xb18c']]},
+    {k:'http',n:'HTTP',c:'#FF7A5E',a:54,b:130,
+     say:'השכבה היחידה שאתם באמת רואים כשאתם גולשים. שימו לב שהיא סתם טקסט. כל מי שיושב בדרך יכול לקרוא אותה.',
+     f:[[54,67,'שורת הבקשה','GET / HTTP/1.1'],
+        [70,89,'לאיזה אתר','Host: www.ynet.co.il'],
+        [92,113,'מי שולח','User-Agent: curl/8.5.0'],
+        [116,126,'מה מקובל','Accept: */*']]}
+  ];
+
+  function owner(i){
+    for(var k=0;k<layers.length;k++)if(i>=layers[k].a&&i<=layers[k].b)return k;
+    return -1;
+  }
+
+  var dump=document.getElementById('dump'),cells=[];
+  for(var r=0;r<B.length;r+=8){
+    var row=document.createElement('div');row.className='r';
+    var off=document.createElement('span');off.className='off';
+    off.textContent='0x'+('0'+r.toString(16)).slice(-2);row.appendChild(off);
+    for(var j=r;j<r+8;j++){
+      if(j>=B.length){row.appendChild(document.createElement('span'));continue}
+      var b=document.createElement('b');b.textContent=B[j];
+      b.setAttribute('data-ly',owner(j));row.appendChild(b);cells[j]=b;
+    }
+    dump.appendChild(row);
+  }
+  function paint(sel,sub){
+    cells.forEach(function(c,i){
+      var ly=+c.getAttribute('data-ly');
+      var cn='ly'+ly;
+      if(sel===null)c.className=cn;
+      else if(ly!==sel)c.className=cn+' mute';
+      else if(sub&&(i<sub[0]||i>sub[1]))c.className=cn;
+      else c.className=cn+' sel';
+    });
+  }
+  paint(null,null);
+
+  var info=document.getElementById('info');
+  function show(i,sub){
+    var L=layers[i];
+    [].slice.call(document.querySelectorAll('.peel')).forEach(function(p){
+      p.setAttribute('aria-pressed',String(+p.getAttribute('data-i')===i));
+    });
+    paint(i,sub);
+    info.style.setProperty('--c',L.c);
+    info.innerHTML='<h2 style="color:'+L.c+'">'+L.n+'</h2><p class="hint">'+L.say+'</p>'+
+      '<ul class="fields">'+L.f.map(function(f,k){
+        return '<li><button data-f="'+k+'"'+((sub&&sub[0]===f[0])?' aria-current="true"':'')+
+               '><span class="ofs">'+f[0]+(f[1]!==f[0]?'-'+f[1]:'')+'</span>'+
+               '<span class="nm">'+f[2]+'</span><span class="vl">'+f[3]+'</span></button></li>';
+      }).join('')+'</ul>'+
+      (L.k==='http'
+        ?'<p class="cap">אותם 77 בייטים, רק שקוראים אותם כטקסט במקום כמספרים. זה בדיוק מה שעבר בכבל:</p>'+
+         '<pre class="code soft">'+CODE.http(txt())+'</pre>'
+        :'');
+    [].slice.call(info.querySelectorAll('.fields button')).forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var f=L.f[+btn.getAttribute('data-f')];show(i,[f[0],f[1]]);
+      });
+    });
+  }
+  function txt(){
+    var s='';
+    for(var i=54;i<B.length;i++){
+      var v=parseInt(B[i],16);
+      s+= v===13?'':v===10?'\n':(v>=32&&v<127)?String.fromCharCode(v):'.';
+    }
+    return s.replace(/\n+$/,'');
+  }
+  [].slice.call(document.querySelectorAll('.peel')).forEach(function(p){
+    p.addEventListener('click',function(){show(+p.getAttribute('data-i'))});
+  });
+
+  var fb1=document.getElementById('fb1'),fb2=document.getElementById('fb2'),doneBox=document.getElementById('done');
+  var w1=false,w2=false;
+  function both(){
+    if(w1&&w2)J.win(doneBox,3,'שמתם לב שכל שכבה עונה על שאלה אחרת לגמרי? Ethernet יודעת רק מי הראוטר הבא בכבל. IP יודעת את היעד בעולם. TCP יודעת לאיזו תוכנה בצד השני. ו-HTTP היא סתם טקסט שכל אחד בדרך יכול לקרוא. ארבע כתובות יעד שונות בפקטה אחת, וכל אחת מהן נכונה בשכבה שלה.',
+      's4.html','לתחנה 4');
+  }
+
+  var m1=J.hints(fb1,[
+    'הכתובת הראשונה בפקטה היא לא זו. היא של הכרטיס הפיזי של הראוטר בקיר, לא של האתר.',
+    'תלחצו על IP למעלה. יש שם שתי כתובות באותו פורמט של ארבעה מספרים עם נקודות. אחת היא המקור, והיעד תמיד בא אחריה.',
+    'בייטים 30 עד 33 הם d4 37 be 17, וזה 212.55.190.23. תכתבו את זה.'
+  ]);
+  function chk(){
+    var v=J.norm(document.getElementById('ip').value);
+    if(v==='212.55.190.23'){
+      w1=true;fb1.hidden=false;fb1.className='fb won';
+      fb1.innerHTML='<span class="mark">✓</span><span class="why">בייטים 30 עד 33. שימו לב שכתובת IP שלמה היא ארבעה בייטים בלבד, ו-d4 37 be 17 זה בדיוק 212.55.190.23 בעשרוני.</span>';
+      show(1,[30,33]);both();
+    } else if(v===''){
+      fb1.hidden=false;fb1.className='fb near';
+      fb1.innerHTML='<b>כמעט! רמז:</b> תלחצו על IP למעלה, ואז על השורה של כתובת היעד. אי אפשר לטעות פה, אף אחד לא בודק.';
+    } else m1();
+  }
+  document.getElementById('goip').addEventListener('click',chk);
+  document.getElementById('ip').addEventListener('keydown',function(e){if(e.key==='Enter')chk()});
+
+  var m2=J.hints(fb2,[
+    '80 הוא לא כתובת ולא שם. הוא מספר שאומר לאיזו תוכנה בצד השני הדבר הזה מיועד.',
+    'תחפשו 0x0050 בהקסה. הוא לא בארבעה עשר הבייטים הראשונים, והוא גם לא בטקסט בסוף.',
+    'זה TCP. בייטים 36 ו-37, פורט היעד.'
+  ]);
+  [].slice.call(document.querySelectorAll('#opts .opt')).forEach(function(b){
+    b.addEventListener('click',function(){
+      if(w2)return;
+      if(b.getAttribute('data-k')==='tcp'){
+        w2=true;fb2.hidden=false;fb2.className='fb won';
+        fb2.innerHTML='<span class="mark">✓</span><span class="why">פורט 80 יושב ב-TCP, בייטים 36 ו-37. IP מביאה את הפקטה לבניין הנכון, ו-80 אומר לאיזו דירה בבניין. 80 זו הדירה של השרת שמגיש אתרים.</span>';
+        show(2,[36,37]);both();
+      } else {b.classList.add('gone');m2();}
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#151C3B">
+<title>מסלול הקוד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Karantina:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/base.css">
+<style>:root{--c:var(--l5)}</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="bar">
+    <a href="../">המפה</a>
+    <span class="tag">לבחירתכם</span>
+  </nav>
+
+  <header class="head">
+    <h1>מסלול הקוד</h1>
+    <p class="lede">זה הצד השני של אותו דבר. במקום ללחוץ על פקטה מוכנה, אתם פותחים סוקט בעצמכם ורואים מה חוזר.</p>
+  </header>
+  <div class="rule"></div>
+
+  <div class="panel">
+    <h2>טעימה</h2>
+    <p>שבע שורות פייתון. הן מייצרות בדיוק את אותם 131 הבייטים שפירקתם בתחנה 3.</p>
+    <pre class="code" id="snip"></pre>
+    <p class="cap">שימו לב לשורה עם 80. זה אותו פורט יעד שחיפשתם בהקסה.</p>
+  </div>
+
+  <div class="panel">
+    <h2>מה יהיה פה</h2>
+    <p>אתגרי הרחבה לכל תחנה: שרת שמדבר עם לקוח, פינג פונג בין שתי תוכניות, ופרוקסי שמעביר הודעות בין שניים.</p>
+    <p style="color:var(--mute);font-size:15px;margin:0">עוד לא פתוח. זה נפתח אחרי המפגש הבא, וגם אז לגמרי בהתנדבות.</p>
+  </div>
+
+  <a class="btn ghost" href="../">חזרה למפה</a>
+
+</div>
+<script src="../assets/code.js"></script>
+<script>
+document.getElementById('snip').innerHTML=CODE.py(
+'import socket\n\n'+
+'s = socket.socket()\n'+
+'s.connect(("212.55.190.23", 80))\n'+
+'s.send(b"GET / HTTP/1.1\\r\\nHost: www.ynet.co.il\\r\\n\\r\\n")\n'+
+'print(s.recv(2048))\n'+
+'s.close()');
+</script>
+</body>
+</html>

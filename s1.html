@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#151C3B">
+<title>מי אתם בכלל?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Karantina:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/base.css">
+<style>:root{--c:var(--l1)}</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="bar">
+    <a href="./">המפה</a>
+    <span class="tag">תחנה 1</span>
+  </nav>
+
+  <div class="gate">
+    <header class="head"><h1>עוד לא נפתחה</h1>
+    <p class="lede">צריך לסיים קודם את תחנה <span class="prev">0</span>. זה לוקח חמש דקות.</p></header>
+    <div class="rule"></div>
+    <a class="btn" href="./">חזרה למפה</a>
+  </div>
+
+  <main class="body-main">
+  <header class="head">
+    <h1>מי אתם בכלל?</h1>
+    <p class="lede">בואו נתחיל מהבייסיק. פתחתם עמוד, וזה כל מה שהוא כבר יודע עליכם. לא לחצתם על כלום.</p>
+  </header>
+  <div class="rule"></div>
+
+  <div class="panel" id="card">
+    <h2>מה שהעולם רואה כשאתם מתחברים</h2>
+    <p id="loading" style="color:var(--mute);margin:0">בודקים...</p>
+    <div id="list"></div>
+  </div>
+
+  <div class="panel">
+    <h2>הניסוי: וויפיי מול נקודה חמה</h2>
+    <p>אותו מחשב, אותו דפדפן, אותכם בדיוק. תחליפו רשת ותראו כמה מהשורות למעלה מתחלפות איתה.</p>
+    <p style="color:var(--mute);font-size:15px">תלחצו שמירה עכשיו. אחר כך תדליקו נקודה חמה בטלפון, תתחברו אליה מהמחשב, ותרעננו את העמוד. אם אתם קוראים את זה מהטלפון, פשוט תכבו וויפיי ותישארו על הדאטה.</p>
+    <div class="row" style="margin-top:13px">
+      <button class="btn" id="save">שמרו את המדידה</button>
+      <button class="btn ghost" id="wipe" hidden>מחקו</button>
+    </div>
+    <div id="cmp"></div>
+  </div>
+
+  <div class="panel">
+    <h2>עכשיו החלק המעניין</h2>
+    <p>שלושים מכשירים בכיתה, כולם על אותו וויפיי, כל אחד פותח משהו אחר.</p>
+    <p style="font-weight:700">כמה כתובות כמו זו שלמעלה הכיתה תופסת באינטרנט?</p>
+    <div class="row" style="margin-top:13px">
+      <input class="grow" type="number" id="a" inputmode="numeric" placeholder="מספר" min="0">
+      <button class="btn" id="go">בדקו</button>
+    </div>
+    <div class="fb" id="fb" hidden></div>
+  </div>
+
+  <section class="dig">
+    <h2>לחפור יותר</h2>
+    <p class="sub">כלים אמיתיים, נפתחים בלשונית חדשה. אף אחד מהם לא מבקש הרשמה.</p>
+    <a href="https://ipinfo.io/" target="_blank" rel="noopener">
+      <b>ipinfo.io</b><span>אותו מידע כמו למעלה רק מפורט יותר. תדביקו שם כתובת של אתר כלשהו ותראו מי מחזיק אותה.</span></a>
+    <a href="https://bgp.he.net/" target="_blank" rel="noopener">
+      <b>bgp.he.net</b><span>תכתבו את מספר ה-AS שלמעלה ותראו לאילו רשתות הספק שלכם מחובר בפועל. זו מפת האינטרנט האמיתית.</span></a>
+    <a href="https://whatismyipaddress.com/" target="_blank" rel="noopener">
+      <b>whatismyipaddress.com</b><span>הקלאסיקה. שימושי בעיקר כדי לראות שגם הם מקבלים בדיוק את אותו דבר, בלי שביקשתם.</span></a>
+    <a href="https://www.shodan.io/" target="_blank" rel="noopener">
+      <b>shodan.io</b><span>מנוע חיפוש למכשירים שמחוברים לאינטרנט. מצלמות, ראוטרים, מדפסות. תתכוננו נפשית.</span></a>
+  </section>
+  </main>
+
+</div>
+<script src="assets/core.js"></script>
+<script>
+J.gate(1);
+(function(){
+  var list=document.getElementById('list'),loading=document.getElementById('loading'),card=document.getElementById('card');
+  var NAMES={1:'פיזית',2:'קו',3:'רשת',4:'תעבורה',5:'אפליקציה',0:'לא רשת'};
+  var demo={ip:'84.229.117.40',city:'Tel Aviv',region:'Tel Aviv District',country:'Israel',
+            emoji:'🇮🇱',isp:'Bezeq International',asn:8551};
+  var snapKeys=['ip','isp','asn','place','conn','eff'];
+  var snapLbl={ip:'כתובת ציבורית',isp:'ספק האינטרנט',asn:'מספר הרשת',place:'איפה זה נראה',conn:'סוג החיבור',eff:'מהירות משוערת'};
+  var now={};
+
+  function g(q){return 'https://www.google.com/search?q='+encodeURIComponent(q)}
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+
+  function field(L,k,v,cls,note,q){
+    var d=document.createElement('div');d.className='fld';
+    var lay=L===0?'<span class="lay n0">לא רשת</span>'
+                 :'<span class="lay n'+L+'"><i>'+L+'</i>'+NAMES[L]+'</span>';
+    d.innerHTML='<div class="fh">'+lay+'<span class="fk">'+k+'</span>'+
+      '<a class="lookup" href="'+g(q)+'" target="_blank" rel="noopener">מה זה?</a></div>'+
+      '<div class="fv '+(cls||'')+'">'+v+'</div>'+
+      (note?'<div class="fn">'+note+'</div>':'');
+    list.appendChild(d);
+    return d;
+  }
+
+  function ua(){
+    var u=navigator.userAgent,m,o={};
+    if(m=u.match(/Edg\/([\d.]+)/))o.b='Edge '+m[1].split('.')[0];
+    else if(m=u.match(/OPR\/([\d.]+)/))o.b='Opera '+m[1].split('.')[0];
+    else if(m=u.match(/Firefox\/([\d.]+)/))o.b='Firefox '+m[1].split('.')[0];
+    else if(m=u.match(/Chrome\/([\d.]+)/))o.b='Chrome '+m[1].split('.')[0];
+    else if(m=u.match(/Version\/([\d.]+).*Safari/))o.b='Safari '+m[1].split('.')[0];
+    else o.b='';
+    if(/Windows NT 10/.test(u))o.os='Windows 10 או 11';
+    else if(m=u.match(/Windows NT ([\d.]+)/))o.os='Windows '+m[1];
+    else if(/iPhone|iPad|iPod/.test(u)){m=u.match(/OS ([\d_]+)/);o.os='iOS '+(m?m[1].replace(/_/g,'.'):'')}
+    else if(m=u.match(/Android ([\d.]+)/))o.os='Android '+m[1];
+    else if(m=u.match(/Mac OS X ([\d_]+)/))o.os='macOS '+m[1].replace(/_/g,'.');
+    else if(/Linux/.test(u))o.os='Linux';
+    else o.os='';
+    o.dev=/iPhone|iPod|Android.*Mobile|Windows Phone/.test(u)?'טלפון'
+         :(/iPad|Tablet|Android/.test(u)?'טאבלט':'מחשב');
+    o.eng=/Firefox\//.test(u)?'Gecko'
+        :(/Edg\/|OPR\/|Chrome\//.test(u)?'Blink'
+        :(/AppleWebKit/.test(u)?'WebKit':''));
+    return o;
+  }
+
+  function build(d,recorded){
+    if(loading)loading.remove();
+    if(recorded){
+      var f=document.createElement('p');f.className='flag';
+      f.textContent='מצב מוקלט. אין עכשיו גישה לבדיקה החיה, אז שורות הרשת למטה הן נתונים ששמורים בעמוד. כל השאר עדיין אמיתי ומגיע מהדפדפן שלכם ברגע זה.';
+      card.querySelector('h2').insertAdjacentElement('afterend',f);
+    }
+
+    var c=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+    var ctMap={wifi:'וויפיי',cellular:'סלולרי',ethernet:'כבל רשת',bluetooth:'בלוטות׳',wimax:'WiMAX',
+               other:'משהו אחר',none:'אין חיבור',unknown:'לא ידוע',mixed:'מעורב'};
+    if(c&&c.type){
+      now.conn=ctMap[c.type]||c.type;
+      field(1,'סוג החיבור',esc(now.conn),'he',
+        'זו השכבה הכי נמוכה שיש, וזה המקום היחיד בעמוד הזה שבו החומר עצמו מציץ החוצה. אוויר או נחושת.',
+        'מה ההבדל בין חיבור wifi לחיבור סלולרי');
+    } else {
+      now.conn='לא ידוע';
+      field(1,'סוג החיבור','הדפדפן שלכם לא מוכן לספר.','off',
+        'רק כרום על אנדרואיד באמת מוציא את זה החוצה. ספארי ואייפון חוסמים בכוונה, ובמחשב זה פשוט לא ממומש. אז אם כתוב פה כלום, אתם בסדר גמור. השורה הבאה עדיין מספרת לכם משהו על הקו עצמו.',
+        'Network Information API browser support');
+    }
+
+    if(c&&c.effectiveType){
+      now.eff=c.effectiveType+(c.downlink?' ('+c.downlink+' Mbps)':'');
+      field(2,'מהירות משוערת',esc(now.eff),'',
+        (c.rtt?'זמן הלוך ושוב מוערך: '+c.rtt+' אלפיות שנייה. ':'')+
+        'הדפדפן לא קורא את החוזה מול הספק. הוא מודד מה באמת קורה בקו ברגע הזה.',
+        'Network Information API effectiveType downlink rtt');
+    } else {
+      now.eff='לא ידוע';
+      field(2,'מהירות משוערת','לא זמין בדפדפן הזה.','off',
+        'אותו סיפור כמו השורה שמעליה. ספארי לא חושף את זה בכלל.',
+        'Network Information API effectiveType');
+    }
+
+    now.ip=d.ip;
+    field(3,'כתובת ציבורית',esc(d.ip),'',
+      'זו לא הכתובת של המכשיר שלכם. זו הכתובת של הראוטר שלכם, וזו הכתובת שהעולם רואה. תזכרו את המשפט הזה, הוא חוזר בסוף העמוד.',
+      'מה זה כתובת IP ציבורית מול פרטית');
+
+    now.isp=d.isp;
+    field(3,'ספק האינטרנט',esc(d.isp),'he',
+      'החברה שמחזיקה בפועל את הקו שלכם.','מה זה ספק אינטרנט ISP');
+
+    now.asn=d.asn?('AS'+d.asn):'לא ידוע';
+    field(3,'מספר הרשת',esc(now.asn),'',
+      'לכל רשת גדולה באינטרנט יש מספר כזה, והוא מזהה את הספק שלכם מול כל שאר העולם. יש כלי למטה שנותן לחפור בזה.',
+      'מה זה ASN autonomous system number');
+
+    now.place=[d.city,d.country].filter(Boolean).join(', ');
+    field(3,'איפה זה נראה',(d.emoji?d.emoji+' ':'')+esc(now.place),'',
+      'זה לא GPS ואף אחד לא ביקש מכם רשות. יש טבלה שממפה טווחי כתובות לאזורים, והיא לפעמים מפספסת בעיר שלמה.',
+      'איך אתרים יודעים איפה אני נמצא GeoIP');
+
+    var rd=field(5,'שם הפוך לכתובת','בודקים...','off',
+      'שואלים את שרת ה-DNS את השאלה ההפוכה. לא "איזו כתובת יש לשם הזה" אלא "איזה שם רשום לכתובת הזאת". לרוב החיבורים הביתיים אין שם כזה בכלל.',
+      'מה זה reverse DNS PTR record');
+
+    var nav=performance.getEntriesByType&&performance.getEntriesByType('navigation')[0];
+    var hop=nav&&nav.nextHopProtocol;
+    var hopTxt={'h3':'HTTP/3, רץ מעל QUIC, שרץ מעל UDP',
+                'h2':'HTTP/2, רץ מעל TCP',
+                'http/1.1':'HTTP/1.1, רץ מעל TCP',
+                'http/1.0':'HTTP/1.0, רץ מעל TCP'};
+    if(hop&&hopTxt[hop]){
+      field(4,'פרוטוקול התעבורה',hopTxt[hop],'he',
+        (hop==='h3'?'כלומר העמוד הזה הגיע אליכם על UDP ולא על TCP. עד לפני כמה שנים זה נשמע כמו בדיחה.'
+                   :'בשכבה הזאת מישהו דואג שכלום לא ילך לאיבוד בדרך. איך בדיוק, זה סיפור לפעם אחרת.'),
+        'מה ההבדל בין HTTP/2 ל HTTP/3 QUIC');
+    } else {
+      field(4,'פרוטוקול התעבורה','הדפדפן לא חשף את זה.','off',
+        'קורה. בדרך כלל זה h2 או h3, ושניהם אומרים דברים שונים לגמרי על מה שרץ מתחתם.',
+        'nextHopProtocol Navigation Timing');
+    }
+
+    field(4,'פורט היעד',location.protocol==='https:'?'443':'80','',
+      'הכתובת מביאה אתכם לבניין הנכון. הפורט אומר לאיזו דירה בבניין. 443 זו הדירה של אתרים מוצפנים.',
+      'מה זה פורט 443 ו 80');
+
+    var U=ua();
+    field(5,'דפדפן',esc(U.b||'לא זוהה'),U.b?'':'off',
+      'האתר לא ניחש. הדפדפן שולח את זה מרצונו החופשי בכל בקשה בודדת.','מה זה user agent');
+    field(5,'מערכת הפעלה',esc(U.os||'לא זוהה'),U.os?'':'off','','מה אתרים לומדים מ user agent');
+    field(5,'סוג מכשיר',U.dev,'he','','mobile detection user agent');
+    field(5,'מנוע רינדור',esc(U.eng||'לא זוהה'),U.eng?'':'off',
+      'יש בעולם שלושה כאלה בערך, וכל מה שאתם רואים באינטרנט מצויר על ידי אחד מהם.',
+      'מה זה מנוע דפדפן Blink WebKit Gecko');
+    field(5,'שפה מועדפת',esc(navigator.language||'לא ידוע'),'',
+      'הדפדפן מספר לכל אתר באיזו שפה אתם רוצים לקרוא. ככה אתרים יודעים להפוך לעברית לבד.',
+      'מה זה Accept-Language header');
+    field(5,'הצפנה',location.protocol==='https:'
+        ?'HTTPS, הכל מוצפן בדרך':'HTTP, שום דבר פה לא מוצפן','he',
+      location.protocol==='https:'
+        ?'מי שיושב בדרך רואה שדיברתם עם השרת הזה, אבל לא רואה מה אמרתם. תחזיקו את ההבדל הזה בראש, הוא חוזר בתחנה 4.'
+        :'העמוד הזה רץ אצלכם מקומית ולכן אין פה הצפנה בכלל. באתר אמיתי המצב הפוך.',
+      'מה זה TLS ואיך HTTPS עובד');
+
+    field(0,'גודל המסך',screen.width+' x '+screen.height,'','','מה זה browser fingerprinting');
+    var tz='לא ידוע';
+    try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||tz}catch(e){}
+    field(0,'אזור זמן',esc(tz),'','','browser fingerprinting timezone');
+    field(0,'ליבות מעבד',navigator.hardwareConcurrency||'לא ידוע','','','navigator hardwareConcurrency fingerprinting');
+
+    var tail=document.createElement('p');
+    tail.className='fn';tail.style.marginTop='15px';
+    tail.textContent='שימו לב לשלוש השורות האחרונות. הן לא עברו ברשת בכלל ואין להן שום קשר לכתובת שלכם. הדפדפן פשוט מוכן לספר אותן לכל אתר ששואל, ואף אחד לא שואל אתכם קודם. שלושתן ביחד כבר מספיקות כדי לזהות אתכם שוב מחר.';
+    card.appendChild(tail);
+
+    var det=document.createElement('details');det.className='raw';
+    det.innerHTML='<summary>המחרוזת המקורית</summary>'+
+      '<div class="body"><div class="fv" style="font-size:12.5px;line-height:1.7">'+esc(navigator.userAgent)+'</div>'+
+      '<p class="fn">כן, כתוב שם Mozilla. גם בכרום, גם בספארי, גם באדג׳. בשנות התשעים אתרים סיננו גולשים לפי השם הזה, אז כל דפדפן חדש התחזה לקודם, ומאז אף אחד לא מעז לשנות (זה באמת ההסבר האמיתי).</p></div>';
+    card.appendChild(det);
+
+    rdns(d.ip,rd);
+    compare();
+  }
+
+  function rdns(ip,el){
+    var box=el.querySelector('.fv');
+    function out(name){
+      if(name){box.className='fv';box.textContent=name}
+      else{box.className='fv off';box.textContent='אין שם רשום לכתובת הזאת. זה המצב הרגיל אצל חיבורים ביתיים.'}
+    }
+    var m=/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/.exec(ip||'');
+    if(!m){box.className='fv off';box.textContent='לא בדקנו, הכתובת הזאת היא לא IPv4.';return}
+    var q=m[4]+'.'+m[3]+'.'+m[2]+'.'+m[1]+'.in-addr.arpa';
+    var urls=['https://dns.google/resolve?name='+q+'&type=PTR',
+              'https://8.8.8.8/resolve?name='+q+'&type=PTR',
+              'https://1.1.1.1/dns-query?name='+q+'&type=PTR'];
+    var done=false,left=urls.length;
+    var t=setTimeout(function(){if(!done){done=true;out(null)}},5000);
+    urls.forEach(function(u,i){
+      fetch(u,{cache:'no-store',headers:i===2?{accept:'application/dns-json'}:{}})
+        .then(function(r){if(!r.ok)throw 0;return r.json()})
+        .then(function(j){
+          if(done)return;
+          var a=(j.Answer||[]).filter(function(r){return r.type===12});
+          if(!a.length)throw 0;
+          done=true;clearTimeout(t);out(String(a[0].data).replace(/\.$/,''));
+        })
+        .catch(function(){left--;if(!left&&!done){done=true;clearTimeout(t);out(null)}});
+    });
+  }
+
+  function compare(){
+    var st=J.read(),box=document.getElementById('cmp'),wipe=document.getElementById('wipe');
+    box.innerHTML='';
+    if(!st.snap||!st.snap.f){wipe.hidden=true;return}
+    wipe.hidden=false;
+    var moved=0,rows='';
+    snapKeys.forEach(function(k){
+      var was=st.snap.f[k]==null?'לא נמדד':st.snap.f[k];
+      var is=now[k]==null?'לא נמדד':now[k];
+      var ch=String(was)!==String(is);if(ch)moved++;
+      rows+='<div class="k'+(ch?' moved':'')+'">'+esc(snapLbl[k])+'</div>'+
+            '<div class="a">'+esc(was)+'</div><div class="b'+(ch?'':' same')+'">'+esc(is)+'</div>';
+    });
+    box.innerHTML='<div class="cmp"><div class="hd">אז</div><div class="hd">עכשיו</div>'+rows+'</div>'+
+      '<p class="fn" style="margin-top:14px">'+
+      (moved?('השתנו '+moved+' שורות. אותו מחשב, אותו דפדפן, אותכם. רק הדלת שדרכה יצאתם לאינטרנט התחלפה, וכל הזהות שלכם ברשת התחלפה איתה.')
+            :'עוד לא השתנה כלום. תחליפו רשת, תרעננו, ותחזרו לפה.')+'</p>';
+  }
+
+  function grab(url,map){
+    return new Promise(function(res,rej){
+      var t=setTimeout(function(){rej()},4200);
+      fetch(url,{cache:'no-store'}).then(function(r){
+        if(!r.ok)throw 0;return r.json();
+      }).then(function(j){clearTimeout(t);var m=map(j);if(!m||!m.ip)throw 0;res(m);})
+        .catch(function(){clearTimeout(t);rej();});
+    });
+  }
+  if(/[?&]recorded/.test(location.search)){build(demo,true);}
+  else{
+    grab('https://ipwho.is/',function(j){
+      if(j.success===false)return null;
+      return {ip:j.ip,city:j.city,region:j.region,country:j.country,
+              emoji:j.flag&&j.flag.emoji,isp:(j.connection&&(j.connection.isp||j.connection.org))||'לא ידוע',
+              asn:j.connection&&j.connection.asn};
+    }).then(function(d){build(d,false);},function(){
+      return grab('https://ipapi.co/json/',function(j){
+        return {ip:j.ip,city:j.city,region:j.region,country:j.country_name,
+                emoji:'',isp:j.org||'לא ידוע',asn:String(j.asn||'').replace('AS','')};
+      }).then(function(d){build(d,false);},function(){build(demo,true);});
+    });
+  }
+
+  document.getElementById('save').addEventListener('click',function(){
+    var st=J.read(),f={};
+    snapKeys.forEach(function(k){f[k]=now[k]==null?null:String(now[k])});
+    st.snap={t:Date.now(),f:f};J.write(st);
+    this.textContent='נשמר. עכשיו תחליפו רשת';
+    compare();
+  });
+  document.getElementById('wipe').addEventListener('click',function(){
+    var st=J.read();delete st.snap;J.write(st);
+    document.getElementById('save').textContent='שמרו את המדידה';
+    compare();
+  });
+
+  var fb=document.getElementById('fb'),inp=document.getElementById('a');
+  var miss=J.hints(fb,[
+    'תספרו כמה כבלים יוצאים מהכיתה החוצה, לא כמה מכשירים יש בפנים.',
+    'כל שלושים המכשירים עוברים דרך אותו ראוטר אחד בקיר. העולם בחוץ רואה רק את הראוטר.',
+    'התשובה היא 1. כל הכיתה נראית מבחוץ ככתובת אחת בדיוק.'
+  ]);
+  function check(){
+    var v=J.norm(inp.value);
+    if(v==='1'||v==='אחת'||v==='אחד'){
+      J.win(fb,1,'הכתובת שראיתם למעלה היא לא שלכם. היא של הראוטר שבקיר. שלושים מכשירים מתחבאים מאחורי מספר אחד, וכשהתשובה חוזרת הראוטר צריך לזכור למי מהם להחזיר אותה. למנגנון הזה קוראים NAT. תזכרו את השם, נחזור אליו.',
+        's2.html','לתחנה 2');
+    } else if(v===''){
+      fb.hidden=false;fb.className='fb near';fb.innerHTML='<b>כמעט! רמז:</b> תכתבו מספר ותנסו. אי אפשר לטעות פה, אף אחד לא בודק.';
+    } else miss();
+  }
+  document.getElementById('go').addEventListener('click',check);
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter')check();});
+})();
+</script>
+</body>
+</html>

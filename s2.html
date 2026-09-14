@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#151C3B">
+<title>DNS אמיתי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Karantina:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/base.css">
+<style>
+:root{--c:var(--l2)}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin:11px 0 0}
+.chip{appearance:none;border:1px solid var(--edge);background:none;color:var(--mute);border-radius:999px;
+  padding:5px 12px;font-family:var(--mono);font-size:12.5px;cursor:pointer;direction:ltr}
+.chip:hover{color:var(--c);border-color:var(--c)}
+.chain{margin:0 0 14px;padding:0 0 14px;border-bottom:1px dashed var(--edge)}
+.chain .step{font-family:var(--mono);font-size:12.5px;direction:ltr;text-align:left;color:var(--mute);
+  line-height:1.7;word-break:break-all}
+.chain .step b{color:var(--l5);font-weight:400}
+.recs{list-style:none;margin:0;padding:0;counter-reset:r}
+.recs li{display:flex;align-items:baseline;gap:11px;padding:9px 0;border-bottom:1px solid rgba(48,59,120,.55)}
+.recs li:last-child{border-bottom:0}
+.recs .i{counter-increment:r;font-family:var(--mono);font-size:11px;color:#7C86BE;min-width:1.4ch}
+.recs .i::before{content:counter(r)}
+.recs .ip{font-family:var(--mono);font-size:16.5px;font-weight:700;direction:ltr;flex:1}
+.recs .ttl{font-family:var(--mono);font-size:12px;color:var(--mute);white-space:nowrap}
+.tally{font-size:15px;margin:13px 0 0;color:var(--mute)}
+.tally b{font-family:var(--mono);color:var(--c);font-size:17px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="bar">
+    <a href="./">המפה</a>
+    <a href="s1.html">תחנה 1</a>
+    <span class="tag">תחנה 2</span>
+  </nav>
+
+  <div class="gate">
+    <header class="head"><h1>עוד לא נפתחה</h1>
+    <p class="lede">צריך לסיים קודם את תחנה <span class="prev">1</span>. זה לוקח חמש דקות.</p></header>
+    <div class="rule"></div>
+    <a class="btn" href="s1.html">לתחנה 1</a>
+  </div>
+
+  <main class="body-main">
+  <header class="head">
+    <h1>DNS אמיתי</h1>
+    <p class="lede">שם של אתר הוא לא כתובת. מישהו באמצע צריך לתרגם. הכפתור למטה שולח שאילתה אמיתית ומחזיר מה שבאמת רשום שם עכשיו.</p>
+  </header>
+  <div class="rule"></div>
+
+  <div class="panel">
+    <div class="row">
+      <input class="grow" type="text" id="d" placeholder="example.com" dir="ltr" autocapitalize="off" autocorrect="off" spellcheck="false">
+      <button class="btn" id="go">שאלו</button>
+    </div>
+    <div class="chips">
+      <button class="chip" data-d="www.ynet.co.il">www.ynet.co.il</button>
+      <button class="chip" data-d="github.com">github.com</button>
+      <button class="chip" data-d="instagram.com">instagram.com</button>
+    </div>
+  </div>
+
+  <div class="panel" id="out" hidden></div>
+
+  <div class="panel">
+    <h2>האתגר</h2>
+    <p>רוב האתרים יחזירו כתובת אחת. תמצאו אתר שמחזיר <b>יותר מ-3</b> כתובות בתשובה אחת.</p>
+    <div class="row" style="margin-top:11px">
+      <button class="btn ghost" id="stuck">תקועים?</button>
+    </div>
+    <div class="fb" id="fb" hidden></div>
+  </div>
+
+  <section class="dig">
+    <h2>לחפור יותר</h2>
+    <p class="sub">אותה שאילתה, מזוויות אחרות. נפתח בלשונית חדשה.</p>
+    <a href="https://dnschecker.org/" target="_blank" rel="noopener">
+      <b>dnschecker.org</b><span>שואל את אותו שם מעשרות מדינות בבת אחת. תנסו אתר גדול ותראו שהתשובה שונה בכל יבשת. זה לא באג, זה בכוונה.</span></a>
+    <a href="https://dns.google/" target="_blank" rel="noopener">
+      <b>dns.google</b><span>אותו שרת שעונה לכם פה, רק עם ממשק. תשחקו עם סוגי רשומות: MX זה מי מקבל את המייל, TXT זה מקום שאנשים דוחפים בו כל מיני דברים.</span></a>
+    <a href="https://crt.sh/" target="_blank" rel="noopener">
+      <b>crt.sh</b><span>כל תעודת אבטחה שהונפקה אי פעם נרשמת ביומן פומבי. תכתבו שם דומיין של חברה ותקבלו רשימה של שרתים שהם אף פעם לא פרסמו.</span></a>
+  </section>
+
+  </main>
+
+</div>
+<script src="assets/core.js"></script>
+<script>
+J.gate(2);
+(function(){
+  var canned={
+    'yahoo.com':{ttl:1504,a:['74.6.231.20','74.6.143.25','98.137.11.164','74.6.231.21','74.6.143.26','98.137.11.163'],c:[]},
+    'reddit.com':{ttl:286,a:['151.101.193.140','151.101.1.140','151.101.129.140','151.101.65.140'],c:[]},
+    'bbc.co.uk':{ttl:283,a:['151.101.64.81','151.101.128.81','151.101.192.81','151.101.0.81'],c:[]},
+    'google.com':{ttl:197,a:['142.250.75.110'],c:[]},
+    'github.com':{ttl:60,a:['20.217.135.5'],c:[]},
+    'instagram.com':{ttl:60,a:['57.144.62.34'],c:[]},
+    'wikipedia.org':{ttl:107,a:['185.15.59.224'],c:[]},
+    'www.ynet.co.il':{ttl:20,a:['212.55.190.23'],
+      c:[['www.ynet.co.il','www.ynet.co.il-v1.edgekey.net'],['www.ynet.co.il-v1.edgekey.net','e12476.dscb.akamaiedge.net']]}
+  };
+  var out=document.getElementById('out'),fb=document.getElementById('fb'),inp=document.getElementById('d');
+  var offline=/[?&]recorded/.test(location.search),tick=null,tried=0;
+  var miss=J.hints(fb,[
+    'אתר קטן יושב על שרת אחד ולכן מחזיר כתובת אחת. תחשבו על אתר שמיליוני אנשים פותחים בו באותה שנייה.',
+    'דווקא הפורטלים האמריקאים הוותיקים, מייל וחדשות משנות התשעים, מחזיקים הכי הרבה שרתים. תנסו פורטל כזה.',
+    'yahoo.com מחזיר שש. תדביקו ותשלחו.'
+  ]);
+
+  function strip(s){return String(s||'').replace(/\.$/,'')}
+  function clean(s){
+    s=String(s||'').trim().replace(/^https?:\/\//i,'').replace(/\/.*$/,'').replace(/\.$/,'');
+    return s.toLowerCase();
+  }
+
+  function render(name,ans,recorded){
+    if(tick){clearInterval(tick);tick=null}
+    out.hidden=false;out.innerHTML='';
+    if(recorded){
+      var f=document.createElement('p');f.className='flag';
+      f.textContent='מצב מוקלט. אין עכשיו גישה לשרת ה-DNS, אז מה שרואים זה תשובות אמיתיות ששמורות בעמוד.';
+      out.appendChild(f);
+    }
+    var h=document.createElement('h2');h.textContent='התשובה עבור '+name;
+    h.style.direction='rtl';out.appendChild(h);
+
+    if(ans.c.length){
+      var ch=document.createElement('div');ch.className='chain';
+      ch.innerHTML='<p style="font-size:13px;color:var(--mute);margin:0 0 7px">שימו לב, לפני שחזרה כתובת השם הועבר הלאה:</p>'+
+        ans.c.map(function(p){return '<div class="step">'+p[0]+' &rarr; <b>'+p[1]+'</b></div>'}).join('');
+      out.appendChild(ch);
+    }
+
+    if(!ans.a.length){
+      var e=document.createElement('p');e.style.color='var(--mute)';e.style.margin='0';
+      e.textContent='לא חזרה אף כתובת. או שהשם לא קיים, או שהוא לא מחזיק כתובת מסוג A. תנסו שם אחר.';
+      out.appendChild(e);return;
+    }
+
+    var ul=document.createElement('ul');ul.className='recs';
+    ans.a.forEach(function(ip){
+      var li=document.createElement('li');
+      li.innerHTML='<span class="i"></span><span class="ip">'+ip+'</span><span class="ttl"></span>';
+      ul.appendChild(li);
+    });
+    out.appendChild(ul);
+
+    var left=ans.ttl;
+    var ttls=[].slice.call(ul.querySelectorAll('.ttl'));
+    var note=document.createElement('p');note.className='tally';out.appendChild(note);
+    function beat(){
+      ttls.forEach(function(s){s.textContent=left>0?('עוד '+left+' שנ'):'פג תוקף'});
+      note.innerHTML=left>0
+        ? '<b>'+ans.a.length+'</b> כתובות חזרו. המספר שלידן הוא כמה שניות מותר לשמור את התשובה לפני ששואלים שוב.'
+        : '<b>'+ans.a.length+'</b> כתובות חזרו, והתוקף שלהן כבר נגמר. שאילתה חדשה עכשיו יכולה להחזיר משהו אחר לגמרי.';
+      if(left>0)left--;else if(tick){clearInterval(tick);tick=null}
+    }
+    beat();tick=setInterval(beat,1000);
+
+    if(ans.a.length>3){
+      J.win(fb,2,'התשובה הזאת היא לא הכתובת של האתר, היא רשימה, והדפדפן שלכם בוחר ממנה אחת. ככה אתר שורד כשמיליון אנשים נכנסים בבת אחת, וככה הוא ממשיך לעבוד כששרת אחד נופל. השם נשאר, הכתובות מתחלפות מתחתיו.',
+        's3.html','לתחנה 3');
+    } else if(!fb.classList.contains('won')){
+      tried++;if(tried>=2)miss();
+    }
+  }
+
+  function parse(j){
+    var a=[],c=[],ttl=null;
+    (j.Answer||[]).forEach(function(r){
+      if(r.type===1){a.push(r.data);if(ttl===null||r.TTL<ttl)ttl=r.TTL}
+      else if(r.type===5)c.push([strip(r.name),strip(r.data)]);
+    });
+    return {a:a,c:c,ttl:ttl===null?0:ttl};
+  }
+
+  function fallback(name){
+    if(canned[name])return render(name,canned[name],true);
+    out.hidden=false;
+    out.innerHTML='<p class="flag">מצב מוקלט. אין עכשיו גישה לשרת ה-DNS.</p>'+
+      '<p style="margin:0 0 10px">לשם הזה אין לי תשובה שמורה, אבל לאלה כן. תלחצו על אחד:</p>'+
+      '<div class="chips">'+Object.keys(canned).map(function(k){
+        return '<button class="chip" data-d="'+k+'">'+k+'</button>'}).join('')+'</div>';
+    wire(out);
+  }
+
+  var ENDS=[
+    function(n){return {u:'https://dns.google/resolve?name='+n+'&type=A'}},
+    function(n){return {u:'https://8.8.8.8/resolve?name='+n+'&type=A'}},
+    function(n){return {u:'https://1.1.1.1/dns-query?name='+n+'&type=A',h:{accept:'application/dns-json'}}}
+  ];
+  function query(name){
+    return new Promise(function(res,rej){
+      var done=false,left=ENDS.length;
+      var t=setTimeout(function(){if(!done){done=true;rej()}},5000);
+      ENDS.forEach(function(mk){
+        var e=mk(encodeURIComponent(name));
+        fetch(e.u,{cache:'no-store',headers:e.h||{}})
+          .then(function(r){if(!r.ok)throw 0;return r.json()})
+          .then(function(j){if(done)return;done=true;clearTimeout(t);res(j)})
+          .catch(function(){left--;if(!left&&!done){done=true;clearTimeout(t);rej()}});
+      });
+    });
+  }
+
+  function ask(raw){
+    var name=clean(raw);
+    if(!name){inp.focus();return}
+    inp.value=name;
+    if(offline)return fallback(name);
+    out.hidden=false;out.innerHTML='<p style="color:var(--mute);margin:0">שולחים שאילתה...</p>';
+    query(name).then(function(j){
+      if(j.Status===3){
+        out.innerHTML='<h2 style="direction:rtl">התשובה עבור '+name+'</h2>'+
+          '<p style="margin:0;color:var(--mute)">השרת ענה שהשם הזה לא קיים בכלל. זו תשובה תקינה לגמרי, לא תקלה. תבדקו אם יש שם טעות כתיב.</p>';
+        return;
+      }
+      render(name,parse(j),false);
+    },function(){fallback(name)});
+  }
+
+  function wire(scope){
+    [].slice.call(scope.querySelectorAll('.chip')).forEach(function(b){
+      b.addEventListener('click',function(){ask(b.getAttribute('data-d'))});
+    });
+  }
+  wire(document);
+  document.getElementById('go').addEventListener('click',function(){ask(inp.value)});
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter')ask(inp.value)});
+  document.getElementById('stuck').addEventListener('click',function(){if(!fb.classList.contains('won'))miss()});
+})();
+</script>
+</body>
+</html>

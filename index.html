@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#151C3B">
+<title>המסע של הפקטה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Karantina:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/base.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <h1 class="display">המסע<br>של הפקטה</h1>
+    <p class="sub">ארבע תחנות. כל אחת בערך חמש דקות. אפשר לעצור באמצע ולחזור מתי שבא לכם.</p>
+    <p class="deal">זה <strong>לא שיעורי בית</strong>. אין ציון, אין מי שבודק, ואף אחד לא רואה מה עשיתם פה. הבקשה היחידה: תביאו <strong>שאלה אחת</strong> למפגש הבא. זהו. 😊</p>
+  </header>
+
+  <div class="meter">
+    <span class="num" id="count">0/4</span>
+    <span class="cap" id="cap">עוד לא התחלתם</span>
+  </div>
+
+  <ol class="line" id="line">
+    <li class="stop" data-n="1" style="--c:var(--l1)">
+      <span class="dot">1</span>
+      <a class="card" href="s1.html">
+        <p class="t">מי אתם בכלל?</p>
+        <p class="d">האתר הזה כבר יודע מאיפה אתם מתחברים עכשיו. בואו נראה כמה הוא יודע.</p>
+        <p class="meta">5 דקות</p>
+      </a>
+    </li>
+    <li class="stop" data-n="2" style="--c:var(--l2)">
+      <span class="dot">2</span>
+      <a class="card" href="s2.html">
+        <p class="t">DNS אמיתי</p>
+        <p class="d">תקלידו שם של אתר ותקבלו בחזרה את הכתובות האמיתיות שלו. שאילתה חיה, לא הדמיה.</p>
+        <p class="meta">5 דקות</p>
+      </a>
+    </li>
+    <li class="stop" data-n="3" style="--c:var(--l3)">
+      <span class="dot">3</span>
+      <a class="card" href="s3.html">
+        <p class="t">מפרק הפקטה</p>
+        <p class="d">פקטה אחת אמיתית, 131 בייטים. תקלפו אותה שכבה אחרי שכבה ותראו מי מחזיק מה.</p>
+        <p class="meta">6 דקות</p>
+      </a>
+    </li>
+    <li class="stop" data-n="4" style="--c:var(--l4)">
+      <span class="dot">4</span>
+      <a class="card" href="s4.html">
+        <p class="t">בנו את הפרוטוקול</p>
+        <p class="d">המשחק מהמסדרון, רק שהפעם החוקים בידיים שלכם ואתם רואים בדיוק מה נשבר.</p>
+        <p class="meta">5 דקות</p>
+      </a>
+    </li>
+    <li class="stop shut" data-n="5" style="--c:var(--l2)">
+      <span class="dot">5</span>
+      <span class="card">
+        <p class="t">בהמשך</p>
+        <p class="d">תחנות חדשות נפתחות אחרי כל מפגש. יש עוד הרבה דרך.</p>
+        <p class="meta">נפתח בהמשך</p>
+      </span>
+    </li>
+    <span class="fill" id="fill"></span>
+  </ol>
+
+  <div class="side">
+    <a class="card" href="lab/">
+      <p class="t">מסלול הקוד</p>
+      <p class="d">בא לכם לכתוב קוד ולא רק ללחוץ? זה בשבילכם. לגמרי אופציונלי, ואף אחד לא בודק.</p>
+      <p class="meta">לבחירתכם</p>
+    </a>
+  </div>
+
+  <section class="ask">
+    <h2 class="display">השאלה שלי</h2>
+    <p>משהו שלא הסתדר לכם פה, או סתם משהו שבא לכם לדעת. תכתבו עכשיו לפני שתשכחו.</p>
+    <textarea id="q" placeholder="למשל: איך הראוטר יודע לאיזה מכשיר להחזיר את התשובה?"></textarea>
+    <p class="tiny" id="shot" hidden>עכשיו תצלמו את זה כדי שלא תשכחו למפגש הבא <span dir="ltr">:)</span></p>
+  </section>
+
+</div>
+<script src="assets/core.js"></script>
+<script>
+(function(){
+  var stops=[].slice.call(document.querySelectorAll('.stop[data-n]'));
+  var n=0;
+  stops.forEach(function(li){
+    var k=+li.getAttribute('data-n');
+    if(k>4)return;
+    if(J.has(k)){li.classList.add('live','won');n++;}
+    else if(J.reachable(k)){li.classList.add('live');}
+    else{
+      li.classList.add('shut');
+      var a=li.querySelector('a.card'),s=document.createElement('span');
+      s.className='card';s.innerHTML=a.innerHTML;
+      s.querySelector('.meta').textContent='נפתחת אחרי '+(k-1);
+      a.parentNode.replaceChild(s,a);
+    }
+  });
+  document.getElementById('count').textContent=n+'/4';
+  document.getElementById('cap').textContent=
+    n===0?'עוד לא התחלתם':n===4?'סיימתם את כולן':n===3?'נשארה אחת':'בדרך';
+
+  var last=null;
+  stops.forEach(function(li){if(li.classList.contains('won'))last=li;});
+  if(last){
+    var line=document.getElementById('line'),fill=document.getElementById('fill');
+    var h=(last.querySelector('.dot').getBoundingClientRect().top
+          -line.getBoundingClientRect().top)+12-30;
+    requestAnimationFrame(function(){fill.style.height=Math.max(0,h)+'px';});
+  }
+
+  var q=document.getElementById('q'),shot=document.getElementById('shot'),st=J.read();
+  q.value=st.q||'';
+  function tog(){shot.hidden=!q.value.trim()}
+  tog();
+  q.addEventListener('input',function(){var s=J.read();s.q=q.value;J.write(s);tog();});
+})();
+</script>
+</body>
+</html>

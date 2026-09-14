@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#151C3B">
+<title>בנו את הפרוטוקול</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Karantina:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/base.css">
+<style>
+:root{--c:var(--l4)}
+.orig{border:1px solid var(--edge);border-radius:12px;padding:13px 15px;background:#101632;margin:0 0 15px}
+.orig .lbl{font-size:12.5px;color:var(--mute);margin:0 0 5px}
+.orig .txt{font-size:17px;font-weight:500;line-height:1.5}
+.orig .cut{font-size:13.5px;color:var(--mute);margin:8px 0 0}
+.idx{font-family:var(--mono);font-size:9.5px;color:#8890C6;vertical-align:.55em;margin-inline-start:1px}
+
+.route{display:flex;align-items:center;gap:5px;margin:0 0 11px;padding:4px 0}
+.nd{flex:none;min-width:36px;height:32px;padding:0 9px;border-radius:9px;border:1px solid var(--edge);
+  background:rgba(29,37,80,.7);display:grid;place-items:center;font-size:12.5px;font-weight:700;white-space:nowrap}
+.nd.r{font-family:var(--mono);color:var(--l2);border-color:rgba(63,210,206,.42)}
+.lnk{flex:1 1 auto;min-width:12px;height:2px;border-radius:2px;background:var(--edge);position:relative}
+.lnk.watched{background:linear-gradient(90deg,var(--edge),var(--l5),var(--edge))}
+.face{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:21px;line-height:1;
+  filter:drop-shadow(0 0 7px rgba(176,140,240,.55))}
+.face.flip{animation:pop .4s ease}
+@keyframes pop{
+  0%{transform:translate(-50%,-50%) scale(.35) rotate(-14deg)}
+  60%{transform:translate(-50%,-50%) scale(1.28) rotate(4deg)}
+  100%{transform:translate(-50%,-50%) scale(1) rotate(0)}}
+.routecap{font-size:13.5px;color:var(--mute);margin:0 0 16px;line-height:1.55}
+.routecap b{color:var(--l5);font-weight:700}
+
+.tapbox{margin:11px 0 0;padding:12px 13px;border-radius:10px;background:rgba(176,140,240,.10);
+  border:1px solid rgba(176,140,240,.32);display:flex;gap:12px;align-items:flex-start}
+.tapbox .bigface{font-size:31px;line-height:1;flex:none}
+.tapbox .bigface.flip{animation:pop2 .4s ease}
+@keyframes pop2{0%{transform:scale(.4) rotate(-14deg)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
+.tapbox .body{flex:1 1 auto;min-width:0}
+.tapbox .lbl{font-size:12px;color:var(--l5);margin:0 0 5px}
+.verdict{list-style:none;margin:9px 0 0;padding:0;font-size:14.5px;line-height:1.55;color:var(--mute)}
+.verdict li{padding-inline-start:16px;position:relative;margin:0 0 4px}
+.verdict li::before{content:'';position:absolute;inset-inline-start:0;top:.62em;width:6px;height:6px;
+  border-radius:50%;background:var(--edge)}
+.verdict li.good::before{background:var(--l4)}
+.verdict li.bad::before{background:var(--l3)}
+@media (prefers-reduced-motion:reduce){.face.flip,.tapbox .bigface.flip{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="bar">
+    <a href="./">המפה</a>
+    <a href="s3.html">תחנה 3</a>
+    <span class="tag">תחנה 4</span>
+  </nav>
+
+  <div class="gate">
+    <header class="head"><h1>עוד לא נפתחה</h1>
+    <p class="lede">צריך לסיים קודם את תחנה <span class="prev">3</span>. זה לוקח חמש דקות.</p></header>
+    <div class="rule"></div>
+    <a class="btn" href="s3.html">לתחנה 3</a>
+  </div>
+
+  <main class="body-main">
+  <header class="head">
+    <h1>בנו את הפרוטוקול</h1>
+    <p class="lede">במסדרון זה הייתם אתם. באינטרנט אלה ראוטרים. אותם חוקים בדיוק, רק שהפעם אתם קובעים אותם.</p>
+  </header>
+  <div class="rule"></div>
+
+  <div class="route" id="route">
+    <span class="nd">אתם</span><span class="lnk"></span>
+    <span class="nd r">1</span><span class="lnk"></span>
+    <span class="nd r">2</span><span class="lnk watched"><b class="face" id="face">😈</b></span>
+    <span class="nd r">3</span><span class="lnk"></span>
+    <span class="nd">יעד</span>
+  </div>
+  <p class="routecap">ארבע קפיצות עד היעד. הקו בין ראוטר 2 לראוטר 3 מנוטר, ומישהו שומר עותק של כל מה שעובר בו.
+    <b>אתם רואים אותו. הפרוטוקול שלכם לא.</b></p>
+
+  <div class="orig">
+    <p class="lbl">ההודעה שאתם שולחים</p>
+    <p class="txt" id="orig"></p>
+    <p class="cut">נחתכת ל-8 פקטות. כל פקטה נוסעת לבד.</p>
+  </div>
+
+  <div class="panel">
+    <h2>מה מדליקים?</h2>
+    <div class="sw">
+      <label><input type="checkbox" id="m_ack"><span class="n">אישור קבלה<span>היעד מאשר כל פקטה שהגיעה. מה שלא אושר, משודר שוב.</span></span><i class="st"></i></label>
+      <label><input type="checkbox" id="m_num"><span class="n">מספור חלקים<span>כל פקטה מקבלת מספר סידורי לפני שהיא יוצאת.</span></span><i class="st"></i></label>
+      <label><input type="checkbox" id="m_sum"><span class="n">בדיקת תקינות<span>כל פקטה נושאת חותמת קטנה שמתאימה רק לתוכן שלה.</span></span><i class="st"></i></label>
+      <label><input type="checkbox" id="m_enc"><span class="n">הצפנה<span>מה שעובר בכבל הוא ג׳יבריש. רק אתם והיעד יודעים לפענח.</span></span><i class="st"></i></label>
+    </div>
+    <button class="btn" id="send">שלחו את ההודעה</button>
+  </div>
+
+  <div class="hops" id="hops"></div>
+  <div class="fb" id="fb" hidden></div>
+
+  <section class="dig">
+    <h2>לחפור יותר</h2>
+    <p class="sub">המשך ישיר למה שקרה פה. נפתח בלשונית חדשה.</p>
+    <a href="https://howhttps.works/" target="_blank" rel="noopener">
+      <b>howhttps.works</b><span>הסבר מצויר של איך שני צדדים שלא נפגשו מעולם מסכימים על מפתח, בלי שמי שמנטר את הכבל באמצע ישמע אותו. זה בדיוק המתג הרביעי.</span></a>
+    <a href="https://badssl.com/" target="_blank" rel="noopener">
+      <b>badssl.com</b><span>אוסף אתרים עם הצפנה שבורה בכוונה, כל אחד שבור אחרת. תלחצו ותראו איך הדפדפן מגיב לכל סוג של שבירה.</span></a>
+    <a href="https://www.cloudflare.com/learning/ssl/what-is-ssl/" target="_blank" rel="noopener">
+      <b>cloudflare.com</b><span>הסברים קצרים על כל מושג שנגענו בו, כתובים על ידי מי שמפעיל חלק גדול מהאינטרנט.</span></a>
+  </section>
+
+  </main>
+
+</div>
+<script src="assets/core.js"></script>
+<script>
+J.gate(4);
+(function(){
+  var PARTS=['תגידו','לדנה','שהמבחן','עבר','לכיתה','7','בשעה','12'];
+  var LOST=4,BAD=5,BADTO='3';
+  var hops=document.getElementById('hops'),fb=document.getElementById('fb');
+  var face=document.getElementById('face');
+  var arrived=false,runs=0,shown=null;
+
+  function ciph(s){
+    var h=2166136261;
+    for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0}
+    var a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',o='';
+    for(var k=0;k<7;k++){
+      h^=h<<13;h>>>=0;h^=h>>>17;h^=h<<5;h>>>=0;
+      o+=a[h%32];
+    }
+    return o;
+  }
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+  function clone(m){return m.map(function(p){return {i:p.i,t:p.t,alive:p.alive,bad:p.bad,gone:p.gone}})}
+  function enc(){return document.getElementById('m_enc').checked}
+
+  document.getElementById('orig').textContent=PARTS.join(' ');
+
+  function draw(m,o){
+    return m.map(function(p){
+      if(!p.alive&&!p.gone)return '';
+      var body=o.enc?'<code>'+ciph(p.t)+'</code>':esc(p.t);
+      if(p.gone)body='<s>'+body+'</s>';
+      else if(p.bad)body='<u>'+body+'</u>';
+      return body+(o.num?'<span class="idx">'+p.i+'</span>':'');
+    }).filter(Boolean).join(' ');
+  }
+
+  function card(s){
+    var d=document.createElement('div');
+    d.className='hop '+(s.cls||'');
+    var h='<div class="who"><span>'+s.who+'</span><em>'+s.tag+'</em></div>'+
+          '<div class="msg">'+s.html+'</div>';
+    if(s.tapped)h+='<div class="tapbox" id="tapbox"></div>';
+    if(s.note)h+='<ul class="verdict">'+s.note.map(function(n){
+      return '<li class="'+(n[0]||'')+'">'+n[1]+'</li>'}).join('')+'</ul>';
+    d.innerHTML=h;return d;
+  }
+
+  function paintFace(animate){
+    var on=enc();
+    var glyph=on?'😭':'😈';
+    if(face.textContent!==glyph||animate){
+      face.textContent=glyph;
+      if(animate){face.classList.remove('flip');void face.offsetWidth;face.classList.add('flip')}
+    }
+    var box=document.getElementById('tapbox');
+    if(!box||!shown)return;
+    box.innerHTML='<span class="bigface'+(animate?' flip':'')+'">'+glyph+'</span>'+
+      '<div class="body"><p class="lbl">מה שנשמר מהקו המנוטר</p>'+
+      '<div class="msg">'+draw(shown,{num:false,enc:on})+'</div>'+
+      '<ul class="verdict"><li class="'+(on?'good':'bad')+'">'+
+      (on?'ג׳יבריש. בלי המפתח אי אפשר לעשות עם זה כלום.'
+         :'טקסט גלוי לגמרי, כולל כל פקטה ששודרה מחדש. אף מנגנון לא הרגיש בזה, כי פה כלום לא אבד וכלום לא נשבר.')+
+      '</li></ul></div>';
+  }
+
+  function go(){
+    runs++;
+    var q=function(id){return document.getElementById(id).checked};
+    var o={ack:q('m_ack'),num:q('m_num'),sum:q('m_sum'),enc:q('m_enc')};
+    var base=PARTS.map(function(t,i){return {i:i+1,t:t,alive:true,bad:false,gone:false}});
+
+    var a0=clone(base);
+    var a1=clone(base);
+    var a2=clone(base);a2[LOST].alive=false;a2[LOST].gone=true;
+    var a3=clone(a2);a3[LOST].gone=false;a3[BAD].t=BADTO;a3[BAD].bad=true;
+
+    var fin=clone(a3);
+    var fixLost=o.num&&o.ack, fixBad=o.sum&&o.ack;
+    if(fixLost){fin[LOST].alive=true;fin[LOST].t=PARTS[LOST]}
+    if(fixBad){fin[BAD].t=PARTS[BAD];fin[BAD].bad=false}
+    var intact=fin.every(function(p){return p.alive&&!p.bad});
+    shown=fin;
+
+    var v=[];
+    v.push(o.num
+      ?(o.ack?['good','מספור: יש חור בספירה, פקטה 5 חסרה. ביקשתי אותה שוב והיא הגיעה.']
+             :['bad','מספור: יש חור בספירה, פקטה 5 חסרה. אני יודע שמשהו אבד ואין לי דרך לבקש אותו שוב.'])
+      :['bad','בלי מספור: קיבלתי 7 פקטות ואין לי מושג שהיו אמורות להיות 8.']);
+    v.push(o.sum
+      ?(o.ack?['good','בדיקת תקינות: פקטה 6 לא הסתדרה עם החותמת שלה. ביקשתי אותה שוב והיא הגיעה נקייה.']
+             :['bad','בדיקת תקינות: פקטה 6 לא הסתדרה עם החותמת שלה. אני יודע שהיא פגומה ואין לי דרך לבקש חדשה.'])
+      :['bad','בלי בדיקת תקינות: המספר שקיבלתי נראה לי תקין לגמרי.']);
+    if(o.ack&&!o.num&&!o.sum)v.push(['','אישור קבלה: אישרתי כל פקטה שהגיעה. על מה בדיוק? אין לי מושג שמשהו חסר או פגום.']);
+    if(o.enc)v.push(['good','הצפנה: פענחתי בלי בעיה. יש לי את המפתח.']);
+
+    var stages=[
+      {who:'אתם',tag:'מקור',html:draw(a0,o),
+       note:[[o.enc?'good':'',o.enc?'8 פקטות יצאו מוצפנות. רק היעד יודע לפתוח אותן.'
+                                   :'8 פקטות יצאו כטקסט גלוי, בדיוק כמו שכתוב למעלה.']]},
+      {who:'ראוטר 1',tag:'קפיצה 1',html:draw(a1,o),
+       note:[['good','הקפיצה עברה נקייה. כל 8 הפקטות הגיעו.']]},
+      {who:'ראוטר 2',tag:'קפיצה 2',cls:'bad',html:draw(a2,o),
+       note:[['bad','פקטה 5 אבדה בקפיצה השנייה. היא לא הגיעה, ואף אחד לא הודיע על זה.']]},
+      {who:'ראוטר 3',tag:'קפיצה 3',cls:'tap',html:draw(a3,o),tapped:true,
+       note:[['bad','פקטה 6 הגיעה פגומה. המספר שבתוכה השתנה בדרך.'],
+             ['bad','הקו בין ראוטר 2 לראוטר 3 מנוטר. עותק של כל מה שעבר בו נשמר בצד.']]},
+      {who:'היעד',tag:'קפיצה 4',cls:intact?'ok':'bad',
+       html:draw(fin,{num:o.num,enc:false}),note:v}
+    ];
+
+    hops.innerHTML='';
+    var els=stages.map(function(s){var e=card(s);hops.appendChild(e);return e});
+    paintFace(false);
+    var slow=!window.matchMedia||!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    els.forEach(function(e,k){
+      if(slow)setTimeout(function(){e.classList.add('in')},k*340);
+      else e.classList.add('in');
+    });
+    setTimeout(function(){verdict(intact,o)},slow?stages.length*340:0);
+  }
+
+  var miss=J.hints(fb,[
+    'תכבו הכל ותשלחו פעם אחת. תראו בדיוק מה נשבר ובאיזו קפיצה. אחר כך תדליקו מנגנון אחד כל פעם.',
+    'מספור חושף פקטה שאבדה, כי נוצר חור בספירה. בדיקת תקינות חושפת פקטה פגומה, כי היא לא מסתדרת עם החותמת שלה. אבל לחשוף זה לא לתקן.',
+    'תדליקו מספור, בדיקת תקינות ואישור קבלה יחד. אישור קבלה הוא היחיד שנותן ליעד לבקש שישדרו שוב את מה שנחשף.'
+  ]);
+
+  function verdict(intact,o){
+    if(intact&&o.enc){
+      J.win(fb,4,'ההודעה הגיעה שלמה, ומהקו המנוטר יצא ג׳יבריש. שימו לב מי עשה מה: מספור חשף את הפקטה שאבדה, בדיקת תקינות חשפה את הפקטה הפגומה, ואישור קבלה הוא זה שאיפשר לבקש אותן שוב. אף אחד משלושת האלה לא נגע בקו המנוטר, כי שם שום דבר לא אבד ושום דבר לא נשבר, אז אין מה לחשוף. רק הצפנה עשתה את זה, והיא לבד לא מתקנת כלום. זה בדיוק מה ש-TCP ו-HTTPS מחלקים ביניהם.',
+        './','חזרה למפה');
+      return;
+    }
+    if(intact){
+      arrived=true;
+      fb.hidden=false;fb.className='fb near';
+      fb.innerHTML='<b>ההודעה הגיעה שלמה!</b> רגע, תגללו חזרה לראוטר 3. בקו המנוטר לא אבד כלום ולא נשבר כלום, אז שום מנגנון שהדלקתם לא הרגיש שם משהו. ובכל זאת יש שם עכשיו עותק מלא של ההודעה שלכם, קריא לחלוטין. נשאר לכם מתג אחד שלא נגעתם בו.';
+      fb.scrollIntoView({block:'nearest',behavior:'smooth'});
+      return;
+    }
+    if(arrived){
+      fb.hidden=false;fb.className='fb near';
+      fb.innerHTML='<b>כמעט! רמז:</b> קודם הצלחתם להביא אותה שלמה. אל תכבו את מה שעבד, רק תוסיפו עליו את המתג הרביעי.';
+      return;
+    }
+    if(runs>1)miss();
+    else{fb.hidden=true;fb.className='fb';}
+  }
+
+  document.getElementById('m_enc').addEventListener('change',function(){paintFace(true)});
+  document.getElementById('send').addEventListener('click',function(){
+    this.textContent='שלחו שוב';go();
+  });
+  paintFace(false);
+})();
+</script>
+</body>
+</html>

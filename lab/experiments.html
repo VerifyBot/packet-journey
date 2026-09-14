@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#EFF2F5">
+<title>מעבדת שבירה · שבעה ניסויים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;800&family=Suez+One&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#EFF2F5;--card:#fff;--ink:#141C26;--soft:#5A6775;--line:#D3DAE2;--signal:#1F4FA8;
+  --kw:#A626A4;--str:#12715A;--num:#B4562A;--com:#8A94A0;--fn:#1F4FA8;
+  --mono:'Consolas','SF Mono','Courier New',monospace;
+  --emoji:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji','Segoe UI Symbol'}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:'Assistant',-apple-system,'Segoe UI',Arial,sans-serif;font-size:16px;line-height:1.5;
+  padding:30px 16px calc(50px + env(safe-area-inset-bottom))}
+.w{max-width:760px;margin:0 auto}
+
+h1{font-family:'Suez One',Georgia,serif;font-weight:400;font-size:30px;margin:0 0 6px;line-height:1.2}
+.lede{color:var(--soft);margin:0 0 16px}
+h2.sec{font-family:'Suez One',Georgia,serif;font-weight:400;font-size:21px;margin:0 0 8px}
+
+.who{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin:0 0 10px;
+  display:grid;grid-template-columns:1fr 150px;gap:10px 16px;align-items:end}
+@media (max-width:520px){.who{grid-template-columns:1fr}}
+.who label{display:block;font-size:12px;font-weight:800;color:var(--signal);letter-spacing:.04em;margin:0 0 3px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:14px 16px 16px;margin:0 0 12px}
+.start ol{margin:0 0 10px;padding-inline-start:20px;font-size:15px}
+.start li{margin:0 0 3px}
+.start p{margin:0 0 8px;font-size:15px}
+.start p:last-child{margin:0}
+.dls{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 12px}
+.dl{display:inline-flex;align-items:center;gap:9px;font:inherit;background:#fff;
+  border:1px solid var(--signal);border-radius:8px;padding:8px 15px 8px 13px;cursor:pointer}
+.dl .fn{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--signal);direction:ltr;unicode-bidi:isolate}
+.dl .pyi{width:20px;height:20px;flex:none;display:block}
+.dl:hover{background:#EDF2FB}
+.dl:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.steps{margin:6px 0 0;padding-inline-start:20px}
+.steps li{margin:0 0 3px}
+.obs{border:1px dashed var(--line);border-radius:8px;padding:9px 11px;margin:10px 0 0}
+.obs p{margin:0 0 2px;font-size:15px}
+.tools{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:0}
+.btn2{font:inherit;font-weight:800;font-size:16px;color:var(--signal);background:#fff;
+  border:1px solid var(--signal);border-radius:8px;padding:10px 20px;cursor:pointer}
+.btn2:hover{background:#EDF2FB}
+.btn2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.qrdlg{border:1px solid var(--line);border-radius:12px;padding:18px 18px 20px;background:var(--card);color:var(--ink);
+  width:296px;max-width:calc(100vw - 32px);text-align:center;position:relative;box-sizing:border-box}
+.qrdlg::backdrop{background:rgba(20,28,38,.58)}
+.qrdlg h3{font-family:'Suez One',Georgia,serif;font-weight:400;font-size:19px;margin:0 0 12px}
+.qrdlg canvas{display:block;margin:0 auto;width:216px;height:216px;max-width:100%;image-rendering:pixelated}
+.qrdlg canvas[hidden]{display:none}
+.qrdlg p{font-size:14.5px;color:var(--soft);margin:11px 0 0;line-height:1.45}
+.qrdlg .x{position:absolute;inset-inline-start:8px;top:5px;border:0;background:none;
+  font-size:24px;line-height:1;color:var(--soft);cursor:pointer;padding:2px 9px;font-family:inherit}
+.qrdlg .x:hover{color:var(--ink)}
+.files{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 0}
+.files[hidden]{display:none}
+.files .lk{font:inherit;font-weight:800;font-size:14px;color:var(--signal);background:#fff;
+  border:1px solid var(--signal);border-radius:8px;padding:7px 13px;cursor:pointer}
+.files .lk:hover{background:#EDF2FB}
+#toast{position:fixed;inset-inline-start:14px;bottom:52px;background:var(--signal);color:#fff;
+  border-radius:20px;padding:6px 15px;font-size:14px;font-weight:800;opacity:0;transition:opacity .25s;pointer-events:none;z-index:10}
+#toast.on{opacity:1}
+.src{margin:0 0 10px}
+.src:last-child{margin:0}
+.src .fn{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--soft);margin:0 0 4px;direction:ltr;text-align:left}
+.rules{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:0 0 20px}
+.rules ol{margin:0;padding-inline-start:20px}
+.rules li{margin:0 0 4px}
+.rules li:last-child{margin:0}
+.rules b{font-weight:800}
+
+.top{display:flex;gap:11px;align-items:baseline;margin:0 0 9px}
+.num{font-family:'Suez One',Georgia,serif;font-size:21px;color:var(--signal);line-height:1;
+  min-width:30px;text-align:center;border:1px solid var(--line);border-radius:7px;padding:6px 0 5px;flex:none}
+.ttl{font-size:19px;font-weight:800;line-height:1.25;margin:0}
+.do{margin:0 0 10px;font-size:15px}
+.do p{margin:0 0 5px}
+.do p:last-child{margin:0}
+.k{font-weight:800;color:var(--signal);font-size:12px;letter-spacing:.04em;display:block;margin:0 0 3px}
+
+code{font-family:var(--mono);font-size:13.5px;
+  background:#F2F5F8;border:1px solid var(--line);border-radius:5px;padding:1px 5px;
+  direction:ltr;unicode-bidi:isolate;display:inline-block;white-space:pre}
+code.blk{display:block;padding:7px 9px;margin:5px 0 0;text-align:left;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+code.file{margin:0;line-height:1.5;font-size:12.5px}
+.tok-kw{color:var(--kw)}
+.tok-str{color:var(--str)}
+.tok-num{color:var(--num)}
+.tok-com{color:var(--com);font-style:italic}
+.tok-fn{color:var(--fn)}
+
+.ba{margin:6px 0 0}
+.ba .row{display:flex;align-items:stretch;gap:8px;margin:0 0 5px}
+.ba .row:last-child{margin:0}
+.tag{flex:none;min-width:46px;text-align:center;font-size:11px;font-weight:800;letter-spacing:.04em;
+  border:1px solid var(--line);border-radius:5px;padding:6px 4px 0;color:var(--soft);background:#F7F9FB}
+.row.after .tag{color:var(--ink);border-color:#8E9AA8;background:#fff}
+.ba code.blk{margin:0;flex:1;min-width:0}
+.row.after code.blk{font-weight:700;border-color:#8E9AA8;border-inline-start-width:4px}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}
+@media (max-width:540px){.split{grid-template-columns:1fr}}
+.box h3{margin:0 0 5px;font-size:13px;font-weight:800;color:var(--signal);letter-spacing:.01em}
+.box.a h3{color:var(--soft)}
+.fill{min-height:66px;background:#F7F9FB;border:1px solid var(--line);border-bottom:2px solid #A9B4C2;
+  border-radius:7px;padding:7px 9px;font-size:15px;line-height:1.5;outline:none;
+  white-space:pre-wrap;overflow-wrap:anywhere}
+.fill:focus{border-color:var(--signal);border-bottom-color:var(--signal);background:#fff}
+.fill:empty::before{content:attr(data-ph);color:#9AA4B0}
+.fill:focus:empty::before{content:""}
+.who .fill{min-height:0;padding:5px 9px;font-weight:800}
+.who .fill.emoji{font-family:var(--emoji),'Assistant',sans-serif}
+
+.send{background:var(--card);border:1px solid var(--signal);border-radius:10px;padding:16px 18px;margin:22px 0 0;text-align:center}
+.send h2{font-family:'Suez One',Georgia,serif;font-weight:400;font-size:22px;margin:0 0 6px}
+.send p{margin:0 0 10px;font-size:15px}
+.send .btn{font:inherit;font-weight:800;font-size:16px;color:#fff;background:var(--signal);
+  border:1px solid var(--signal);border-radius:8px;padding:10px 22px;cursor:pointer}
+.send .btn:hover{background:#183E85}
+.send .btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.send .how{color:var(--soft);font-size:14px;margin:10px 0 0}
+#saved{position:fixed;inset-inline-start:14px;bottom:14px;background:var(--card);border:1px solid var(--line);
+  border-radius:20px;padding:4px 13px;font-size:13px;color:var(--soft);opacity:0;transition:opacity .25s;pointer-events:none}
+#saved.on{opacity:1}
+
+@media print{
+  @page{size:A4;margin:11mm 12mm}
+  html,body{background:#fff}
+  body{padding:0;font-size:10.8pt;line-height:1.36;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .w{max-width:none}
+  .noprint,.start,#saved{display:none !important}
+  h1{font-size:20pt;margin-bottom:3px}
+  .lede{margin-bottom:8px;font-size:10pt}
+  .who{padding:7px 12px;margin-bottom:8px;border-color:#141C26;border-width:1.5px;gap:5px 16px;break-inside:avoid}
+  .who label{font-size:8.6pt;margin-bottom:1px}
+  .rules{padding:7px 10px;margin-bottom:10px;font-size:9.4pt;border-color:#B9C2CC;break-inside:avoid}
+  .card{break-inside:avoid;page-break-inside:avoid;margin-bottom:6px;padding:7px 10px 9px;border-color:#B9C2CC}
+  .top{margin-bottom:6px}
+  .num{font-size:16pt;padding:3px 0 2px;min-width:26px}
+  .ttl{font-size:12.5pt}
+  .do{font-size:9.7pt;margin-bottom:6px}
+  code{font-size:9.3pt;background:#fff;border-color:#C7CFD9}
+  .tag{background:#fff;font-size:8.4pt;padding-top:4px;min-width:40px}
+  .box h3{font-size:9.2pt;margin-bottom:3px}
+  .fill{background:#fff;border:1px solid #8E9AA8;border-bottom-width:1px;min-height:42px;
+    font-size:9.7pt;padding:5px 7px;break-inside:avoid;page-break-inside:avoid}
+  .fill:empty::before{content:""}
+  .send{break-inside:avoid;page-break-inside:avoid;margin-top:10px;padding:8px 11px}
+  .send h2{font-size:13pt}
+  .send p{font-size:9.7pt;margin-bottom:0}
+  .send .tools,.send .how,.qrdlg{display:none}
+}
+</style>
+</head>
+<body>
+<div class="w">
+
+  <h1>מעבדת שבירה</h1>
+  <p class="lede">קול, הקוד רץ ועובד. עכשיו בואו נשבור אותו שבע פעמים.</p>
+
+  <div class="who">
+    <div><label>השמות שלכם</label><div class="fill" id="f_names" contenteditable="true" data-ph="מי ומי בזוג"></div></div>
+    <div><label>אימוג'י אהוב</label><div class="fill emoji" id="f_emoji" contenteditable="true"></div></div>
+  </div>
+
+  <div class="card start">
+    <h2 class="sec">לפני שמתחילים</h2>
+    <p>קודם כל צריך שיהיה לכם קוד שעובד. תורידו את שני הקבצים לאותה תיקייה, ותריצו אותם פעם אחת בדיוק כמו שהם.</p>
+    <div class="dls noprint">
+      <button class="dl" data-dl="server.py" aria-label="הורדת server.py"><svg class="pyi" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path fill="#3776AB" d="M15.9 2c-2.3 0-4.2.2-5.6.6-2.1.6-2.5 1.8-2.5 4v2.9h8.1v1H4.6c-2.2 0-4.1 1.3-4.7 3.8-.7 2.9-.7 4.7 0 7.7.5 2.3 1.8 3.9 4 3.9h2.8v-3.5c0-2.5 2.2-4.7 4.7-4.7h8c2.1 0 3.8-1.7 3.8-3.8V6.6c0-2-1.7-3.6-3.8-3.9-1.3-.2-2.7-.3-4-.3zm-4.4 2.5c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5S10 6.8 10 6s.7-1.5 1.5-1.5z"/><path fill="#FFD43B" d="M24.6 11.4v3.4c0 2.6-2.2 4.8-4.8 4.8h-8c-2 0-3.8 1.8-3.8 3.8v7.1c0 2 1.8 3.2 3.8 3.8 2.4.7 4.7.8 7.6 0 1.9-.5 3.8-1.6 3.8-3.8v-2.9h-8v-1h11.9c2.2 0 3.1-1.6 3.8-3.9.8-2.4.8-4.7 0-7.7-.5-2.2-1.6-3.8-3.8-3.8h-2.5zm-4.5 15.6c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5.7-1.5 1.5-1.5z"/></svg><span class="fn" dir="ltr">server.py</span></button>
+      <button class="dl" data-dl="client.py" aria-label="הורדת client.py"><svg class="pyi" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path fill="#3776AB" d="M15.9 2c-2.3 0-4.2.2-5.6.6-2.1.6-2.5 1.8-2.5 4v2.9h8.1v1H4.6c-2.2 0-4.1 1.3-4.7 3.8-.7 2.9-.7 4.7 0 7.7.5 2.3 1.8 3.9 4 3.9h2.8v-3.5c0-2.5 2.2-4.7 4.7-4.7h8c2.1 0 3.8-1.7 3.8-3.8V6.6c0-2-1.7-3.6-3.8-3.9-1.3-.2-2.7-.3-4-.3zm-4.4 2.5c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5S10 6.8 10 6s.7-1.5 1.5-1.5z"/><path fill="#FFD43B" d="M24.6 11.4v3.4c0 2.6-2.2 4.8-4.8 4.8h-8c-2 0-3.8 1.8-3.8 3.8v7.1c0 2 1.8 3.2 3.8 3.8 2.4.7 4.7.8 7.6 0 1.9-.5 3.8-1.6 3.8-3.8v-2.9h-8v-1h11.9c2.2 0 3.1-1.6 3.8-3.9.8-2.4.8-4.7 0-7.7-.5-2.2-1.6-3.8-3.8-3.8h-2.5zm-4.5 15.6c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5.7-1.5 1.5-1.5z"/></svg><span class="fn" dir="ltr">client.py</span></button>
+    </div>
+    <ol>
+      <li>תשימו את שני הקבצים באותה תיקייה.</li>
+      <li>תפתחו שם cmd. בסייר הקבצים לוחצים על שורת הכתובת למעלה, מוחקים מה שכתוב, כותבים cmd ואנטר.</li>
+      <li>בחלון הראשון מריצים <code>python server.py</code>&rlm;.</li>
+      <li>פותחים חלון שני באותה תיקייה ומריצים <code>python client.py</code>&rlm;.</li>
+      <li>תכתבו שם ואנטר. חזר אליכם Hello עם השם שלכם? מעולה, אתם בבית.</li>
+    </ol>
+    <p>רק אחרי שזה עבד מתחילים מניסוי 1. כל שבעת הניסויים מניחים שהבסיס רץ אצלכם. אחרת תרדפו אחרי טעות הקלדה שלכם במקום אחרי הדבר האמיתי.</p>
+    <div class="src">
+      <div class="fn">server.py</div>
+      <code class="blk py file">import socket
+
+IP = "0.0.0.0"        # 0.0.0.0 = תקשיב לכל כרטיסי הרשת של המחשב
+PORT = 1234
+
+server = socket.socket()
+server.bind((IP, PORT))
+server.listen()
+print("Server listening on port", PORT)
+
+while True:
+    # accept נתקע כאן עד שלקוח מתחבר
+    client, addr = server.accept()
+    print("Connected:", addr)
+
+    while True:
+        data = client.recv(1024)   # נתקע כאן עד שמגיעים בייטים
+        if not data:               # b"" = הצד השני סגר
+            break
+
+        name = data.decode()       # בייטים -&gt; טקסט
+        print("Got:", name)
+
+        client.send(("Hello " + name).encode())   # טקסט -&gt; בייטים
+
+    client.close()
+    print("Client closed. Waiting for the next one.")</code>
+    </div>
+    <div class="src">
+      <div class="fn">client.py</div>
+      <code class="blk py file">import socket
+
+SERVER_IP = "127.0.0.1"   # 127.0.0.1 = המחשב הזה עצמו
+SERVER_PORT = 1234
+
+client = socket.socket()
+client.connect((SERVER_IP, SERVER_PORT))   # השרת חייב כבר לרוץ
+print("Connected to", SERVER_IP, SERVER_PORT)
+
+msg = input("Your name: ")
+client.send(msg.encode())        # טקסט -&gt; בייטים
+
+data = client.recv(1024)         # נתקע כאן עד שמגיעה תשובה
+print("Server said:", data.decode())
+
+client.close()</code>
+    </div>
+  </div>
+
+  <div class="rules">
+    <ol>
+      <li><b>קודם מנחשים, רק אחר כך מריצים.</b> תכתבו את הניחוש לפני שאתם נוגעים במקלדת. ניחשתם לא נכון? מעולה, זה שווה בדיוק כמו לנחש נכון.</li>
+      <li>אחרי כל ניסוי <b>תחזירו את הקוד למה שהיה</b>. אחרת הניסוי הבא ישקר לכם.</li>
+      <li>שני חלונות cmd פתוחים כל הזמן: שרת בראשון, לקוח בשני. ותמיד, אבל תמיד, מריצים קודם את השרת.</li>
+      <li>תוכנית שנתקעת נסגרת עם <code>Ctrl+C</code>&rlm;. שימו לב: תקוע זה לא קלקול, זה תוצאה.</li>
+      <li>שגיאה אדומה בקונסולה זאת התשובה שלכם. תקראו את <b>השורה האחרונה</b> שלה. כל הבלגן מעליה הרבה פחות מעניין.</li>
+      <li>אפשר להיעזר בחבר, באינטרנט וב-AI. רק תוודאו עם עצמכם שבאמת הבנתם מה קרה, זה בשבילכם.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="top"><div class="num">1</div><h2 class="ttl">לקוח לפני שרת</h2></div>
+    <div class="do">
+      <span class="k">מה עושים</span>
+      <p>תסגרו את חלון השרת עם <code>Ctrl+C</code>&rlm; ותוודאו שהוא באמת סגור. בקוד לא נוגעים בכלל. תריצו רק את הלקוח:</p>
+      <code class="blk">python client.py</code>
+    </div>
+    <div class="split">
+      <div class="box q"><h3>מה אתם חושבים שיקרה?</h3>
+        <div class="fill" id="p1" contenteditable="true" data-ph="מה אתם חושבים שיקרה? תכתבו לפני שאתם מריצים"></div></div>
+      <div class="box a"><h3>מה קרה בפועל?</h3>
+        <div class="fill" id="a1" contenteditable="true" data-ph="מה קרה בפועל? תכתבו אחרי"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="top"><div class="num">2</div><h2 class="ttl">פורט אחר, רק אצל הלקוח</h2></div>
+    <div class="do">
+      <span class="k">מה עושים</span>
+      <p>השרת ממשיך לרוץ רגיל על 1234. ב-<code class="py">client.py</code>&rlm; בלבד תשנו את השורה:</p>
+      <div class="ba">
+        <div class="row"><span class="tag">לפני</span><code class="blk py">SERVER_PORT = 1234</code></div>
+        <div class="row after"><span class="tag">אחרי</span><code class="blk py">SERVER_PORT = 1235</code></div>
+      </div>
+      <p>תשמרו ותריצו את הלקוח. בשרת לא נוגעים.</p>
+    </div>
+    <div class="split">
+      <div class="box q"><h3>מה אתם חושבים שיקרה?</h3>
+        <div class="fill" id="p2" contenteditable="true" data-ph="מה אתם חושבים שיקרה? תכתבו לפני שאתם מריצים"></div></div>
+      <div class="box a"><h3>מה קרה בפועל?</h3>
+        <div class="fill" id="a2" contenteditable="true" data-ph="מה קרה בפועל? תכתבו אחרי"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="top"><div class="num">3</div><h2 class="ttl">שני לקוחות על שרת אחד</h2></div>
+    <div class="do">
+      <span class="k">מה עושים</span>
+      <p>פה לא משנים שום קוד. השרת ממשיך לרוץ. תריצו לקוח בחלון שני, וכשהוא שואל <code>Your name:</code>&rlm; <b>לא כותבים כלום ולא לוחצים אנטר</b>. משאירים אותו ככה תלוי באוויר.</p>
+      <p>עכשיו תפתחו חלון cmd שלישי ותריצו שם עוד לקוח:</p>
+      <code class="blk">python client.py</code>
+      <p>בלקוח הזה כן תכתבו שם ותלחצו אנטר. ועכשיו תסתכלו על שלושת החלונות, במיוחד על זה של השרת.</p>
+    </div>
+    <div class="split">
+      <div class="box q"><h3>מה אתם חושבים שיקרה?</h3>
+        <div class="fill" id="p3" contenteditable="true" data-ph="מה אתם חושבים שיקרה? תכתבו לפני שאתם מריצים"></div></div>
+      <div class="box a"><h3>מה קרה בפועל?</h3>
+        <div class="fill" id="a3" contenteditable="true" data-ph="מה קרה בפועל? תכתבו אחרי"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="top"><div class="num">4</div><h2 class="ttl">לצאת מהמחשב שלכם</h2></div>
+    <div class="do">
+      <span class="k">מה עושים</span>
+      <p><b>רשות, וצריך שני מחשבים.</b> תעשו אותו על <b>נקודה חמה מהפלאפון</b>, לא על הרשת של בית הספר. למה? כי ברשתות של מוסדות כמעט תמיד דולק בידוד לקוחות, שחוסם מכשירים על אותה רשת מלדבר אחד עם השני. הקוד שלכם יהיה מושלם וזה פשוט לא יתחבר. בנקודה חמה אין את החסימה הזאת.</p>
+      <ol class="steps">
+        <li>אחד מכם מדליק נקודה חמה בפלאפון, ושני המחשבים מתחברים אליה.</li>
+        <li>במחשב שמריץ את השרת פותחים cmd ומריצים <code>ipconfig</code>&rlm;. מחפשים את השורה <code>IPv4 Address</code>&rlm;. במק או בלינוקס משתמשים ב-<code>ifconfig</code>&rlm; במקום.</li>
+        <li>אותו מחשב מריץ <code>python server.py</code>&rlm; ומשאיר את החלון פתוח.</li>
+        <li>במחשב השני משנים את השורה:</li>
+      </ol>
+      <div class="ba">
+        <div class="row"><span class="tag">לפני</span><code class="blk py">SERVER_IP = "127.0.0.1"</code></div>
+        <div class="row after"><span class="tag">אחרי</span><code class="blk py">SERVER_IP = "192.168.43.17"</code></div>
+      </div>
+      <p>עם הכתובת שקיבלתם במקום זאת שכתובה פה, ואז מריצים שם <code>python client.py</code>&rlm; ושולחים שם. אחר כך מחליפים תפקידים.</p>
+      <p>אותו תרגיל בדיוק עובד גם בבית מול כל מכשיר שני, אז מי שלא הספיק בשיעור יכול להשלים.</p>
+    </div>
+    <div class="split">
+      <div class="box q"><h3>מה אתם חושבים שיקרה?</h3>
+        <div class="fill" id="p4" contenteditable="true" data-ph="מה אתם חושבים שיקרה? תכתבו לפני שאתם מריצים"></div></div>
+      <div class="box a"><h3>מה קרה בפועל?</h3>
+        <div class="fill" id="a4" contenteditable="true" data-ph="מה קרה בפועל? תכתבו אחרי"></div></div>
+    </div>
+    <div class="obs"><span class="k">שאלה קטנה</span><p>איזו כתובת IP קיבלתם על הנקודה החמה, ומה הייתה הכתובת שלכם לפני זה? משהו נראה שונה?</p><div class="fill" id="h4" contenteditable="true" data-ph="הכתובת שקיבלתם, ומה שמעניין בה"></div></div>
+  </div>
+
+  <div class="card">
+    <div class="top"><div class="num">5</div><h2 class="ttl">קופסה קטנה מדי</h2></div>
+    <div class="do">
+      <span class="k">מה עושים</span>
+      <p>קודם כל תחזירו את הכתובת ל-<code class="py">"127.0.0.1"</code>&rlm;. עכשיו ב-<code class="py">client.py</code>&rlm; תשנו את שורת הקבלה:</p>
+      <div class="ba">
+        <div class="row"><span class="tag">לפני</span><code class="blk py">data = client.recv(1024)</code></div>
+        <div class="row after"><span class="tag">אחרי</span><code class="blk py">data = client.recv(4)</code></div>
+      </div>
+      <p>תריצו, ותכתבו שם ארוך. לא שתי אותיות 🙂</p>
+    </div>
+    <div class="split">
+      <div class="box q"><h3>מה אתם חושבים שיקרה?</h3>
+        <div class="fill" id="p5" contenteditable="true" data-ph="מה אתם חושבים שיקרה? תכתבו לפני שאתם מריצים"></div></div>
+      <div class="box a"><h3>מה קרה בפועל?</h3>
+        <div class="fill" id="a5" contenteditable="true" data-ph="מה קרה בפועל? תכתבו אחרי"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="top"><div class="num">6</div><h2 class="ttl">לשלוח טקסט כמו שהוא</h2></div>
+    <div class="do">
+      <span class="k">מה עושים</span>
+      <p>תחזירו את <code class="py">recv(1024)</code>&rlm;. עכשיו ב-<code class="py">client.py</code>&rlm; תורידו את <code class="py">.encode()</code>&rlm; מהשליחה:</p>
+      <div class="ba">
+        <div class="row"><span class="tag">לפני</span><code class="blk py">client.send(msg.encode())</code></div>
+        <div class="row after"><span class="tag">אחרי</span><code class="blk py">client.send(msg)</code></div>
+      </div>
+    </div>
+    <div class="split">
+      <div class="box q"><h3>מה אתם חושבים שיקרה?</h3>
+        <div class="fill" id="p6" contenteditable="true" data-ph="מה אתם חושבים שיקרה? תכתבו לפני שאתם מריצים"></div></div>
+      <div class="box a"><h3>מה קרה בפועל?</h3>
+        <div class="fill" id="a6" contenteditable="true" data-ph="מה קרה בפועל? תכתבו אחרי"></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="top"><div class="num">7</div><h2 class="ttl">שרת ששותק</h2></div>
+    <div class="do">
+      <span class="k">מה עושים</span>
+      <p>תחזירו את <code class="py">.encode()</code>&rlm; ללקוח. הפעם נוגעים דווקא בשרת: ב-<code class="py">server.py</code>&rlm; תוסיפו סולמית בתחילת שורת השליחה, ככה שהיא תהפוך להערה:</p>
+      <div class="ba">
+        <div class="row"><span class="tag">לפני</span><code class="blk py">client.send(("Hello " + name).encode())</code></div>
+        <div class="row after"><span class="tag">אחרי</span><code class="blk py"># client.send(("Hello " + name).encode())</code></div>
+      </div>
+      <p>תסגרו את השרת הישן, תריצו את החדש, ואז תריצו לקוח ותשלחו שם. תסתכלו על שני החלונות.</p>
+    </div>
+    <div class="split">
+      <div class="box q"><h3>מה אתם חושבים שיקרה?</h3>
+        <div class="fill" id="p7" contenteditable="true" data-ph="מה אתם חושבים שיקרה? תכתבו לפני שאתם מריצים"></div></div>
+      <div class="box a"><h3>מה קרה בפועל?</h3>
+        <div class="fill" id="a7" contenteditable="true" data-ph="מה קרה בפועל? תכתבו אחרי"></div></div>
+    </div>
+  </div>
+
+  <div class="send">
+    <h2>וזהו, שולחים</h2>
+    <p>מילאתם את כל השבעה? יופי. תייצאו לקובץ ותשלחו לי אותו בוואטסאפ.</p>
+    <div class="tools">
+      <button class="btn" id="pdf">ייצוא כ-PDF</button>
+      <button class="btn2" id="qrbtn">להמשיך בבית</button>
+    </div>
+    <p class="how">הכפתור פותח את חלון ההדפסה של הדפדפן. תבחרו שם יעד <b>Save as PDF</b> ותשמרו. את הקובץ ששמרתם שולחים לי.</p>
+    <dialog class="qrdlg noprint" id="qrdlg">
+      <button class="x" id="qrclose" aria-label="סגירה">&times;</button>
+      <h3>להמשיך בבית</h3>
+      <canvas id="qrcv" hidden></canvas>
+      <p id="qrmsg"></p>
+      <div class="files" id="qrfiles" hidden>
+        <button class="lk" id="qrsave">הורדת קובץ התקדמות</button>
+        <button class="lk" id="qrload">טעינת קובץ</button>
+        <input type="file" id="qrfile" accept=".json,application/json" hidden>
+      </div>
+    </dialog>
+  </div>
+
+</div>
+<div id="saved">נשמר</div>
+<div id="toast"></div>
+
+<script>
+(function(){
+var FILES = {
+  'server.py': "import socket\n\nIP = \"0.0.0.0\"        # 0.0.0.0 = תקשיב לכל כרטיסי הרשת של המחשב\nPORT = 1234\n\nserver = socket.socket()\nserver.bind((IP, PORT))\nserver.listen()\nprint(\"Server listening on port\", PORT)\n\nwhile True:\n    # accept נתקע כאן עד שלקוח מתחבר\n    client, addr = server.accept()\n    print(\"Connected:\", addr)\n\n    while True:\n        data = client.recv(1024)   # נתקע כאן עד שמגיעים בייטים\n        if not data:               # b\"\" = הצד השני סגר\n            break\n\n        name = data.decode()       # בייטים -> טקסט\n        print(\"Got:\", name)\n\n        client.send((\"Hello \" + name).encode())   # טקסט -> בייטים\n\n    client.close()\n    print(\"Client closed. Waiting for the next one.\")\n",
+  'client.py': "import socket\n\nSERVER_IP = \"127.0.0.1\"   # 127.0.0.1 = המחשב הזה עצמו\nSERVER_PORT = 1234\n\nclient = socket.socket()\nclient.connect((SERVER_IP, SERVER_PORT))   # השרת חייב כבר לרוץ\nprint(\"Connected to\", SERVER_IP, SERVER_PORT)\n\nmsg = input(\"Your name: \")\nclient.send(msg.encode())        # טקסט -> בייטים\n\ndata = client.recv(1024)         # נתקע כאן עד שמגיעה תשובה\nprint(\"Server said:\", data.decode())\n\nclient.close()\n"
+};
+  function dl(name){
+    var blob = new Blob([FILES[name]], {type:'text/x-python;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+  }
+  var dls = document.querySelectorAll('[data-dl]');
+  for(var q = 0; q < dls.length; q++){
+    (function(el){
+      el.addEventListener('click', function(){
+        var which = el.getAttribute('data-dl');
+        if(which === 'both'){ dl('server.py'); setTimeout(function(){ dl('client.py'); }, 500); }
+        else dl(which);
+      });
+    })(dls[q]);
+  }
+  var KW = /^(import|from|as|while|for|if|elif|else|break|continue|def|return|in|is|not|and|or|True|False|None|pass|try|except|finally|with|class|lambda|global|del|raise|yield)$/;
+  var RE = /(#[^\n]*)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|(\b\d+(?:\.\d+)?\b)|([A-Za-z_][A-Za-z0-9_]*)|([\s\S])/g;
+  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function hl(src){
+    var out = '', m;
+    RE.lastIndex = 0;
+    while((m = RE.exec(src)) !== null){
+      if(m[1]) out += '<span class="tok-com">' + esc(m[1]) + '</span>';
+      else if(m[2]) out += '<span class="tok-str">' + esc(m[2]) + '</span>';
+      else if(m[3]) out += '<span class="tok-num">' + esc(m[3]) + '</span>';
+      else if(m[4]){
+        var word = m[4];
+        if(KW.test(word)) out += '<span class="tok-kw">' + word + '</span>';
+        else if(/^\s*\(/.test(src.slice(RE.lastIndex))) out += '<span class="tok-fn">' + word + '</span>';
+        else out += esc(word);
+      }
+      else out += esc(m[5]);
+    }
+    return out;
+  }
+  var codes = document.querySelectorAll('code.py');
+  for(var i = 0; i < codes.length; i++) codes[i].innerHTML = hl(codes[i].textContent);
+  var KEY = 'breaklab.v1';
+  var fields = document.querySelectorAll('.fill');
+  var saved = document.getElementById('saved');
+  var store = {};
+  try{ store = JSON.parse(localStorage.getItem(KEY) || '{}'); }catch(e){ store = {}; }
+  for(var j = 0; j < fields.length; j++){
+    if(store[fields[j].id]) fields[j].textContent = store[fields[j].id];
+  }
+  function nodeText(n){
+    if(n.nodeType === 3) return n.nodeValue;
+    if(n.nodeName === 'BR') return '\n';
+    var s = '', kids = n.childNodes;
+    for(var i = 0; i < kids.length; i++){
+      if(kids[i].nodeName === 'BR' && kids.length === 1) continue;
+      s += nodeText(kids[i]);
+    }
+    return s;
+  }
+  function readField(el){
+    var out = '', kids = el.childNodes;
+    for(var i = 0; i < kids.length; i++){
+      var k = kids[i];
+      if(k.nodeType === 1 && (k.nodeName === 'DIV' || k.nodeName === 'P')) out += '\n' + nodeText(k);
+      else out += nodeText(k);
+    }
+    return out;
+  }
+  var timer = null, hide = null;
+  function flush(){
+    var data = {};
+    for(var k = 0; k < fields.length; k++){
+      var t = readField(fields[k]);
+      if(t.trim()) data[fields[k].id] = t;
+    }
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){ return; }
+    saved.classList.add('on');
+    clearTimeout(hide);
+    hide = setTimeout(function(){ saved.classList.remove('on'); }, 1600);
+  }
+  document.addEventListener('input', function(e){
+    if(!e.target.classList || !e.target.classList.contains('fill')) return;
+    clearTimeout(timer);
+    timer = setTimeout(flush, 400);
+  });
+  document.addEventListener('paste', function(e){
+    if(!e.target.classList || !e.target.classList.contains('fill')) return;
+    e.preventDefault();
+    var text = (e.clipboardData || window.clipboardData).getData('text/plain');
+    document.execCommand('insertText', false, text);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Tab') return;
+    if(!e.target.classList || !e.target.classList.contains('code')) return;
+    e.preventDefault();
+    document.execCommand('insertText', false, '    ');
+  });
+  window.addEventListener('beforeunload', function(){ clearTimeout(timer); flush(); });
+
+  document.getElementById('pdf').addEventListener('click', function(){
+    clearTimeout(timer); flush();
+    var who = readField(document.getElementById('f_names')).trim();
+    var emo = readField(document.getElementById('f_emoji')).trim();
+    var old = document.title;
+    document.title = 'ניסויים ברשת' + (who ? ' - ' + who : '') + (emo ? ' ' + emo : '');
+    window.print();
+    setTimeout(function(){ document.title = old; }, 1000);
+  });
+  var QR = (function(){
+    var ECL = [[7,1,19,0,0],[10,1,34,0,0],[15,1,55,0,0],[20,1,80,0,0],[26,1,108,0,0],[18,2,68,0,0],[20,2,78,0,0],[24,2,97,0,0],[30,2,116,0,0],[18,2,68,2,69],[20,4,81,0,0],[24,2,92,2,93],[26,4,107,0,0],[30,3,115,1,116],[22,5,87,1,88],[24,5,98,1,99],[28,1,107,5,108],[30,5,120,1,121],[28,3,113,4,114],[28,3,107,5,108],[28,4,116,4,117],[28,2,111,7,112],[30,4,121,5,122],[30,6,117,4,118],[26,8,106,4,107],[28,10,114,2,115],[30,8,122,4,123],[30,3,117,10,118],[30,7,116,7,117],[30,5,115,10,116],[30,13,115,3,116],[30,17,115,0,0],[30,17,115,1,116],[30,13,115,6,116],[30,12,121,7,122],[30,6,121,14,122],[30,17,122,4,123],[30,4,122,18,123],[30,20,117,4,118],[30,19,118,6,119]];
+    var ALIGN = [[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]];
+    var EXP = new Array(512), LOG = new Array(256);
+    (function(){ var x = 1;
+      for(var i = 0; i < 255; i++){ EXP[i] = x; LOG[x] = i; x <<= 1; if(x & 0x100) x ^= 0x11D; }
+      for(var j = 255; j < 512; j++) EXP[j] = EXP[j - 255];
+    })();
+    function mul(a, b){ return (a === 0 || b === 0) ? 0 : EXP[LOG[a] + LOG[b]]; }
+    function genPoly(n){
+      var p = [1];
+      for(var i = 0; i < n; i++){
+        var q = p.slice(); q.push(0);
+        for(var j = 0; j < p.length; j++) q[j + 1] ^= mul(p[j], EXP[i]);
+        p = q;
+      }
+      return p;
+    }
+    function ecc(data, n){
+      var g = genPoly(n), res = new Array(n);
+      for(var i = 0; i < n; i++) res[i] = 0;
+      for(var k = 0; k < data.length; k++){
+        var f = data[k] ^ res[0];
+        res.shift(); res.push(0);
+        for(var m = 0; m < n; m++) res[m] ^= mul(g[m + 1], f);
+      }
+      return res;
+    }
+    function capacityBits(v){
+      var t = ECL[v - 1];
+      return (t[1] * t[2] + t[3] * t[4]) * 8;
+    }
+    function encode(bytes){
+      var v = 0, cc, need;
+      for(var i = 1; i <= 40; i++){
+        cc = (i < 10) ? 8 : 16;
+        need = 4 + cc + bytes.length * 8;
+        if(need <= capacityBits(i)){ v = i; break; }
+      }
+      if(!v) return null;
+      cc = (v < 10) ? 8 : 16;
+      var bits = [];
+      function put(val, len){ for(var b = len - 1; b >= 0; b--) bits.push((val >> b) & 1); }
+      put(4, 4); put(bytes.length, cc);
+      for(var k = 0; k < bytes.length; k++) put(bytes[k], 8);
+      var cap = capacityBits(v);
+      for(var t0 = 0; t0 < 4 && bits.length < cap; t0++) bits.push(0);
+      while(bits.length % 8) bits.push(0);
+      var pads = [0xEC, 0x11], pi = 0;
+      while(bits.length < cap){ put(pads[pi], 8); pi ^= 1; }
+      var dataCw = [];
+      for(var c = 0; c < bits.length; c += 8){
+        var byte = 0;
+        for(var z = 0; z < 8; z++) byte = (byte << 1) | bits[c + z];
+        dataCw.push(byte);
+      }
+      var T = ECL[v - 1], ecn = T[0];
+      var blocks = [], eccs = [], pos = 0, bi;
+      for(bi = 0; bi < T[1]; bi++){ var d1 = dataCw.slice(pos, pos + T[2]); pos += T[2]; blocks.push(d1); eccs.push(ecc(d1, ecn)); }
+      for(bi = 0; bi < T[3]; bi++){ var d2 = dataCw.slice(pos, pos + T[4]); pos += T[4]; blocks.push(d2); eccs.push(ecc(d2, ecn)); }
+      var out = [], maxd = Math.max(T[2], T[4]), q;
+      for(q = 0; q < maxd; q++) for(bi = 0; bi < blocks.length; bi++) if(q < blocks[bi].length) out.push(blocks[bi][q]);
+      for(q = 0; q < ecn; q++) for(bi = 0; bi < eccs.length; bi++) out.push(eccs[bi][q]);
+      return { v: v, cw: out };
+    }
+    function build(v, cw){
+      var n = 17 + 4 * v, i, j;
+      var m = [], f = [];
+      for(i = 0; i < n; i++){ m.push(new Array(n).fill(0)); f.push(new Array(n).fill(0)); }
+      function finder(r, c){
+        for(i = -1; i <= 7; i++) for(j = -1; j <= 7; j++){
+          var rr = r + i, cc2 = c + j;
+          if(rr < 0 || rr >= n || cc2 < 0 || cc2 >= n) continue;
+          var on = (i >= 0 && i <= 6 && (j === 0 || j === 6)) || (j >= 0 && j <= 6 && (i === 0 || i === 6)) || (i >= 2 && i <= 4 && j >= 2 && j <= 4);
+          m[rr][cc2] = on ? 1 : 0; f[rr][cc2] = 1;
+        }
+      }
+      finder(0, 0); finder(0, n - 7); finder(n - 7, 0);
+      var ap = ALIGN[v - 1];
+      for(i = 0; i < ap.length; i++) for(j = 0; j < ap.length; j++){
+        var r0 = ap[i], c0 = ap[j];
+        if(f[r0][c0]) continue;
+        for(var dr = -2; dr <= 2; dr++) for(var dc = -2; dc <= 2; dc++){
+          m[r0 + dr][c0 + dc] = (Math.max(Math.abs(dr), Math.abs(dc)) !== 1) ? 1 : 0;
+          f[r0 + dr][c0 + dc] = 1;
+        }
+      }
+      for(i = 8; i < n - 8; i++){ var b = (i % 2 === 0) ? 1 : 0; m[6][i] = b; f[6][i] = 1; m[i][6] = b; f[i][6] = 1; }
+      m[n - 8][8] = 1; f[n - 8][8] = 1;
+      for(i = 0; i <= 8; i++){ if(!f[8][i]){ f[8][i] = 1; } if(!f[i][8]){ f[i][8] = 1; } }
+      for(i = 0; i < 8; i++){ f[8][n - 1 - i] = 1; f[n - 1 - i][8] = 1; }
+      if(v >= 7) for(i = 0; i < 6; i++) for(j = 0; j < 3; j++){ f[i][n - 11 + j] = 1; f[n - 11 + j][i] = 1; }
+      var bit = 0, total = cw.length * 8;
+      function nextBit(){ if(bit >= total) return 0; var b2 = (cw[bit >> 3] >> (7 - (bit & 7))) & 1; bit++; return b2; }
+      var up = true;
+      for(var col = n - 1; col > 0; col -= 2){
+        if(col === 6) col = 5;
+        for(var rc = 0; rc < n; rc++){
+          var row = up ? (n - 1 - rc) : rc;
+          for(var s = 0; s < 2; s++){
+            var cc3 = col - s;
+            if(f[row][cc3]) continue;
+            m[row][cc3] = nextBit();
+          }
+        }
+        up = !up;
+      }
+      return { m: m, f: f, n: n };
+    }
+    function maskFn(k, r, c){
+      switch(k){
+        case 0: return (r + c) % 2 === 0;
+        case 1: return r % 2 === 0;
+        case 2: return c % 3 === 0;
+        case 3: return (r + c) % 3 === 0;
+        case 4: return (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0;
+        case 5: return (r * c) % 2 + (r * c) % 3 === 0;
+        case 6: return ((r * c) % 2 + (r * c) % 3) % 2 === 0;
+        default: return ((r + c) % 2 + (r * c) % 3) % 2 === 0;
+      }
+    }
+    function fmtBits(mask){
+      var d = (1 << 3) | mask;
+      var rem = d;
+      for(var i = 0; i < 10; i++) rem = (rem << 1) ^ (((rem >> 9) & 1) * 0x537);
+      return ((d << 10) | rem) ^ 0x5412;
+    }
+    function verBits(v){
+      var rem = v;
+      for(var i = 0; i < 12; i++) rem = (rem << 1) ^ (((rem >> 11) & 1) * 0x1F25);
+      return (v << 12) | rem;
+    }
+    function penalty(m, n){
+      var p = 0, i, j, run, dark = 0;
+      for(i = 0; i < n; i++){
+        run = 1;
+        for(j = 1; j < n; j++){
+          if(m[i][j] === m[i][j - 1]) run++;
+          else { if(run >= 5) p += 3 + (run - 5); run = 1; }
+        }
+        if(run >= 5) p += 3 + (run - 5);
+        run = 1;
+        for(j = 1; j < n; j++){
+          if(m[j][i] === m[j - 1][i]) run++;
+          else { if(run >= 5) p += 3 + (run - 5); run = 1; }
+        }
+        if(run >= 5) p += 3 + (run - 5);
+      }
+      for(i = 0; i < n - 1; i++) for(j = 0; j < n - 1; j++){
+        var a = m[i][j];
+        if(a === m[i][j + 1] && a === m[i + 1][j] && a === m[i + 1][j + 1]) p += 3;
+      }
+      var pat1 = [1,0,1,1,1,0,1,0,0,0,0], pat2 = [0,0,0,0,1,0,1,1,1,0,1];
+      function match(get, len, at){
+        for(var q = 0; q < 11; q++) if(get(at + q) !== pat1[q]) return false;
+        return true;
+      }
+      function match2(get, at){
+        for(var q = 0; q < 11; q++) if(get(at + q) !== pat2[q]) return false;
+        return true;
+      }
+      for(i = 0; i < n; i++){
+        (function(row){
+          var g = function(x){ return (x < 0 || x >= n) ? 0 : m[row][x]; };
+          for(var x = 0; x <= n - 11; x++){ if(match(g, n, x)) p += 40; if(match2(g, x)) p += 40; }
+        })(i);
+        (function(col){
+          var g = function(x){ return (x < 0 || x >= n) ? 0 : m[x][col]; };
+          for(var x = 0; x <= n - 11; x++){ if(match(g, n, x)) p += 40; if(match2(g, x)) p += 40; }
+        })(i);
+      }
+      for(i = 0; i < n; i++) for(j = 0; j < n; j++) if(m[i][j]) dark++;
+      var pct = dark * 100 / (n * n);
+      p += Math.floor(Math.abs(pct - 50) / 5) * 10;
+      return p;
+    }
+    function place(base, v, mask){
+      var n = base.n, m = [], i, j;
+      for(i = 0; i < n; i++) m.push(base.m[i].slice());
+      for(i = 0; i < n; i++) for(j = 0; j < n; j++) if(!base.f[i][j] && maskFn(mask, i, j)) m[i][j] ^= 1;
+      var fb = fmtBits(mask);
+      for(i = 0; i <= 5; i++) m[i][8] = (fb >> i) & 1;
+      m[7][8] = (fb >> 6) & 1; m[8][8] = (fb >> 7) & 1; m[8][7] = (fb >> 8) & 1;
+      for(i = 9; i <= 14; i++) m[8][14 - i] = (fb >> i) & 1;
+      for(i = 0; i <= 7; i++) m[8][n - 1 - i] = (fb >> i) & 1;
+      for(i = 8; i <= 14; i++) m[n - 15 + i][8] = (fb >> i) & 1;
+      m[n - 8][8] = 1;
+      if(v >= 7){
+        var vb = verBits(v);
+        for(i = 0; i < 18; i++){
+          var b = (vb >> i) & 1, r = Math.floor(i / 3), c = i % 3;
+          m[r][n - 11 + c] = b; m[n - 11 + c][r] = b;
+        }
+      }
+      return m;
+    }
+    return {
+      make: function(bytes){
+        var e = encode(bytes);
+        if(!e) return null;
+        var base = build(e.v, e.cw), best = null, bestP = Infinity;
+        for(var k = 0; k < 8; k++){
+          var m = place(base, e.v, k), p = penalty(m, base.n);
+          if(p < bestP){ bestP = p; best = m; }
+        }
+        return { size: base.n, modules: best, version: e.v };
+      },
+      capacity: function(v){ return Math.floor((capacityBits(v) - 4 - ((v < 10) ? 8 : 16)) / 8); }
+    };
+  })();
+  var BASE = 'https://verifybot.github.io/packet-journey/lab/experiments.html';
+  var PROG = 'lab-progress.json';
+  var FS = 'https://firestore.googleapis.com/v1/projects/packet-journey-lab/databases/(default)/documents';
+  var AK = 'AIzaSyCtoOy6-aKA5qlYRyDVcH2_2rvxzu8EZ08';
+  var lastPayload = null, lastKey = null;
+  function toast(txt){
+    var el = document.getElementById('toast');
+    el.textContent = txt; el.classList.add('on');
+    setTimeout(function(){ el.classList.remove('on'); }, 2800);
+  }
+  function collect(){
+    var a = [];
+    for(var i = 0; i < fields.length; i++) a.push(readField(fields[i]));
+    return a;
+  }
+  function apply(arr){
+    for(var i = 0; i < fields.length && i < arr.length; i++){
+      if(typeof arr[i] === 'string') fields[i].textContent = arr[i];
+    }
+  }
+  function newKey(){
+    var abc = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var raw = new Uint8Array(24);
+    crypto.getRandomValues(raw);
+    var s = '';
+    for(var i = 0; i < raw.length; i++) s += abc.charAt(raw[i] % abc.length);
+    return s;
+  }
+  async function share(){
+    var payload = JSON.stringify(collect());
+    if(payload === lastPayload && lastKey) return lastKey;
+    if(payload.length > 39000) throw new Error('too-big');
+    var key = newKey();
+    var res = await fetch(FS + '/p?documentId=' + key + '&key=' + AK, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({fields: {d: {stringValue: payload}, t: {integerValue: String(Date.now())}}})
+    });
+    if(!res.ok) throw new Error('http-' + res.status);
+    lastPayload = payload; lastKey = key;
+    return key;
+  }
+  function drawQR(text){
+    var q = QR.make(Array.from(new TextEncoder().encode(text)));
+    if(!q) return null;
+    var cv = document.getElementById('qrcv');
+    var quiet = 4, total = q.size + quiet * 2;
+    var scale = Math.max(3, Math.min(8, Math.round(260 / total)));
+    cv.width = total * scale; cv.height = total * scale;
+    var ctx = cv.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height);
+    ctx.fillStyle = '#000';
+    for(var r = 0; r < q.size; r++) for(var c = 0; c < q.size; c++)
+      if(q.modules[r][c]) ctx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
+    cv.hidden = false;
+    return q.version;
+  }
+  function saveFile(){
+    var blob = new Blob([JSON.stringify(collect())], {type: 'application/json'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = PROG;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+  }
+  document.getElementById('qrsave').addEventListener('click', saveFile);
+  document.getElementById('qrload').addEventListener('click', function(){ document.getElementById('qrfile').click(); });
+  document.getElementById('qrfile').addEventListener('change', function(e){
+    var f = e.target.files[0];
+    if(!f) return;
+    var rd = new FileReader();
+    rd.onload = function(){
+      try{
+        var arr = JSON.parse(rd.result);
+        if(Object.prototype.toString.call(arr) !== '[object Array]') throw 0;
+        apply(arr); flush(); toast('שוחזר');
+      }catch(err){ toast('הקובץ לא נקרא'); }
+    };
+    rd.readAsText(f);
+    e.target.value = '';
+  });
+  var dlg = document.getElementById('qrdlg');
+  var qrbtn = document.getElementById('qrbtn');
+  document.getElementById('qrclose').addEventListener('click', function(){ dlg.close(); });
+  dlg.addEventListener('click', function(e){
+    var r = dlg.getBoundingClientRect();
+    if(e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
+  });
+  dlg.addEventListener('close', function(){ setTimeout(function(){ qrbtn.focus(); }, 0); });
+  qrbtn.addEventListener('click', async function(){
+    flush();
+    var msg = document.getElementById('qrmsg'), cv = document.getElementById('qrcv');
+    var files = document.getElementById('qrfiles');
+    cv.hidden = true; files.hidden = true;
+    msg.textContent = 'רגע...';
+    if(!dlg.open) dlg.showModal();
+    try{
+      var url = BASE + '#k=' + (await share());
+      drawQR(url);
+      msg.textContent = 'תסרקו עם הטלפון ותמשיכו משם';
+    }catch(err){
+      cv.hidden = true; files.hidden = false;
+      msg.textContent = (String(err).indexOf('too-big') >= 0)
+        ? 'כתבתם ממש הרבה, יותר ממה שנכנס. תורידו קובץ, ובבית תטענו אותו.'
+        : 'לא הצלחתי לשמור, כנראה אין רשת. תורידו קובץ, ובבית תטענו אותו.';
+    }
+  });
+  if(location.hash.indexOf('#k=') === 0){
+    (function(){
+      var key = location.hash.slice(3).replace(/[^A-Za-z0-9]/g, '');
+      fetch(FS + '/p/' + key + '?key=' + AK).then(function(r){
+        if(!r.ok) throw new Error('http-' + r.status);
+        return r.json();
+      }).then(function(j){
+        apply(JSON.parse(j.fields.d.stringValue));
+        flush();
+        history.replaceState(null, '', location.pathname + location.search);
+        toast('שוחזר');
+      }).catch(function(){ toast('לא הצלחתי לשחזר'); });
+    })();
+  }
+})();
+</script>
+</body>
+</html>
