@@ -3,818 +3,966 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#EFF2F5">
-<title>מרחיקי לכת · ארבעה אתגרים</title>
+<meta name="theme-color" content="#0F1720">
+<title>מרחיקי לכת</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;800&family=Suez+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&family=Suez+One&display=swap" rel="stylesheet">
 <style>
-:root{--paper:#EFF2F5;--card:#fff;--ink:#141C26;--soft:#5A6775;--line:#D3DAE2;--signal:#0E6E52;
-  --dark:#0A5540;--tint:#E8F2EE;--warn:#A82B22;
-  --kw:#A626A4;--str:#12715A;--num:#B4562A;--com:#8A94A0;--fn:#0E6E52;--key:#7C8794;
-  --mono:'Consolas','SF Mono','Courier New',monospace;
-  --emoji:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji','Segoe UI Symbol'}
+:root{
+  --bg:#0F1720; --panel:#16202B; --rule:#2A3947; --rule2:#3B4C5D;
+  --txt:#DCE4EC; --dim:#8E9CAB;
+  --green:#0E6E52; --greenT:#4BC79A; --red:#A82B22; --redT:#F2776A; --amber:#E0A94A;
+  --kw:#D07BCB; --str:#5FC79E; --num:#E8A272; --com:#78848F; --fn:#7BA7EE;
+  --mono:'IBM Plex Mono','Consolas','SF Mono','Courier New',monospace;
+}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--paper);color:var(--ink);
-  font-family:'Assistant',-apple-system,'Segoe UI',Arial,sans-serif;font-size:16px;line-height:1.5;
-  padding:30px 16px calc(50px + env(safe-area-inset-bottom))}
-.w{max-width:760px;margin:0 auto}
+body{margin:0;background:var(--bg);color:var(--txt);
+  font-family:'Assistant',-apple-system,'Segoe UI',Arial,sans-serif;font-size:16px;line-height:1.55;
+  padding:26px 14px calc(56px + env(safe-area-inset-bottom));overflow-x:hidden}
+.w{max-width:720px;margin:0 auto}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+c{font-family:var(--mono);font-size:.92em;direction:ltr;unicode-bidi:isolate;color:var(--num)}
 
-h1{font-family:'Suez One',Georgia,serif;font-weight:400;font-size:30px;margin:0 0 6px;line-height:1.2}
-.lede{color:var(--soft);margin:0 0 16px}
-h2.sec{font-family:'Suez One',Georgia,serif;font-weight:400;font-size:21px;margin:0 0 8px}
+h1{font-family:'Suez One',Georgia,serif;font-weight:400;font-size:clamp(31px,9vw,44px);margin:0;line-height:1.04}
+.lede{color:var(--dim);margin:9px 0 0;max-width:46ch}
+.lede b{color:var(--txt);font-weight:600}
+.deal{margin:13px 0 0;padding:10px 13px;border:1px solid var(--rule);background:var(--panel);
+  font-size:15px;color:var(--dim);max-width:52ch}
+.deal b{color:var(--amber);font-weight:800}
 
-.who{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin:0 0 10px;
-  display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;align-items:start}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);
+  border:1px solid var(--rule);margin:18px 0 22px}
+@media (max-width:560px){.strip{grid-template-columns:1fr 1fr}}
+.seg{background:var(--panel);padding:9px 11px 10px;display:block;text-decoration:none;color:inherit;min-width:0}
+.seg:hover{background:#1B2734}
+.seg .sn{display:block;font-size:12.5px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seg .sv{display:block;font-family:'Suez One',Georgia,serif;font-size:19px;line-height:1.3;color:var(--rule2)}
+.seg.lit .sv{color:var(--greenT)}
+
+.inst{background:var(--panel);border:1px solid var(--rule);border-top:3px solid var(--green);
+  margin:0 0 14px;scroll-margin-top:12px}
+.inst.atk{border-top-color:var(--red)}
+.inst.next{border-top-color:var(--amber)}
+.ihead{display:flex;gap:12px;align-items:flex-start;padding:13px 15px 0}
+.ino{font-family:'Suez One',Georgia,serif;font-size:17px;line-height:1;color:#EAF6F1;background:var(--green);
+  width:30px;height:30px;display:flex;align-items:center;justify-content:center;flex:none}
+.atk .ino{background:var(--red);color:#FCEFEE}
+.next .ino{background:var(--amber);color:#2A1E06}
+.ititle{flex:1;min-width:0}
+.ititle h2{font-size:20px;font-weight:800;margin:0;line-height:1.2}
+.ititle p{color:var(--dim);font-size:14px;margin:2px 0 0}
+.read{font-family:var(--mono);font-size:13px;color:var(--dim);white-space:nowrap;flex:none;padding-top:3px}
+.read b{color:var(--greenT);font-weight:600}
+.ibody{padding:14px 15px 16px}
+.ibody > p{font-size:15px}
+
+.stage{background:#0C131B;border:1px solid var(--rule);padding:16px 14px;text-align:center}
+.target{font-family:var(--mono);font-size:clamp(25px,7.4vw,35px);font-weight:600;
+  direction:ltr;unicode-bidi:isolate;line-height:1.2;color:var(--txt);word-break:break-all}
+.mine{font-family:var(--mono);font-size:13px;color:var(--dim);direction:ltr;unicode-bidi:isolate;margin:0 0 10px}
+.tbar{height:4px;background:var(--rule);margin:12px 0 0}
+.tbar i{display:block;height:100%;background:var(--amber);width:100%}
+.secs{font-size:12.5px;color:var(--dim);margin:5px 0 0;line-height:1.45}
+.secs.n{font-family:var(--mono)}
+@media (prefers-reduced-motion:reduce){.tbar{display:none}}
+
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 0}
+.big{font:inherit;font-weight:800;font-size:17px;padding:13px 6px;cursor:pointer;
+  background:#1E2B38;color:var(--txt);border:1px solid var(--rule2);border-radius:7px}
+.big:hover{background:#26364A;border-color:var(--dim)}
+.btn{font:inherit;font-weight:800;font-size:15px;padding:9px 18px;cursor:pointer;border-radius:7px;
+  background:var(--green);color:#EAF6F1;border:1px solid var(--green)}
+.btn:hover{background:#128664;border-color:#128664}
+.btn.ghost{background:transparent;color:var(--txt);border-color:var(--rule2)}
+.btn.ghost:hover{background:#1E2B38}
+.btn.sm{font-size:13.5px;padding:7px 13px}
+.btn:disabled{opacity:.45;cursor:default}
+.row2{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 0}
+
+.fb{margin:12px 0 0;padding:10px 12px;border-inline-start:3px solid var(--rule2);background:#121B24;
+  font-size:15px;line-height:1.5}
+.fb.ok{border-inline-start-color:var(--greenT)}
+.fb.no{border-inline-start-color:var(--redT)}
+.fb.hint{border-inline-start-color:var(--amber)}
+.fb .head{font-weight:800;display:block;margin:0 0 3px}
+.fb.ok .head{color:var(--greenT)}
+.fb.no .head{color:var(--redT)}
+.fb.hint .head{color:var(--amber)}
+.fb[hidden]{display:none}
+.fb p{margin:0}
+.fb p + p{margin-top:7px}
+
+.dis{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.dis details{border:1px solid var(--rule2);flex:1 1 100%;min-width:0}
+.dis details[open]{border-color:var(--amber)}
+.dis summary{cursor:pointer;padding:7px 12px;font-size:14px;font-weight:800;color:var(--amber);list-style:none}
+.dis summary::-webkit-details-marker{display:none}
+.dis summary::before{content:"+";display:inline-block;margin-inline-end:6px}
+.dis details[open] summary::before{content:"\2212"}
+.dis .db{padding:0 12px 11px;font-size:14.5px;line-height:1.5;color:var(--txt)}
+.dis .db p{margin:0}
+.dis .db p + p{margin-top:6px}
+
+.dump{background:#0C131B;border:1px solid var(--rule);padding:11px 0;margin:0;overflow-x:auto;
+  font-family:var(--mono);font-size:13px}
+@media (max-width:520px){.dump{font-size:11px}}
+.dline{direction:ltr;unicode-bidi:isolate;text-align:left;white-space:nowrap;padding:0 12px;color:var(--com)}
+.dline.cmdline{color:var(--fn);font-weight:600;margin:0 0 6px}
+.dline.dhead{padding-inline-start:12px}
+.dline.dhead span{display:inline-block}
+.dline.dhead .c1{width:18ch}
+.dline.dhead .c2{width:21ch}
+@media (max-width:520px){.dline.dhead .c1{width:17ch}.dline.dhead .c2{width:20ch}}
+.drow{direction:ltr;unicode-bidi:isolate;display:block;width:100%;text-align:left;white-space:nowrap;
+  font:inherit;background:none;border:0;border-inline-start:3px solid transparent;
+  padding:2px 12px 2px 9px;cursor:pointer;color:var(--txt)}
+.drow:hover{background:#16212C}
+.drow span{display:inline-block}
+.drow .c1{width:18ch;color:var(--num)}
+.drow .c2{width:21ch;color:var(--num)}
+.drow .c3{color:var(--str)}
+.drow[aria-pressed="true"]{background:#2A1A18;border-inline-start-color:var(--redT)}
+.drow.show{background:#3A2410;border-inline-start-color:var(--amber)}
+.drow.hit{background:#12261F;border-inline-start-color:var(--greenT)}
+.drow:disabled{cursor:default}
+@media (max-width:520px){.drow .c1{width:17ch}.drow .c2{width:20ch}}
+
+.macin{width:100%;font-family:var(--mono);font-size:clamp(16px,4.5vw,20px);font-weight:600;
+  direction:ltr;text-align:left;padding:11px 12px;background:#0C131B;color:var(--txt);
+  border:1px solid var(--rule2);border-radius:0}
+.macin::placeholder{color:#55646F}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 0}
+.chip{font:inherit;font-size:13.5px;font-weight:600;padding:5px 12px;border-radius:14px;cursor:pointer;
+  background:transparent;color:var(--dim);border:1px solid var(--rule2)}
+.chip:hover{color:var(--txt);border-color:var(--dim)}
+.chip.on{color:var(--greenT);border-color:var(--greenT)}
+.bytes{display:flex;gap:5px;margin:14px 0 0;direction:ltr;unicode-bidi:isolate;flex-wrap:wrap}
+.by{font-family:var(--mono);font-size:15px;font-weight:600;padding:6px 8px;background:#1C2733;
+  border:1px solid var(--rule);text-align:center;min-width:40px}
+.by.oui{background:#123A2E;border-color:#1C5A46;color:var(--greenT)}
+.by.oui.soft{background:#1C2733;border-color:var(--rule);color:var(--dim)}
+.bylab{display:flex;gap:5px;direction:ltr;unicode-bidi:isolate;margin:4px 0 0;flex-wrap:wrap}
+.bylab span{min-width:40px;padding:0 8px;font-size:11px;color:var(--dim);text-align:center}
+.bits{font-family:var(--mono);font-size:14px;margin:14px 0 0;direction:ltr;unicode-bidi:isolate;
+  display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.bits i{font-style:normal;padding:2px 5px;background:#1C2733;border:1px solid var(--rule)}
+.bits i.on{background:#3A2A10;border-color:#6B5120;color:var(--amber)}
+.bits em{font-style:normal;font-family:'Assistant',sans-serif;font-size:12.5px;color:var(--dim);
+  direction:rtl;unicode-bidi:isolate;margin-inline-start:9px}
+.flags{display:flex;flex-wrap:wrap;gap:7px;margin:11px 0 0;padding:0;list-style:none}
+.flag{font-size:13px;font-weight:600;padding:4px 10px;border:1px solid var(--rule2);color:var(--dim)}
+.flag.on{border-color:var(--greenT);color:var(--greenT)}
+.flag.warn{border-color:var(--amber);color:var(--amber)}
+.vend{margin:12px 0 0;font-size:15px}
+.vend b{font-weight:800}
+.vend.un{color:var(--dim)}
+.lk{color:var(--fn)}
+
+.steps{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:12px 0 0}
+.stp{background:#0C131B;padding:12px 13px}
+.stp h3{font-size:15px;font-weight:800;margin:0 0 7px}
+.stp h3 span{color:var(--amber)}
+.hops{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:10px 0 0}
+.hop{background:#0C131B;width:100%;text-align:start;font:inherit;border:0;cursor:pointer;
+  padding:8px 11px;color:var(--txt);display:flex;gap:10px;align-items:baseline}
+.hop:hover{background:#141F2A}
+.hop .hn{font-family:var(--mono);font-size:13px;color:var(--dim);width:2ch;flex:none}
+.hop .hi{font-family:var(--mono);font-size:13.5px;color:var(--num);direction:ltr;unicode-bidi:isolate;
+  width:15ch;flex:none}
+.hop .ht{font-family:var(--mono);font-size:12.5px;color:var(--com);direction:ltr;unicode-bidi:isolate;flex:none}
+.hop .hx{font-size:13.5px;color:var(--dim);margin-inline-start:auto}
+.hop.open{background:#141F2A}
+.hop.open .hx{color:var(--greenT)}
+.hopnote{background:#0C131B;padding:0 11px 10px;font-size:14.5px;color:var(--txt);margin:0}
+@media (max-width:520px){.hop{flex-wrap:wrap;gap:4px 10px}.hop .hx{margin-inline-start:0}}
+
+#report{background:var(--panel);border:1px solid var(--rule);border-top:3px solid var(--green);
+  margin:26px 0 0;padding:16px 15px 18px}
+#report h2{font-family:'Suez One',Georgia,serif;font-weight:400;font-size:23px;margin:0 0 4px}
+#report .sub{color:var(--dim);font-size:14.5px;margin:0 0 14px}
+.who{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin:0 0 14px}
 @media (max-width:520px){.who{grid-template-columns:1fr}}
-.who label{display:block;font-size:12px;font-weight:800;color:var(--signal);letter-spacing:.04em;margin:0 0 3px}
-
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;
-  padding:14px 16px 16px;margin:0 0 12px}
-.rules{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:0 0 20px}
-.rules ol{margin:0;padding-inline-start:20px}
-.rules li{margin:0 0 4px}
-.rules li:last-child{margin:0}
-.rules b{font-weight:800}
-.start ol,.start p{font-size:15px}
-.start ol{margin:0 0 10px;padding-inline-start:20px}
-.start li{margin:0 0 3px}
-.start p{margin:0 0 8px}
-.start p:last-child{margin:0}
-
-.top{display:flex;gap:11px;align-items:baseline;margin:0 0 4px}
-.num{font-family:'Suez One',Georgia,serif;font-size:21px;color:var(--signal);line-height:1;
-  min-width:30px;text-align:center;border:1px solid var(--line);border-radius:7px;padding:6px 0 5px;flex:none}
-.ttl{font-size:19px;font-weight:800;line-height:1.25;margin:0}
-.sub{color:var(--soft);font-size:14px;margin:0 0 11px;padding-inline-start:41px}
-.k{font-weight:800;color:var(--signal);font-size:12px;letter-spacing:.04em;display:block;margin:13px 0 5px}
-.k.first{margin-top:0}
-.do{font-size:15px}
-.do p{margin:0 0 5px}
-.do p:last-child{margin:0}
-ol.steps{margin:0;padding-inline-start:20px;font-size:15px}
-ol.steps li{margin:0 0 4px}
-ul.steps{margin:0;padding-inline-start:18px;font-size:15px}
-ul.steps li{margin:0 0 4px}
-
-code{font-family:var(--mono);font-size:13.5px;
-  background:#F2F5F8;border:1px solid var(--line);border-radius:5px;padding:1px 5px;
-  direction:ltr;unicode-bidi:isolate;display:inline-block;white-space:pre-wrap;
-  max-width:100%;overflow-wrap:anywhere}
-code.blk{display:block;padding:7px 9px;margin:5px 0 0;text-align:left;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
-code.cmd{background:#fff;border-color:var(--signal);border-inline-start-width:4px;font-weight:700;font-size:14.5px}
-code.out{background:#F4F6F8;border-style:dashed;border-color:#C3CCD6;color:var(--ink);
-  font-size:12.2px;line-height:1.45;white-space:pre;overflow-x:auto;word-break:normal}
-@media (max-width:560px){code.out{font-size:10.5px;line-height:1.4}}
-.sample{margin:9px 0 0}
-.sample .cap{font-size:12px;color:var(--soft);font-weight:600;margin:0 0 3px}
-.tok-kw{color:var(--kw)}
-.tok-str{color:var(--str)}
-.tok-num{color:var(--num)}
-.tok-com{color:var(--com);font-style:italic}
-.tok-fn{color:var(--fn)}
-.tok-k{color:var(--key)}
-
-.vals{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;margin:5px 0 0}
-@media (max-width:540px){.vals{grid-template-columns:1fr}}
-.vals.one{grid-template-columns:1fr}
-.v{min-width:0}
-.v label{display:block;font-size:12.5px;font-weight:800;color:var(--soft);margin:0 0 2px}
-
-.fill{min-height:64px;background:#F7F9FB;border:1px solid var(--line);border-bottom:2px solid #A9B4C2;
-  border-radius:7px;padding:7px 9px;font-size:15px;line-height:1.5;outline:none;
-  white-space:pre-wrap;overflow-wrap:anywhere}
-.fill:focus{border-color:var(--signal);border-bottom-color:var(--signal);background:#fff}
-.fill:empty::before{content:attr(data-ph);color:#9AA4B0}
+.lb{display:block;font-size:12.5px;font-weight:800;color:var(--greenT);margin:0 0 3px}
+.fill{min-height:42px;background:#0C131B;border:1px solid var(--rule2);padding:7px 10px;
+  font-size:15px;line-height:1.5;outline:none;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--txt)}
+.fill:focus{border-color:var(--greenT)}
+.fill:empty::before{content:attr(data-ph);color:#5C6B78}
 .fill:focus:empty::before{content:""}
-.who .fill{min-height:0;padding:5px 9px;font-weight:800;white-space:pre-wrap;overflow-wrap:anywhere}
-.fill.val{min-height:0;padding:5px 9px;direction:ltr;text-align:left;font-family:var(--mono);
-  font-size:14px;font-weight:700;white-space:pre-wrap;overflow-wrap:anywhere}
-.fill.val:empty::before{direction:rtl;display:block;text-align:right;font-family:'Assistant',sans-serif;font-weight:400;font-size:13.5px}
-.fill.out{direction:ltr;text-align:left;font-family:var(--mono);font-size:12.5px;line-height:1.45;
-  white-space:pre-wrap;overflow-wrap:normal;overflow-x:auto;min-height:104px;tab-size:4}
-.fill.out:empty::before{direction:rtl;display:block;text-align:right;font-family:'Assistant',sans-serif;font-size:14px}
-.fill.code{direction:ltr;text-align:left;font-family:var(--mono);font-size:13px;line-height:1.45;
-  white-space:pre-wrap;overflow-wrap:normal;overflow-x:auto;min-height:96px;tab-size:4}
-.fill.code:empty::before{direction:rtl;display:block;text-align:right;font-family:'Assistant',sans-serif;font-size:14px}
-
-.ask{border:1px dashed var(--line);border-radius:8px;padding:10px 12px;margin:12px 0 0;font-size:15px}
-.ask .q{font-weight:800;color:var(--signal);font-size:12px;letter-spacing:.04em;display:block;margin:0 0 5px}
-.ask ul{margin:0 0 7px;padding-inline-start:18px}
-.ask li{margin:0 0 3px}
-.ask .fill{margin:0}
-
-.warn{border:1px solid var(--warn);border-radius:8px;padding:9px 12px;margin:10px 0 0;font-size:14.5px;
-  background:#FCF4F3;color:#7A1F18}
-.warn b{font-weight:800}
-
-details{border:1px solid var(--line);border-radius:8px;padding:0;margin:0 0 7px;background:#FAFBFC}
-details[open]{background:#fff}
-summary{cursor:pointer;padding:9px 12px;font-weight:800;font-size:14.5px;list-style:none}
-summary::-webkit-details-marker{display:none}
-summary::before{content:"+ ";color:var(--signal);font-weight:800}
-details[open] summary::before{content:"\2212 "}
-details[open] summary{border-bottom:1px solid var(--line)}
-.body{padding:10px 12px 12px;font-size:15px}
-.body p{margin:0 0 6px}
-.body p:last-child{margin:0}
-
-.tools{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:0}
-.btn2{font:inherit;font-weight:800;font-size:16px;color:var(--signal);background:#fff;
-  border:1px solid var(--signal);border-radius:8px;padding:10px 20px;cursor:pointer}
-.btn2:hover{background:#E8F2EE}
-.btn2:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-.qrdlg{border:1px solid var(--line);border-radius:12px;padding:18px 18px 20px;background:var(--card);color:var(--ink);
-  width:296px;max-width:calc(100vw - 32px);text-align:center;margin:auto;box-sizing:border-box}
-.nostore{background:#A82B22;color:#fff;padding:11px 15px;font-size:15px;font-weight:600;line-height:1.4;text-align:center}
-.qrdlg::backdrop{background:rgba(20,28,38,.58)}
-.qrdlg h3{font-family:'Suez One',Georgia,serif;font-weight:400;font-size:19px;margin:0 0 12px}
-.qrdlg canvas{display:block;margin:0 auto;width:216px;height:216px;max-width:100%;image-rendering:pixelated}
-.qrdlg canvas[hidden]{display:none}
-.qrdlg .qrlink{display:block;direction:ltr;word-break:break-all;font-size:12px;line-height:1.35;margin:9px 0 0;color:var(--signal);text-align:center}
-.qrdlg p{font-size:14.5px;color:var(--soft);margin:11px 0 0;line-height:1.45}
-.qrdlg .x{position:absolute;inset-inline-start:8px;top:5px;border:0;background:none;
-  font-size:24px;line-height:1;color:var(--soft);cursor:pointer;padding:2px 9px;font-family:inherit}
-.qrdlg .x:hover{color:var(--ink)}
-.files{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 0}
-.files[hidden]{display:none}
-.files .lk{font:inherit;font-weight:800;font-size:14px;color:var(--signal);background:#fff;
-  border:1px solid var(--signal);border-radius:8px;padding:7px 13px;cursor:pointer}
-.files .lk:hover{background:#E8F2EE}
-#toast{position:fixed;inset-inline-start:14px;bottom:52px;background:var(--signal);color:#fff;
-  border-radius:20px;padding:6px 15px;font-size:14px;font-weight:800;opacity:0;transition:opacity .25s;pointer-events:none;z-index:10}
-#toast.on{opacity:1}
-
-.send{background:var(--card);border:1px solid var(--signal);border-radius:10px;padding:16px 18px;margin:22px 0 0;text-align:center}
-.send h2{font-family:'Suez One',Georgia,serif;font-weight:400;font-size:22px;margin:0 0 6px}
-.send p{margin:0 0 10px;font-size:15px}
-.send .btn{font:inherit;font-weight:800;font-size:16px;color:#fff;background:var(--signal);
-  border:1px solid var(--signal);border-radius:8px;padding:10px 22px;cursor:pointer}
-.send .btn:hover{background:var(--dark)}
-.send .btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-.send .how{color:var(--soft);font-size:14px;margin:10px 0 0}
-#saved{position:fixed;inset-inline-start:14px;bottom:14px;background:var(--card);border:1px solid var(--line);
-  border-radius:20px;padding:4px 13px;font-size:13px;color:var(--soft);opacity:0;transition:opacity .25s;pointer-events:none}
+.who .fill{min-height:0;font-weight:700}
+#f_note{min-height:80px}
+table.rs{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:14.5px}
+table.rs th,table.rs td{text-align:start;padding:6px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+table.rs th{width:38%;font-weight:800;color:var(--txt)}
+table.rs td{color:var(--dim)}
+.how{color:var(--dim);font-size:14px;margin:11px 0 0}
+.how b{color:var(--txt)}
+#saved{position:fixed;inset-inline-start:13px;bottom:13px;background:var(--panel);border:1px solid var(--rule);
+  padding:4px 13px;font-size:13px;color:var(--dim);opacity:0;transition:opacity .25s;pointer-events:none}
 #saved.on{opacity:1}
+.nostore{background:var(--red);color:#fff;padding:10px 14px;font-size:14.5px;font-weight:600;text-align:center}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important;scroll-behavior:auto !important}}
+
+.cmp{margin:9px 0 0;font-family:var(--mono);font-size:13px}
+.cmp .cr{display:flex;gap:9px;align-items:center;margin:0 0 3px}
+.cmp .cl{font-family:'Assistant',sans-serif;font-size:12.5px;color:var(--dim);width:58px;flex:none}
+.cmp .oc{direction:ltr;unicode-bidi:isolate;display:flex;gap:3px}
+.cmp .oc span{padding:1px 5px;background:#1C2733;border:1px solid var(--rule);min-width:34px;text-align:center}
+.cmp .oc span.m{background:#123A2E;border-color:#1C5A46;color:var(--greenT)}
+.cmp .oc span.x{background:#3A1512;border-color:#6B241D;color:var(--redT)}
+.cmp .oc span.d{opacity:.5}
 
 @media print{
-  @page{size:A4;margin:11mm 12mm}
-  html,body{background:#fff}
-  body{padding:0;font-size:10.8pt;line-height:1.36;
-    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  @page{size:A4;margin:14mm 14mm}
+  html,body{background:#fff;color:#141C26}
+  body{padding:0;font-size:11pt;line-height:1.4;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .w{max-width:none}
-  .noprint,.start,.sample,#saved,#toast,.nostore,.qrdlg,details{display:none !important}
-  h1{font-size:20pt;margin-bottom:3px}
-  .lede{margin-bottom:8px;font-size:10pt}
-  .who{padding:7px 12px;margin-bottom:8px;border-color:#141C26;border-width:1.5px;gap:5px 16px;break-inside:avoid}
-  .who label{font-size:8.6pt;margin-bottom:1px}
-  .rules{padding:7px 10px;margin-bottom:10px;font-size:9.4pt;border-color:#B9C2CC;break-inside:avoid}
-  .card{break-inside:avoid;page-break-inside:avoid;margin-bottom:6px;padding:7px 10px 9px;border-color:#B9C2CC}
-  .top{margin-bottom:3px}
-  .num{font-size:16pt;padding:3px 0 2px;min-width:26px}
-  .ttl{font-size:12.5pt}
-  .sub{font-size:9.2pt;margin-bottom:6px}
-  .k{font-size:9pt;margin:9px 0 3px}
-  .do,ol.steps,ul.steps{font-size:9.7pt}
-  code{font-size:9.3pt;background:#fff;border-color:#C7CFD9}
-  code.cmd{font-size:9.8pt}
-  .warn{font-size:9.3pt;padding:5px 9px;background:#fff}
-  .ask{font-size:9.5pt;padding:6px 9px;margin-top:8px;break-inside:avoid}
-  .ask .q{font-size:9pt;margin-bottom:3px}
-  .v label{font-size:8.8pt}
-  .vals{gap:5px 9px}
-  .fill{background:#fff;border:1px solid #8E9AA8;border-bottom-width:1px;min-height:40px;
-    font-size:9.7pt;padding:5px 7px;break-inside:avoid;page-break-inside:avoid}
-  .fill.val{min-height:0;font-size:9.7pt;white-space:pre-wrap}
-  .fill.out{font-size:8.6pt;min-height:56px;line-height:1.32}
-  .fill.code{font-size:8.8pt;min-height:56px}
+  #console,#saved,.noprint,.nostore,.dis,details{display:none !important}
+  .lede{color:#5A6775;font-size:10.5pt;margin-top:6px}
+  .lede b{color:#141C26}
+  h1{font-size:23pt}
+  .strip{margin:14px 0 18px}
+  #report{background:#fff;border:0;margin:0;padding:0}
+  #report h2{font-size:21pt;margin:0 0 4px}
+  #report .sub{color:#5A6775;font-size:10.5pt;margin:0 0 12px}
+  .lb{color:#0E6E52;font-size:9pt}
+  .who{gap:6px 16px;margin-bottom:12px}
+  .fill{background:#fff;border:1px solid #8E9AA8;color:#141C26;min-height:34px;font-size:10.5pt;
+    break-inside:avoid;page-break-inside:avoid}
   .fill:empty::before{content:""}
-  .send{break-inside:avoid;page-break-inside:avoid;margin-top:10px;padding:8px 11px}
-  .send h2{font-size:13pt}
-  .send p{font-size:9.7pt;margin-bottom:0}
-  .send .tools,.send .how{display:none}
+  #f_note{min-height:70px}
+  table.rs{font-size:10.5pt}
+  table.rs th,table.rs td{border-bottom:1px solid #C7CFD9;padding:5px 0}
+  table.rs td{color:#3A4654}
 }
 </style>
 </head>
 <body>
 <div class="w">
-
+<header>
   <h1>מרחיקי לכת</h1>
-  <p class="lede">קשה בכוונה. אף אחד לא מצפה שתעשו את זה</p>
+  <p class="lede">כל מה שנגענו בו היום ולא הספקנו להסביר, ועוד קצת ממה שיבוא במפגש הבא. <b>אין ציון ואין חובה</b>, ואם נמאס לכם באמצע השני זה לגמרי לגיטימי.</p>
+  <p class="deal noprint">נתקעתם? <b>תפתחו רמז.</b> לא עזר? <b>תפתחו את התשובה.</b> אף אחד לא סופר ואף אחד לא בודק. המטרה פה היא להבין, לא לסבול.</p>
+  <nav class="strip" id="strip" aria-label="מצב">
+    <a class="seg" href="#c1"><span class="sn">שכן או לא</span><span class="sv" id="s1">רצף 0</span></a>
+    <a class="seg" href="#c2"><span class="sn">תפסו את השקרן</span><span class="sv" id="s2">0 / 4</span></a>
+    <a class="seg" href="#c3"><span class="sn">MAC שמשקר</span><span class="sv" id="s3">0 / 6</span></a>
+    <a class="seg" href="#c4"><span class="sn">אז לאן?</span><span class="sv" id="s4">0 / 3</span></a>
+  </nav>
+</header>
 
-  <div class="who">
-    <div><label>השמות שלכם</label><div class="fill" id="f_names" contenteditable="true" data-ph="מי ומי בזוג"></div></div>
-    <div><label>מחמאה אהובה</label><div class="fill" id="f_praise" contenteditable="true"></div></div>
+<main id="console">
+
+<section class="inst" id="c1">
+  <div class="ihead">
+    <div class="ino">1</div>
+    <div class="ititle"><h2>שכן או לא</h2>
+      <p>כתובת עולה על המסך. היא ברשת שלכם או לא? יש תשע שניות</p></div>
+    <div class="read">רצף <b id="r1">0</b></div>
   </div>
-  <div class="card start">
-    <h2 class="sec">מה זה הדף הזה</h2>
-    <p>הדף הזה הוא לא שיעורי בית ולא המשך של התרגיל. הוא בשביל מי שיצא מהמפגש וחשב "רגע, אבל אם ככה זה עובד, אז אפשר פשוט..." והמחשבה הזאת לא הרפתה.</p>
-    <p>אין פה שלבים, אין סדר, ואין ציפייה שתסיימו. תבחרו אחד, תחפרו בו כמה שבא לכם, ותשלחו גם אם יצא לכם רק חצי. חצי של שאלה טובה שווה יותר ממשהו שלם ומשעמם.</p>
-    <p>מותר להיעזר ב-AI, באינטרנט ובכל אדם על פני כדור הארץ. מותר גם לכתוב קוד, אבל לא חייבים, ורוב מה שפה נפתר בדף ועיפרון.</p>
-    <div class="warn"><b>שורה אחת שהיא לא פילוסופיה:</b> כל מה שפה עושים על הרשת שלכם בבית, או על נקודה חמה שאתם פתחתם. לעשות את זה על רשת של בית ספר, של שכן או של בית קפה זאת עבירה פלילית, גם אם לא נגעתם בשום דבר. ההבדל בין להבין התקפה לבין להריץ אותה הוא לא טכני, הוא מי נתן לכם רשות.</div>
-  </div>
-  <div class="card">
-    <div class="top"><div class="num">1</div><h2 class="ttl">לתפוס ARP באוויר</h2></div>
-    <p class="sub">שתי חבילות, אחת שאלה ואחת תשובה. הכל שם, בעין</p>
-    <span class="k first">מה עושים</span>
-    <ol class="steps">
-      <li>תתקינו Wireshark בבית ותתחילו הקלטה על המתאם שדרכו אתם באינטרנט.</li>
-      <li>בשורת הפילטר למעלה תכתבו <code>arp</code>&rlm; ואנטר. עכשיו נשאר רק מה שמעניין.</li>
-      <li>בחלון cmd כמנהל תריצו <code>arp -d *</code>&rlm;, ואז פינג לשער שלכם. ככה אתם מכריחים את השאלה לצאת לאוויר ברגע שאתם בוחרים. בלי הרשאת מנהל, פשוט תעשו פינג לכתובת ברשת הביתית שאין לה שורה בטבלה, נגיד הטלוויזיה או הטלפון של מישהו בבית.</li>
-      <li>תסתכלו על שתי השורות הראשונות שקפצו, ותפתחו אותן.</li>
-    </ol>
-    <div class="warn">הכל פה על הרשת הביתית שלכם, על מחשב שלכם. Wireshark על רשת של מוסד זה סיפור אחר לגמרי, וזה כתוב בגדול בתחילת הדף.</div>
-    <div class="sample noprint"><div class="cap">בערך ככה זה ייראה</div>
-      <code class="blk out">No.  Source             Destination        Protocol  Info
- 41  9c:b6:d0:3f:1a:7e  ff:ff:ff:ff:ff:ff  ARP       Who has 192.168.1.52? Tell 192.168.1.37
- 42  a4:83:e7:09:bb:21  9c:b6:d0:3f:1a:7e  ARP       192.168.1.52 is at a4:83:e7:09:bb:21</code></div>
-    <span class="k">מה מצאתם</span>
-    <div class="vals">
-      <div class="v"><label>ה-Destination של הבקשה</label><div class="fill val" id="f1a" contenteditable="true" data-ph="MAC"></div></div>
-      <div class="v"><label>ה-Opcode של הבקשה ושל התשובה</label><div class="fill val" id="f1b" contenteditable="true" data-ph="? / ?"></div></div>
-      <div class="v"><label>כמה תשובות חזרו על בקשה אחת</label><div class="fill val" id="f1c" contenteditable="true" data-ph="מספר"></div></div>
-      <div class="v"><label>כמה בקשות ARP נקלטו בדקה</label><div class="fill val" id="f1d" contenteditable="true" data-ph="מספר"></div></div>
+  <div class="ibody">
+    <div class="stage">
+      <p class="mine" id="c1me"></p>
+      <div class="target" id="c1t">...</div>
+      <div class="tbar"><i id="c1bar"></i></div>
+      <p class="secs n" id="c1s">9</p>
     </div>
-    <div class="ask"><span class="q">שאלות לעצמכם</span>
-      <ul>
-        <li>תסתכלו על מי שלח את התשובה. איפה בדיוק בחבילה הזאת כתוב מי היא, ומי כתב את זה שם?</li>
-        <li>המחשב שלכם קיבל תשובה אחת וקיבל אותה. מה היה קורה אילו היו חוזרות שתיים, שונות זו מזו? תנסו למצוא מה ווינדוס עושה במקרה כזה.</li>
-        <li>תקבעו את השורה של השער ידנית עם <code>arp -s</code>&rlm; (צריך cmd כמנהל), ואז תריצו שוב <code>arp -d *</code>&rlm; ותראו מה שרד. מפני מה בדיוק שורה כזאת מגנה?</li>
-        <li>ועכשיו המחיר: תחשבו על רשת בית ספר עם מאה מחשבים ושני שרתים. מי מקליד את כל השורות הקבועות, ומה קורה ביום שבו מחליפים ראוטר?</li>
-      </ul>
-      <div class="fill" id="f1q" contenteditable="true" data-ph="מה מצאתם"></div>
+    <div class="pair">
+      <button class="big" id="c1yes">שכן</button>
+      <button class="big" id="c1no">לא שכן</button>
+    </div>
+    <div class="row2">
+      <button class="btn sm ghost noprint" id="c1idk">לא יודע, תראו לי</button>
+      <button class="btn sm ghost noprint" id="c1reset">להתחיל מחדש</button>
+    </div>
+    <div class="fb" id="c1fb" hidden></div>
+    <div class="chips noprint" id="c1lvls"></div>
+    <div class="dis noprint">
+      <details><summary>רמז</summary><div class="db">
+        <p>המסכה היא הכלל היחיד פה. כל מקום שבו יש בה <c>255</c> הוא מספר שחייב להיות זהה אצל שניכם. כל מקום שבו יש <c>0</c> הוא מספר שלא מעניין אף אחד.</p></div></details>
+      <details><summary>עוד רמז</summary><div class="db">
+        <p>ומה עם מספר באמצע, כמו <c>128</c> או <c>240</c>? הוא חותך את המספר האחרון לקטעים. <c>128</c> חותך לשניים: 0 עד 127, ו-128 עד 255. <c>240</c> חותך לקטעים של 16.</p>
+        <p>אותם שלושה מספרים ראשונים כבר לא מספיקים. צריך גם ליפול באותו קטע.</p></div></details>
+      <details><summary>התשובה</summary><div class="db">
+        <p>המחשב עושה AND בין הכתובת שלו למסכה, ואותו דבר לכתובת השנייה. יצאו שני מספרים זהים? שכנים. שונים? לא שכנים, והחבילה הולכת לשער.</p>
+        <p>אחרי כל תשובה, נכונה או לא, הדף מראה לכם את הטווח המדויק של הרשת שלכם ואיפה הכתובת נופלת. אין פה שום דבר שאתם אמורים לנחש.</p></div></details>
     </div>
   </div>
-  <div class="card">
-    <div class="top"><div class="num">2</div><h2 class="ttl">אף אחד לא בודק שם תעודת זהות</h2></div>
-    <p class="sub">ARP מאמין לכל תשובה שחוזרת. תנסו לתקן את זה</p>
-    <span class="k first">מה עושים</span>
-    <div class="do">
-      <p>בפרוטוקול ARP אין שום שדה של אימות. אין חתימה, אין סיסמה, אין דרך לדעת אם מי שענה "אני 192.168.1.1" הוא באמת השער. וזה לא באג שמישהו שכח, זה נבנה ככה ב-1982 ועדיין רץ ככה היום בכל רשת בעולם.</p>
-      <p>המשימה שלכם היא לתכנן את התיקון. תכתבו למטה איך ARP היה נראה אילו הייתה בו הוכחת זהות: מה בדיוק נוסף לחבילה, מי בודק את זה ומתי.</p>
-      <p>ואז, וזה החלק המעניין, תנסו לשבור את הפתרון שלכם. כל תשובה שתכתבו תיתקל בבעיה, ומציאת הבעיה שווה יותר מהפתרון.</p>
+</section>
+
+<section class="inst atk" id="c2">
+  <div class="ihead">
+    <div class="ino">2</div>
+    <div class="ititle"><h2>תפסו את השקרן</h2>
+      <p>טבלת ARP אמיתית מתוך מחשב. תסמנו את השורות שמריחות רע</p></div>
+    <div class="read"><b id="r2">0</b> / 4</div>
+  </div>
+  <div class="ibody">
+    <div class="dump" id="c2dump"></div>
+    <div class="row2">
+      <button class="btn" id="c2check">לבדוק</button>
+      <button class="btn sm ghost noprint" id="c2next">הטבלה הבאה</button>
+      <span class="read" id="c2n"></span>
     </div>
-    <span class="k">התכנון שלכם</span>
-    <div class="fill" id="f2a" contenteditable="true" data-ph="מה מוסיפים לחבילה, מי בודק, ומתי"></div>
-    <div class="ask"><span class="q">שאלות לעצמכם</span>
-      <ul>
-        <li>אם התשובה שלכם כוללת מפתחות או חתימות: מי מחלק את המפתחות, ואיך מכשיר חדש שהתחבר לרשת בפעם הראשונה מקבל את שלו?</li>
-        <li>ARP רץ לפני שיש למכשיר בכלל כתובת IP. כל מנגנון שדורש להתחבר לשרת כדי לאמת נופל לבור של ביצה ותרנגולת. תזהו איפה בדיוק הפתרון שלכם נופל לבור הזה.</li>
-        <li>מה עולה לשים חתימה על כל תשובת ARP ברשת של אלף מכשירים, במונחי זמן ושל מי שצריך לבדוק אותה?</li>
-        <li>תחפשו מה זה <code>Dynamic ARP Inspection</code>&rlm;. זה קיים, זה עובד, ובכל זאת רוב הרשתות בעולם לא מפעילות אותו. תנסו להבין למה.</li>
-      </ul>
-      <div class="fill" id="f2q" contenteditable="true" data-ph="מה יצא לכם"></div>
+    <div class="fb" id="c2fb" hidden></div>
+    <div class="dis noprint" id="c2dis"></div>
+  </div>
+</section>
+
+<section class="inst" id="c3">
+  <div class="ihead">
+    <div class="ino">3</div>
+    <div class="ititle"><h2>MAC שמשקר</h2>
+      <p>בשיעור אמרנו שכתובת MAC יוצאת מהמפעל ולא משתנה לעולם. לטלפון שלכם יש כתובת אחרת בכל רשת</p></div>
+    <div class="read"><b id="r3">0</b> / 6</div>
+  </div>
+  <div class="ibody">
+    <p style="margin:0 0 12px">שתי הטענות נכונות, וזה לא באג. יש ביט אחד בתוך הכתובת שאומר "את זו לא המפעל קבע". תדביקו למטה כתובת MAC, כל צורה שהיא, ותראו אותו נדלק.</p>
+    <label class="lb" for="c3in">כתובת MAC</label>
+    <input class="macin" id="c3in" dir="ltr" spellcheck="false" autocomplete="off"
+           placeholder="a4:83:e7:09:bb:21" value="a4:83:e7:09:bb:21">
+    <div class="chips noprint" id="c3ps"></div>
+    <div id="c3out"></div>
+
+    <div class="fb hint" style="margin-top:18px">
+      <span class="head">תבדקו על הטלפון שלכם, לוקח חצי דקה</span>
+      <p><b>אייפון:</b> הגדרות, Wi-Fi, הכפתור העגול ליד הרשת שאתם מחוברים אליה. שם יש "כתובת Wi-Fi פרטית" וכתובת מתחתיה.</p>
+      <p><b>אנדרואיד:</b> הגדרות, הרשת שאתם מחוברים אליה, פרטיות. שם כתוב אם ה-MAC אקראי או של המכשיר.</p>
+      <p>תדביקו את מה שראיתם בשדה למעלה. סביר מאוד שהביט של "הוגדרה בתוכנה" יידלק.</p>
+    </div>
+
+    <div class="fb hint" id="c3quiz" style="margin-top:12px">
+      <span class="head">שש כתובות. כל אחת היא אחת מהשלוש</span>
+      <div class="target" id="c3q" style="font-size:clamp(19px,5.5vw,26px);margin-top:9px"></div>
+      <div class="chips" id="c3btns" style="margin-top:12px"></div>
+      <div class="fb" id="c3fb" hidden style="margin-top:11px"></div>
+    </div>
+
+    <div class="dis noprint">
+      <details><summary>רמז</summary><div class="db">
+        <p>הכל מוכרע בקבוצה הראשונה בלבד, שני התווים הראשונים. תמירו אותה לבינארי ותסתכלו על שני הביטים הימניים.</p></div></details>
+      <details><summary>עוד רמז</summary><div class="db">
+        <p>הביט הימני ביותר: אם הוא <c>1</c>, הכתובת מיועדת לקבוצה שלמה ולא למכשיר אחד. זה מולטיקאסט, ו-<c>ff:ff:ff:ff:ff:ff</c> הוא המקרה הקיצוני שלו, שידור לכולם.</p>
+        <p>הביט השני מימין: אם הוא <c>1</c>, מישהו קבע את הכתובת בתוכנה ולא המפעל.</p></div></details>
+      <details><summary>התשובה</summary><div class="db">
+        <p>אלה שני ביטים בשמות <c>I/G</c> ו-<c>U/L</c>. הביט הימני הוא I/G: יחיד או קבוצה. השני מימין הוא U/L: אוניברסלי, כלומר מהמפעל, או מקומי, כלומר מומצא.</p>
+        <p>הטלפון שלכם מדליק את U/L ומגריל כתובת חדשה לכל רשת ויפיי, כדי שחנות או שדה תעופה לא יוכלו לזהות שחזרתם. ה-MAC של החומרה עדיין קיים ועדיין קבוע, הוא פשוט לא זה שנשלח.</p>
+        <p>וזה בדיוק מה שעושה גם מי שמזייף. אין הבדל טכני בין השניים, רק בכוונה.</p></div></details>
     </div>
   </div>
-  <div class="card">
-    <div class="top"><div class="num">3</div><h2 class="ttl">חשבון על המסכה</h2></div>
-    <p class="sub">אין פה פקודה להריץ. יש דף, עיפרון ובסיס שתיים</p>
-    <span class="k first">מה מחשבים</span>
-    <div class="do"><p>קחו את המסכה שלכם, תכתבו אותה בבינארי, ותספרו כמה אחדות יש בה. המספר הזה הוא בדיוק מה שכתוב אחרי הלוכסן כשרואים כתובת בסגנון <code>192.168.1.0/24</code>&rlm;.</p></div>
-    <span class="k">תמלאו לכל אחת</span>
-    <div class="vals">
-      <div class="v"><label>255.255.255.0 = איזה /?</label><div class="fill val" id="f3a" contenteditable="true" data-ph="/?"></div></div>
-      <div class="v"><label>כמה כתובות יש בה בסך הכל</label><div class="fill val" id="f3b" contenteditable="true" data-ph="מספר"></div></div>
-      <div class="v"><label>כמה מהן אפשר לתת למכשיר</label><div class="fill val" id="f3c" contenteditable="true" data-ph="מספר"></div></div>
-      <div class="v"><label>אילו שתיים אי אפשר, ולמה</label><div class="fill val" id="f3d" contenteditable="true" data-ph="הכתובות"></div></div>
-      <div class="v"><label>255.255.255.192 = איזה /?</label><div class="fill val" id="f3e" contenteditable="true" data-ph="/?"></div></div>
-      <div class="v"><label>כמה מכשירים נכנסים ב-192.168.1.64/26</label><div class="fill val" id="f3f" contenteditable="true" data-ph="מספר"></div></div>
-      <div class="v"><label>הכתובת הראשונה והאחרונה ב-/26 הזה</label><div class="fill val" id="f3g" contenteditable="true" data-ph="from / to"></div></div>
-      <div class="v"><label>האם 192.168.1.130 נמצאת בו</label><div class="fill val" id="f3h" contenteditable="true" data-ph="כן / לא"></div></div>
-    </div>
-    <div class="ask"><span class="q">שאלות לעצמכם</span>
-      <ul>
-        <li>לכל /26 הולכות לאיבוד שתי כתובות. ברשת שמחולקת לארבעה /26 זה כבר שמונה. תחשבו מה הרווח שבגללו בכל זאת מחלקים.</li>
-        <li>מסכה של /31 קיימת ומשתמשים בה בפועל בין שני ראוטרים. לפי מה שחישבתם היא אמורה להיות חסרת תועלת. תחפשו למה היא בכל זאת עובדת שם.</li>
-        <li>מה יקרה למכשיר שהוגדרה לו בטעות מסכה של <code>255.255.0.0</code>&rlm; ברשת שכולה <code>255.255.255.0</code>&rlm;? תעברו על זה שלב שלב: למי הוא ישלח ישירות, ולמי דרך השער.</li>
-      </ul>
-      <div class="fill" id="f3q" contenteditable="true" data-ph="מה יצא לכם"></div>
-    </div>
+</section>
+
+<section class="inst next" id="c4">
+  <div class="ihead">
+    <div class="ino">4</div>
+    <div class="ititle"><h2>לא שכן. אז לאן?</h2>
+      <p>גילינו שכתובת לא נמצאת ברשת שלכם. מה קורה איתה עכשיו</p></div>
+    <div class="read"><b id="r4">0</b> / 3</div>
   </div>
-  <div class="card">
-    <div class="top"><div class="num">4</div><h2 class="ttl">לתפוס שקרן</h2></div>
-    <p class="sub">שיחקתם את זה בכיתה. עכשיו תבנו את הגלאי</p>
-    <span class="k first">מה מתכננים</span>
-    <div class="do">
-      <p>נניח שיש לכם רשת בבית ואתם רוצים לדעת אם מישהו עליה מזייף ARP. אין לכם גישה לראוטר, יש לכם מחשב אחד שמחובר לרשת כמו כל השאר, ומותר לכם להריץ עליו מה שבא לכם.</p>
-      <p>תכתבו איך תזהו את זה. לא "אשתמש בכלי X", אלא <b>על מה בדיוק אתם מסתכלים</b> ומה מבין הדברים שראיתם ייחשב אצלכם לעדות.</p>
-    </div>
-    <span class="k">איך תזהו</span>
-    <div class="fill" id="f4a" contenteditable="true" data-ph="על מה מסתכלים, ומה נחשב עדות"></div>
-    <div class="ask"><span class="q">שאלות לעצמכם</span>
-      <ul>
-        <li>הסימן הכי פשוט הוא ששני IPים שונים מצביעים על אותו MAC. תריצו <code>arp -a</code>&rlm; בבית ותבדקו אם זה קורה אצלכם. אם כן, זה לא בהכרח התקפה. תנסו למצוא מתי זה דווקא תקין.</li>
-        <li>תוקף שיודע שמחפשים אותו יכול פשוט לזייף גם את ה-MAC שלו. איזה חלק מהזיהוי שלכם שורד את זה ואיזה נופל?</li>
-        <li>יש דבר כזה תשובת ARP שאף אחד לא ביקש, ובדרך כלל היא הסימן הראשון. תחפשו איך קוראים לה, ואיך היא נראית ב-Wireshark מול תשובה רגילה.</li>
-        <li>אתם קונים גלאי מושלם שתופס כל זיוף. מה בדיוק הוא נותן לכם, אם התוקף כבר יושב באמצע שבוע?</li>
-      </ul>
-      <div class="fill" id="f4q" contenteditable="true" data-ph="מה יצא לכם"></div>
-    </div>
-    <span class="k">קוד, אם יצא לכם</span>
-    <div class="fill code" id="f4b" contenteditable="true" data-ph="אפשר להדביק פה קוד. לא חובה, רוב התשובות פה הן בכלל לא קוד"></div>
-  </div>
-  <div class="send">
-    <h2>וזהו</h2>
-    <p>עשיתם אחד? חצי אחד? תייצאו ותשלחו לי בוואטסאפ. ואם נתקעתם ולא הצלחתם, זה בדיוק מה שאני רוצה לשמוע במפגש הבא.</p>
-    <div class="tools">
-      <button class="btn" id="pdf">ייצוא כ-PDF</button>
-      <button class="btn2" id="qrbtn">להמשיך בבית</button>
-    </div>
-    <p class="how">הכפתור פותח את חלון ההדפסה של הדפדפן. תבחרו שם יעד <b>Save as PDF</b> ותשמרו. את הקובץ ששמרתם שולחים לי.</p>
-    <dialog class="qrdlg noprint" id="qrdlg">
-      <button class="x" id="qrclose" aria-label="סגירה">&times;</button>
-      <h3>להמשיך בבית</h3>
-      <canvas id="qrcv" hidden></canvas>
-      <p id="qrmsg"></p>
-      <a id="qrlink" class="qrlink" hidden target="_blank" rel="noopener"></a>
-      <div class="files" id="qrfiles" hidden>
-        <button class="lk" id="qrsave">הורדת קובץ התקדמות</button>
-        <button class="lk" id="qrload">טעינת קובץ</button>
-        <input type="file" id="qrfile" accept=".json,application/json" hidden>
+  <div class="ibody">
+    <div class="steps">
+      <div class="stp">
+        <h3><span>שלב 1.</span> מהשם לכתובת</h3>
+        <p style="margin:0 0 9px;font-size:14.5px;color:var(--dim)">הקלדתם שם באנגלית. לרשת אין מושג מה זה. בואו נשאל שרת DNS אמיתי, עכשיו, מהדפדפן שלכם.</p>
+        <div class="chips noprint" id="c4sites"></div>
+        <div class="row2"><button class="btn sm" id="c4ask">לשאול</button>
+          <span class="read" id="c4site"></span></div>
+        <div class="fb" id="c4dns" hidden></div>
       </div>
-    </dialog>
+      <div class="stp">
+        <h3><span>שלב 2.</span> שכן שלכם?</h3>
+        <p style="margin:0 0 9px;font-size:14.5px;color:var(--dim)">קיבלנו כתובת. תריצו עליה את אותה בדיקה מאתגר 1, מול <c>192.168.1.37</c> עם מסכה <c>255.255.255.0</c>.</p>
+        <div class="row2"><button class="btn sm" id="c4near" disabled>לבדוק</button></div>
+        <div class="fb" id="c4nearfb" hidden></div>
+      </div>
+      <div class="stp">
+        <h3><span>שלב 3.</span> הדרך</h3>
+        <p style="margin:0 0 4px;font-size:14.5px;color:var(--dim)">ככה נראה המסלול מהבית שלי אל ynet. לא מהמחשב שלכם, ואת האמיתי נריץ במפגש הבא עם <c>tracert</c>. תלחצו על כל קפיצה.</p>
+        <div class="hops" id="c4hops"></div>
+        <div class="fb" id="c4end" hidden></div>
+      </div>
+    </div>
+    <div class="dis noprint">
+      <details><summary>רמז</summary><div class="db">
+        <p>המחשב שלכם לא יודע ולא צריך לדעת איפה ynet. הוא יודע דבר אחד: הכתובת הזאת לא אצלי, אז אני מוסר אותה למי שאחראי על "לא אצלי". זה השער.</p></div></details>
+      <details><summary>עוד רמז</summary><div class="db">
+        <p>והשער? גם הוא לא יודע איפה ynet. גם הוא יודע רק לאן למסור הלאה. וככה זה ממשיך, מכונה אחרי מכונה, עד שמישהו כבר כן יודע.</p></div></details>
+      <details><summary>התשובה</summary><div class="db">
+        <p>הפכנו שם לכתובת (זה <b>DNS</b>), גילינו שהכתובת לא ברשת שלנו, ומסרנו אותה לשער. משם היא עברה יד ליד בין ראוטרים, כשכל אחד יודע רק את הקפיצה הבאה ואף אחד לא מכיר את כל המסלול (זה <b>ניתוב</b>).</p>
+        <p>שני הדברים האלה הם המפגש הבא במלואו. אז בואו איתם.</p></div></details>
+    </div>
   </div>
+</section>
+
+</main>
+
+<section id="report">
+  <h2>מה יצא לכם</h2>
+  <p class="sub">זה החלק שאפשר לשלוח. גם אם נגעתם רק באחד מהארבעה.</p>
+  <div class="who">
+    <div><div class="lb" id="l_names">השמות שלכם</div>
+      <div class="fill" id="f_names" contenteditable="true" role="textbox" aria-labelledby="l_names" data-ph="מי ומי"></div></div>
+    <div><div class="lb" id="l_praise">מחמאה אהובה</div>
+      <div class="fill" id="f_praise" contenteditable="true" role="textbox" aria-labelledby="l_praise"></div></div>
+  </div>
+  <table class="rs"><tbody id="rsum"></tbody></table>
+  <div class="lb" id="l_note">מה שמתם לב?</div>
+  <div class="fill" id="f_note" contenteditable="true" role="textbox" aria-labelledby="l_note" data-ph="משהו שהפתיע אתכם, משהו שלא הסתדר, או שאלה שנשארה פתוחה"></div>
+  <p class="how noprint">מי שבא לו לשלוח, שישלח לי בוואטסאפ. הכפתור פותח את חלון ההדפסה של הדפדפן, בוחרים <b>Save as PDF</b>, שומרים ושולחים את הקובץ.</p>
+  <div class="row2 noprint"><button class="btn" id="pdf">ייצוא כ-PDF</button></div>
+</section>
 
 </div>
 <div id="saved">נשמר</div>
-<div id="toast"></div>
-
 <script>
 (function(){
-  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-  var IPRE = /^\d{1,3}(?:\.\d{1,3}){3}$/;
-  var MACRE = /^(?:[0-9A-Fa-f]{2}[-:]){5}[0-9A-Fa-f]{2}$/;
-  var OUTKW = /^(dynamic|static|Yes|No|Enabled|Disabled|Preferred|Hybrid)$/;
+var D = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob('eyJsdiI6IFt7Im1lIjogIjE5Mi4xNjguMS4zNyIsICJtYXNrIjogIjI1NS4yNTUuMjU1LjAiLCAibmVlZCI6IDQsICJ0aXAiOiAi15TXnteh15vXlCAyNTUuMjU1LjI1NS4wINeQ15XXnteo16og16nXqdec15XXqdeqINeU157Xodek16jXmdedINeU16jXkNep15XXoNeZ150g15fXmdeZ15HXmdedINec15TXmdeV16og15bXlNeZ150uINeU157Xodek16gg15TXkNeX16jXldefINec15Ag157Xoteg15nXmdefINeQ16Mg15DXl9eTLiJ9LCB7Im1lIjogIjEwLjQuNy4xOSIsICJtYXNrIjogIjI1NS4yNTUuMC4wIiwgIm5lZWQiOiA0LCAidGlwIjogIteU157Xodeb15Qg15TXqten16bXqNeULiDXqNenINep16DXmSDXlNee16HXpNeo15nXnSDXlNeo15DXqdeV16DXmdedINeX15nXmdeR15nXnSDXnNeU15nXldeqINeW15TXmdedLCDXkNeWINeU16jXqdeqINeU16jXkdeUINeZ15XXqteoINeS15PXldec15QuIn0sIHsibWUiOiAiMTkyLjE2OC4xLjUiLCAibWFzayI6ICIyNTUuMjU1LjI1NS4xMjgiLCAibmVlZCI6IDQsICJ0aXAiOiAi16nXmdee15Ug15zXkSDXnC0xMjguINeU15XXkCDXl9eV16rXmiDXkNeqINeU157Xodek16gg15TXkNeX16jXldefINeR15PXmdeV16cg15HXkNee16bXoiwg15DXliDXkNeV16rXnSDXqdec15XXqdeUINee16HXpNeo15nXnSDXqNeQ16nXldeg15nXnSDXm9eR16gg15zXkCDXnteh16TXmden15nXnS4ifSwgeyJtZSI6ICIxNzIuMjAuMTAuMyIsICJtYXNrIjogIjI1NS4yNTUuMjU1LjI0MCIsICJuZWVkIjogOTksICJ0aXAiOiAi15TXnteh15vXlCAyNDAg157XqdeQ15nXqNeUIDE2INeb16rXldeR15XXqiDXkdeb15wg16fXmNeiLiDXqteX16nXkdeVINeR16fXpNeZ16bXldeqINep15wgMTY6IDAsIDE2LCAzMiwgNDguIn1dLCAiZHAiOiBbeyJpZmFjZSI6ICJJbnRlcmZhY2U6IDE5Mi4xNjguMS4zNyAtLS0gMHhjIiwgInJvd3MiOiBbWyIxOTIuMTY4LjEuMSIsICI5Yy1iNi1kMC0zZi0xYS03ZSIsICJkeW5hbWljIl0sIFsiMTkyLjE2OC4xLjE0IiwgImE0LTgzLWU3LTA5LWJiLTIxIiwgImR5bmFtaWMiXSwgWyIxOTIuMTY4LjEuNTIiLCAiOWMtYjYtZDAtM2YtMWEtN2UiLCAiZHluYW1pYyJdLCBbIjE5Mi4xNjguMS44OCIsICJkYy1hNi0zMi00Zi05MC0wYiIsICJkeW5hbWljIl0sIFsiMjI0LjAuMC4yMiIsICIwMS0wMC01ZS0wMC0wMC0xNiIsICJzdGF0aWMiXSwgWyIyMzkuMjU1LjI1NS4yNTAiLCAiMDEtMDAtNWUtN2YtZmYtZmEiLCAic3RhdGljIl0sIFsiMjU1LjI1NS4yNTUuMjU1IiwgImZmLWZmLWZmLWZmLWZmLWZmIiwgInN0YXRpYyJdXSwgImJhZCI6IFswLCAyXSwgImgxIjogIteq15XXp9ejINec15Ag157Xntem15nXkCBNQUMg15fXk9epLiDXlNeV15Ag15zXlden15cg15DXqiDXlteUINep15vXkdeoINeZ16kg15zXlSDXldee15PXkdeZ16cg15DXldeq15Ug15zXm9eq15XXkdeqINep15wg157Xmdep15TXlSDXkNeX16guIiwgImgyIjogIteq16LXkdeo15Ug16LXnCDXlNei157XldeT15Qg15TXkNee16bXoteZ16og15HXnNeR15Mg15XXqteX16TXqdeVINei16jXmiDXqdee15XXpNeZ16Ig15nXldeq16gg157XpNei150g15DXl9eqLiIsICJhbnMiOiAi15TXoteo15ogPGM+OWMtYjYtZDAtM2YtMWEtN2U8L2M+INeZ15XXqdeRINeS150g15EtPGM+MTkyLjE2OC4xLjE8L2M+INeV15LXnSDXkS08Yz4xOTIuMTY4LjEuNTI8L2M+LiDXkNec15Qg16nXqteZINeU16nXldeo15XXqi4iLCAiZG9uZSI6ICLXlteQ16og15TXl9eq15nXnteUOiDXkNeV16rXlSBNQUMg157XldecINep16rXmSDXm9eq15XXkdeV16ogSVAg16nXldeg15XXqi4g15XXkNeX16og157XlNefINeU15nXkCDXlNep16LXqCwg15DXliDXnteZINep157Xl9eW15nXpyDXkdep16rXmdeU158g16jXldeQ15Qg15DXqiDXm9ecINee15Qg16nXmdeV16bXkCDXnteb150g15TXl9eV16bXlC4ifSwgeyJpZmFjZSI6ICJJbnRlcmZhY2U6IDEwLjAuMC4yMyAtLS0gMHg1IiwgInJvd3MiOiBbWyIxMC4wLjAuMSIsICJmMC0xOC05OC0yYy00MS1kMyIsICJkeW5hbWljIl0sIFsiMTAuMC4wLjUiLCAiYjgtMjctZWItMWQtNmEtNDAiLCAiZHluYW1pYyJdLCBbIjEwLjAuMC45IiwgImI4LTI3LWViLTFkLTZhLTRkIiwgImR5bmFtaWMiXSwgWyIxMC4wLjAuMTciLCAiM2MtMTUtYzItODgtMGUtNzciLCAiZHluYW1pYyJdLCBbIjEwLjAuMC4zMSIsICJmMC0xOC05OC0yYy00MS1kMyIsICJkeW5hbWljIl0sIFsiMTAuMC4wLjQ0IiwgIjAwLWUwLTRjLTY4LTEyLTlhIiwgImR5bmFtaWMiXSwgWyIyMjQuMC4wLjI1MSIsICIwMS0wMC01ZS0wMC0wMC1mYiIsICJzdGF0aWMiXSwgWyIyMzkuMjU1LjI1NS4yNTAiLCAiMDEtMDAtNWUtN2YtZmYtZmEiLCAic3RhdGljIl1dLCAiYmFkIjogWzAsIDRdLCAiaDEiOiAi15DXldeq15Qg15fXqteZ157XlCDXm9ee15Ug16fXldeT150sINeo16cg16nXlNek16LXnSDXpteo15nXmiDXnNen16jXldeQINeQ16og15vXnCDXqdepINeU16fXkdeV16bXldeqINeV15zXkCDXqNenINeQ16og15TXqdec15XXqSDXlNeo15DXqdeV16DXldeqLiIsICJoMiI6ICI8Yz5iOC0yNy1lYi0xZC02YS00MDwvYz4g15UtPGM+YjgtMjctZWItMWQtNmEtNGQ8L2M+INeg15LXnteo15nXnSDXkNeX16jXqiwg15DXliDXkNec15Qg16nXoNeZINee15vXqdeZ16jXmdedINep15XXoNeZ150g157XkNeV16rXlSDXmdem16jXny4g16rXp9eZ158g15zXktee16jXmS4iLCAiYW5zIjogIjxjPmYwLTE4LTk4LTJjLTQxLWQzPC9jPiDXnteV16TXmdeiINeS150g15EtPGM+MTAuMC4wLjE8L2M+INeV15LXnSDXkS08Yz4xMC4wLjAuMzE8L2M+LiDXkNec15Qg16nXqteZINeU16nXldeo15XXqi4iLCAiZG9uZSI6ICLXqdec15XXqSDXlNen15HXldem15XXqiDXlNeo15DXqdeV16DXldeqINeU158g15TXmdem16jXnywg15DXliDXqdeg15kg157Xm9ep15nXqNeZ150g157XkNeV16rXlSDXmdem16jXnyDXoNeo15DXmdedINeb157XoteYINeW15TXmdedINeR15fXpteZINep16DXmdeZ15Qg16nXnCDXnteR15guINeU15TXkdeT15wg15TXkNee15nXqteZINeU15XXkCDXkdep15zXldepINeU15DXl9eo15XXoNeV16ouIn0sIHsiaWZhY2UiOiAiSW50ZXJmYWNlOiAxOTIuMTY4LjQzLjExMiAtLS0gMHg5IiwgInJvd3MiOiBbWyIxOTIuMTY4LjQzLjEiLCAiMmMtZjAtNWQtNzctYTEtMDQiLCAiZHluYW1pYyJdLCBbIjE5Mi4xNjguNDMuNTUiLCAiMDAtMTUtNWQtMDEtNjQtMjIiLCAiZHluYW1pYyJdLCBbIjE5Mi4xNjguNDMuNzciLCAiMDAtMTUtNWQtMDEtNjQtMjIiLCAiZHluYW1pYyJdLCBbIjE5Mi4xNjguNDMuMTAxIiwgIjA4LTAwLTI3LWI0LWU5LTFjIiwgImR5bmFtaWMiXSwgWyIxOTIuMTY4LjQzLjI1NSIsICJmZi1mZi1mZi1mZi1mZi1mZiIsICJzdGF0aWMiXSwgWyIyMjQuMC4wLjIiLCAiMDEtMDAtNWUtMDAtMDAtMDIiLCAic3RhdGljIl0sIFsiMjI0LjAuMC4yMiIsICIwMS0wMC01ZS0wMC0wMC0xNiIsICJzdGF0aWMiXSwgWyIyMjQuMC4wLjI1MSIsICIwMS0wMC01ZS0wMC0wMC1mYiIsICJzdGF0aWMiXV0sICJiYWQiOiBbMSwgMl0sICJoMSI6ICLXl9em15kg157XlNeY15HXnNeUINeU15bXkNeqINeU15nXkCDXkdeb15zXnCDXnNeQINee15vXqdeZ16jXmdedLiDXqteh16rXm9ec15Ug16LXnCDXlNei157XldeT15Qg15TXmdee16DXmdeqLiIsICJoMiI6ICLXm9ecINee15Qg16nXm9eq15XXkSDXnNeZ15PXlSA8Yz5zdGF0aWM8L2M+INeU15XXkCDXnteV15zXmNeZ16fXkNeh15gg15DXlSDXqdeZ15PXldeoLCDXldeU15XXkCDXoNeo15DXlCDXm9eb15Qg15HXm9ecINee15fXqdeRINeR16LXldec150uINeq16rXotec157XlSDXnteU16nXldeo15XXqiDXlNeQ15zXlC4iLCAiYW5zIjogIteR15nXnyDXqdeV16jXldeqINeULTxjPmR5bmFtaWM8L2M+LCDXlNei16jXmiA8Yz4wMC0xNS01ZC0wMS02NC0yMjwvYz4g15fXldeW16gg16TXotee15nXmdedOiDXkS08Yz4xOTIuMTY4LjQzLjU1PC9jPiDXldeRLTxjPjE5Mi4xNjguNDMuNzc8L2M+LiIsICJkb25lIjogIteU16TXotedINeU16nXp9eo158g15zXkCDXlNeq15fXlteUINec16nXoteoINeQ15zXkCDXnNee15fXqdeRINeQ15fXqCDXkdeb15nXqteULiDXkNeV16rXlCDXqdeZ15jXlCDXkdeT15nXldenLCDXqNenINep16fXldeo15DXmdedINeQ16og15TXk9eV15DXqCDXqdecINeQ15PXnSDXkNeX15Mg15HXnten15XXnSDXqdecINeb15XXnNedLiJ9LCB7ImlmYWNlIjogIkludGVyZmFjZTogMTkyLjE2OC4xLjM3IC0tLSAweGMiLCAicm93cyI6IFtbIjE5Mi4xNjguMS4xIiwgIjljLWI2LWQwLTNmLTFhLTdlIiwgImR5bmFtaWMiXSwgWyIxOTIuMTY4LjEuMTIiLCAiYTQtODMtZTctMDktYmItMjEiLCAiZHluYW1pYyJdLCBbIjE5Mi4xNjguMS4yMyIsICJkYy1hNi0zMi00Zi05MC0wYiIsICJkeW5hbWljIl0sIFsiMTkyLjE2OC4xLjQwIiwgIjAwLTUwLTU2LWMwLTAwLTA4IiwgImR5bmFtaWMiXSwgWyIxOTIuMTY4LjEuNDEiLCAiMDAtNTAtNTYtYzAtMDAtMDEiLCAiZHluYW1pYyJdLCBbIjIyNC4wLjAuMjIiLCAiMDEtMDAtNWUtMDAtMDAtMTYiLCAic3RhdGljIl0sIFsiMjM5LjI1NS4yNTUuMjUwIiwgIjAxLTAwLTVlLTdmLWZmLWZhIiwgInN0YXRpYyJdLCBbIjI1NS4yNTUuMjU1LjI1NSIsICJmZi1mZi1mZi1mZi1mZi1mZiIsICJzdGF0aWMiXV0sICJiYWQiOiBbXSwgImgxIjogIteS150g15jXkdec15Qg16DXp9eZ15nXlCDXlNeZ15Ag16rXqdeV15HXlC4g15zXkCDXkdeb15wg15jXkdec15Qg157Xodeq16rXqCDXnteZ16nXlNeVLiIsICJoMiI6ICI8Yz4wMC01MC01Ni1jMC0wMC0wODwvYz4g15UtPGM+MDAtNTAtNTYtYzAtMDAtMDE8L2M+INeU150g16nXoNeZINee16rXkNee15nXnSDXldeZ16jXmNeV15DXnNeZ15nXnSDXotecINeQ15XXqteVINee15fXqdeRLiDXkNeV16rXlSDXmdem16jXnywg15vXqteV15HXldeqINep15XXoNeV16ouIiwgImFucyI6ICLXkNeZ158g16TXlCDXqden16jXny4g15DXoyBNQUMg15zXkCDXl9eV15bXqCDXpNei157XmdeZ150uINeq15zXl9em15Ug16LXnCDXlNeR15PXmden15Qg15HXnNeZINec16HXntefINeb15zXldedLiIsICJkb25lIjogIteV15bXkNeqINeU16DXp9eV15PXlDog15LXnNeQ15kg16nXpteV16LXpyDXotecINeb15wg15jXkdec15Qg15TXldeQINeS15zXkNeZINeX16HXqCDXoteo15ouINeo15XXkSDXlNeW157XnyDXpNep15XXmCDXkNeZ158g15DXoyDXkNeX15MuIn1dLCAidm4iOiB7IjAwOjUwOjU2IjogIlZNd2FyZSIsICIwMDowYzoyOSI6ICJWTXdhcmUiLCAiMDA6MDU6NjkiOiAiVk13YXJlIiwgIjA4OjAwOjI3IjogIlZpcnR1YWxCb3giLCAiMGE6MDA6MjciOiAiVmlydHVhbEJveCIsICI1Mjo1NDowMCI6ICJRRU1VIC8gS1ZNIiwgIjAwOjE1OjVkIjogIk1pY3Jvc29mdCBIeXBlci1WIiwgIjAwOjE2OjNlIjogIlhlbiIsICJiODoyNzplYiI6ICJSYXNwYmVycnkgUGkiLCAiZGM6YTY6MzIiOiAiUmFzcGJlcnJ5IFBpIiwgImU0OjVmOjAxIjogIlJhc3BiZXJyeSBQaSIsICJhNDo4MzplNyI6ICJBcHBsZSIsICJmMDoxODo5OCI6ICJBcHBsZSIsICIzYzoxNTpjMiI6ICJBcHBsZSIsICIwMDoxYjo2MyI6ICJBcHBsZSIsICI5YzpiNjpkMCI6ICJIb24gSGFpIChGb3hjb25uKSIsICIwMDplMDo0YyI6ICJSZWFsdGVrIiwgIjJjOmYwOjVkIjogIk1pY3JvLVN0YXIgKE1TSSkiLCAiMDE6MDA6NWUiOiAiSVB2NCBtdWx0aWNhc3QiLCAiMzM6MzM6MDAiOiAiSVB2NiBtdWx0aWNhc3QifSwgInBzIjogW1si15DXmdeZ16TXldefIiwgImE0OjgzOmU3OjA5OmJiOjIxIl0sIFsiTUFDINeQ16fXqNeQ15kg16nXnCDXmNec16TXldefIiwgIjhlOjNmOmIxOjA3OmM0OjIyIl0sIFsi15vXqteV15HXqiDXqdeZ15PXldeoIiwgImZmOmZmOmZmOmZmOmZmOmZmIl0sIFsi16jXodek15HXqNeZINek15nXmSIsICJiODoyNzplYjoxZDo2YTo0MCJdLCBbItee15vXldeg15Qg15XXmdeo15jXldeQ15zXmdeqIiwgIjUyOjU0OjAwOjEyOjM0OjU2Il1dLCAiY2wiOiBbWyJiODoyNzplYjoxZDo2YTo0MCIsICJmYWN0b3J5Il0sIFsiNTI6NTQ6MDA6MTI6MzQ6NTYiLCAibG9jYWwiXSwgWyJmZjpmZjpmZjpmZjpmZjpmZiIsICJncm91cCJdLCBbImE0OjgzOmU3OjA5OmJiOjIxIiwgImZhY3RvcnkiXSwgWyI4ZTozZjpiMTowNzpjNDoyMiIsICJsb2NhbCJdLCBbIjAxOjAwOjVlOjAwOjAwOjE2IiwgImdyb3VwIl1dLCAic3QiOiBbWyJ5bmV0IiwgInd3dy55bmV0LmNvLmlsIiwgWyIyMy41NS4zNy4xNzQiXV0sIFsi15LXldeS15wiLCAid3d3Lmdvb2dsZS5jb20iLCBbIjE0Mi4yNTAuMTg1LjEwMCJdXSwgWyLXldeZ16fXmdek15PXmdeUIiwgImhlLndpa2lwZWRpYS5vcmciLCBbIjE4NS4xNS41OS4yMjQiXV0sIFsi15TXkdeZ16og16HXpNeoIiwgImVkdGVjaC5vcmcuaWwiLCBbIjEwNC4yMS4zMi4xIl1dXSwgImhwIjogW1siMSIsICIxOTIuMTY4LjEuMSIsICIxIG1zIiwgIteU16jXkNeV15jXqCDXqdec15vXnSDXkdeR15nXqi4g15bXlCDXlNep16LXqCwg15XXlteQ16og15TXm9eq15XXkdeqINep16jXkNeZ16rXnSDXlNeZ15XXnSDXkS1EZWZhdWx0IEdhdGV3YXkuIl0sIFsiMiIsICIxMC4xMDAuMS4xIiwgIjkgbXMiLCAi15vXkdeoINec15Ag15DXptec15vXnS4g15bXkNeqINee15vXldeg15Qg15DXptecINeh16TXpyDXlNeQ15nXoNeY16jXoNeYLCDXldeS150g15TXmdeQINeb16rXldeR16og16TXqNeY15nXqi4iXSwgWyIzIiwgIjIxMi4xNDMuMC4xMCIsICIxMyBtcyIsICLXm9eq15XXkdeqINem15nXkdeV16jXmdeqINeQ157Xmdeq15nXqiwg15HXqteV15og15TXkNeo16UuINee15vXkNefINeV15TXnNeQ15Qg15vXnCDXp9ek15nXpteUINeU15nXkCDXnteb15XXoNeUINep15wg157Xmdep15TXlSDXkNeX16guIl0sIFsiNCIsICI4MC4xNzkuNTUuMTYxIiwgIjE1IG1zIiwgIteg16fXldeT16og15fXmdeR15XXqCDXkteT15XXnNeUINeR16rXnCDXkNeR15nXkS4g16TXlCDXoNek15LXqdeqINeU16rXoteR15XXqNeUINep15wg15TXnteV158g16HXpNen15nXnS4iXSwgWyI1IiwgIjIzLjU1LjM3LjE3NCIsICIxNyBtcyIsICLXlNeS16LXqtedLiDXlteQ16og15TXm9eq15XXkdeqINep16fXmdeR15zXqtedINee15QtRE5TINeR16nXnNeRINeU16jXkNep15XXny4iXV19'), function(c){ return c.charCodeAt(0); })));
+var KEY = 'recon.farout.v2';
+var $ = function(id){ return document.getElementById(id); };
+var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function hlCmd(src){
-    var parts = src.split(/(\s+)/), out = '', seen = false;
-    for(var i = 0; i < parts.length; i++){
-      var p = parts[i];
-      if(!p) continue;
-      if(/^\s+$/.test(p)){ out += esc(p); continue; }
-      if(!seen){ out += '<span class="tok-fn">' + esc(p) + '</span>'; seen = true; continue; }
-      if(p.charAt(0) === '/' || p.charAt(0) === '-') out += '<span class="tok-num">' + esc(p) + '</span>';
-      else if(IPRE.test(p) || MACRE.test(p)) out += '<span class="tok-num">' + esc(p) + '</span>';
-      else out += '<span class="tok-str">' + esc(p) + '</span>';
-    }
-    return out;
+var S = {n:'', p:'', t:'', c1:{best:0, lvl:0, at:0}, c2:{done:[]}, c3:{i:0, ok:0}, c4:{dns:0, near:0, hops:0}};
+try{
+  var raw = JSON.parse(localStorage.getItem(KEY) || 'null');
+  if(raw && typeof raw === 'object'){
+    if(raw.c1) S.c1 = raw.c1;
+    if(raw.c2) S.c2 = raw.c2;
+    if(raw.c3) S.c3 = raw.c3;
+    if(raw.c4) S.c4 = raw.c4;
+    S.n = raw.n || ''; S.p = raw.p || ''; S.t = raw.t || '';
   }
+}catch(e){}
 
-  function hlVals(s){
-    var parts = s.split(/([A-Za-z0-9.:\-]+)/), out = '';
-    for(var i = 0; i < parts.length; i++){
-      var p = parts[i];
-      if(!p) continue;
-      if(IPRE.test(p) || MACRE.test(p)) out += '<span class="tok-num">' + esc(p) + '</span>';
-      else if(OUTKW.test(p)) out += '<span class="tok-str">' + esc(p) + '</span>';
-      else if(/^\d+$/.test(p)) out += '<span class="tok-num">' + esc(p) + '</span>';
-      else out += esc(p);
-    }
-    return out;
-  }
+var savedEl = $('saved'), hideT = null, warned = false;
+function warnNoStorage(){
+  if(warned) return; warned = true;
+  var b = document.createElement('div');
+  b.className = 'nostore noprint';
+  b.textContent = 'הדפדפן הזה לא שומר כלום. אם תרעננו את הדף, ההתקדמות תיעלם.';
+  document.body.insertBefore(b, document.body.firstChild);
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); }
+  catch(e){ warnNoStorage(); return; }
+  savedEl.classList.add('on');
+  clearTimeout(hideT);
+  hideT = setTimeout(function(){ savedEl.classList.remove('on'); }, 1500);
+}
+(function(){ try{ localStorage.setItem('__t','1'); localStorage.removeItem('__t'); }catch(e){ warnNoStorage(); } })();
 
-  function hlOut(src){
-    var lines = src.split('\n'), out = [];
-    for(var i = 0; i < lines.length; i++){
-      var ln = lines[i];
-      var m = ln.match(/^(\s*)([A-Za-z][A-Za-z0-9 ()\-]*?)((?:\s*\.)+\s*:|\s*:)(.*)$/);
-      if(m && m[3].indexOf('.') >= 0){
-        out.push(esc(m[1]) + '<span class="tok-k">' + esc(m[2]) + esc(m[3]) + '</span>' + hlVals(m[4]));
-      } else {
-        out.push(hlVals(ln));
-      }
-    }
-    return out.join('\n');
-  }
+function fb(el, kind, head, html){
+  el.hidden = false;
+  el.className = 'fb ' + kind;
+  el.innerHTML = '<span class="head">' + head + '</span>' + (html || '');
+}
+function mono(s){ return '<c>' + s + '</c>'; }
 
-  var cs = document.querySelectorAll('code.cmd');
-  for(var i = 0; i < cs.length; i++) cs[i].innerHTML = hlCmd(cs[i].textContent);
-  var os = document.querySelectorAll('code.out');
-  for(var i = 0; i < os.length; i++) os[i].innerHTML = hlOut(os[i].textContent);
-  var KEY = 'recon.farout.v1';
-  var fields = document.querySelectorAll('.fill');
-  var saved = document.getElementById('saved');
-  var store = {};
-  try{ store = JSON.parse(localStorage.getItem(KEY) || '{}'); }catch(e){ store = {}; }
-  for(var j = 0; j < fields.length; j++){
-    if(store[fields[j].id]) fields[j].textContent = store[fields[j].id];
-  }
-  function nodeText(n){
-    if(n.nodeType === 3) return n.nodeValue;
-    if(n.nodeName === 'BR') return '\n';
-    var s = '', kids = n.childNodes;
-    for(var i = 0; i < kids.length; i++){
-      if(kids[i].nodeName === 'BR' && kids.length === 1) continue;
-      s += nodeText(kids[i]);
-    }
-    return s;
-  }
-  function readField(el){
-    var out = '', kids = el.childNodes;
-    for(var i = 0; i < kids.length; i++){
-      var k = kids[i];
-      if(k.nodeType === 1 && (k.nodeName === 'DIV' || k.nodeName === 'P')) out += '\n' + nodeText(k);
-      else out += nodeText(k);
-    }
-    return out;
-  }
-  var timer = null, hide = null;
-  function flush(){
-    var data = {};
-    for(var k = 0; k < fields.length; k++){
-      var t = readField(fields[k]);
-      if(t.trim()) data[fields[k].id] = t;
-    }
-    try{ localStorage.setItem(KEY, JSON.stringify(data)); }
-    catch(e){ warnNoStorage(); return; }
-    saved.classList.add('on');
-    clearTimeout(hide);
-    hide = setTimeout(function(){ saved.classList.remove('on'); }, 1600);
-  }
-  var warned = false;
-  function warnNoStorage(){
-    if(warned) return; warned = true;
-    var b = document.createElement('div');
-    b.className = 'nostore noprint';
-    b.textContent = 'שימו לב: הדפדפן הזה לא שומר מה שאתם כותבים. אם תרעננו את הדף הכל יימחק. לחצו על "להמשיך בבית" כדי לשמור את העבודה.';
-    document.body.insertBefore(b, document.body.firstChild);
-  }
-  (function storageCheck(){
-    try{ localStorage.setItem('__t','1'); localStorage.removeItem('__t'); }
-    catch(e){ warnNoStorage(); }
-  })();
-  function flushNow(){ clearTimeout(timer); flush(); }
-  window.addEventListener('pagehide', flushNow);
-  window.addEventListener('beforeunload', flushNow);
-  document.addEventListener('visibilitychange', function(){
-    if(document.visibilityState === 'hidden') flushNow();
-  });
-  document.addEventListener('blur', function(e){
-    if(e.target.classList && e.target.classList.contains('fill')) flushNow();
-  }, true);
 
-  document.addEventListener('input', function(e){
-    if(!e.target.classList || !e.target.classList.contains('fill')) return;
-    clearTimeout(timer);
-    timer = setTimeout(flush, 250);
-  });
-  document.addEventListener('paste', function(e){
-    if(!e.target.classList || !e.target.classList.contains('fill')) return;
-    e.preventDefault();
-    var text = (e.clipboardData || window.clipboardData).getData('text/plain');
-    document.execCommand('insertText', false, text);
-  });
-  document.addEventListener('keydown', function(e){
-    if(e.key !== 'Tab') return;
-    if(!e.target.classList || !e.target.classList.contains('code')) return;
-    e.preventDefault();
-    document.execCommand('insertText', false, '    ');
-  });
-  window.addEventListener('beforeunload', function(){ clearTimeout(timer); flush(); });
+function ip2n(s){ var o = s.split('.'); return ((+o[0] << 24) >>> 0) + (+o[1] << 16) + (+o[2] << 8) + (+o[3]); }
+function n2ip(n){ return [(n >>> 24) & 255, (n >>> 16) & 255, (n >>> 8) & 255, n & 255].join('.'); }
+function same(a, b, m){ var mn = ip2n(m); return ((ip2n(a) & mn) >>> 0) === ((ip2n(b) & mn) >>> 0); }
+function maskBits(m){ var n = ip2n(m), c = 0; for(var i = 31; i >= 0; i--){ if(n & (1 << i)) c++; else break; } return c; }
 
-  document.getElementById('pdf').addEventListener('click', function(){
-    clearTimeout(timer); flush();
-    var who = readField(document.getElementById('f_names')).trim();
-    var old = document.title;
-    document.title = 'מרחיקי לכת' + (who ? ' - ' + who : '');
-    window.print();
-    setTimeout(function(){ document.title = old; }, 1000);
+var cur = null, tid = null, t0 = 0, TSEC = 9;
+
+function gen(l){
+  var mo = l.mask.split('.').map(Number), meo = l.me.split('.').map(Number);
+  for(var tries = 0; tries < 80; tries++){
+    var o = meo.slice(), want = Math.random() < 0.5, pi = -1, i;
+    for(i = 0; i < 4; i++) if(mo[i] === 0) o[i] = 1 + Math.floor(Math.random() * 253);
+    for(i = 0; i < 4; i++) if(mo[i] !== 0 && mo[i] !== 255) pi = i;
+    if(pi >= 0){
+      var free = 256 - mo[pi], netp = meo[pi] & mo[pi];
+      if(want){ o[pi] = netp + Math.floor(Math.random() * free); }
+      else {
+        var np;
+        do{ np = Math.floor(Math.random() * (256 / free)) * free; }while(np === netp);
+        o[pi] = np + Math.floor(Math.random() * free);
+      }
+    } else if(!want){
+      var cand = [];
+      for(i = 0; i < 4; i++) if(mo[i] === 255) cand.push(i);
+      var k = cand[Math.random() < 0.75 ? cand.length - 1 : Math.max(0, cand.length - 2)];
+      var d = 1 + Math.floor(Math.random() * 4);
+      o[k] = (meo[k] + (Math.random() < 0.5 ? d : -d) + 256) % 256;
+      if(o[k] === meo[k]) o[k] = (o[k] + 1) % 256;
+    }
+    var t = o.join('.');
+    if(t === l.me) continue;
+    if(o[3] === 0 || o[3] === 255 || o[0] === 0 || o[0] === 255) continue;
+    return {t: t, yes: same(t, l.me, l.mask)};
+  }
+  return {t: '10.0.0.9', yes: same('10.0.0.9', l.me, l.mask)};
+}
+
+function octCells(ip, mask, other){
+  var o = ip.split('.'), mo = mask.split('.').map(Number), oo = other ? other.split('.') : null, h = '';
+  for(var i = 0; i < 4; i++){
+    var c = 'd';
+    if(oo && mo[i] !== 0) c = ((+o[i] & mo[i]) === (+oo[i] & mo[i])) ? 'm' : 'x';
+    h += '<span class="' + c + '">' + o[i] + '</span>';
+  }
+  return '<span class="oc">' + h + '</span>';
+}
+
+function compare(l, t){
+  var mn = ip2n(l.mask), net = (ip2n(l.me) & mn) >>> 0, bc = (net + (~mn >>> 0)) >>> 0;
+  var h = '<div class="cmp">';
+  h += '<div class="cr"><span class="cl">אתם</span>' + octCells(l.me, l.mask, t) + '</div>';
+  h += '<div class="cr"><span class="cl">המסכה</span>' + octCells(l.mask, '0.0.0.0', null) + '</div>';
+  h += '<div class="cr"><span class="cl">הכתובת</span>' + octCells(t, l.mask, l.me) + '</div>';
+  h += '</div>';
+  h += '<p>הרשת שלכם היא ' + mono(n2ip(net)) + ' עד ' + mono(n2ip(bc)) + ', כלומר ' + maskBits(l.mask) +
+       ' ביטים קבועים. ' + mono(t) + (same(t, l.me, l.mask) ? ' נופלת בפנים.' : ' נופלת בחוץ.') + '</p>';
+  if(!same(t, l.me, l.mask))
+    h += '<p style="color:var(--amber)">ואם היא בחוץ, המחשב שלכם לא מנסה בכלל למצוא אותה. הוא מוסר אותה לשער. מה קורה משם זה אתגר 4.</p>';
+  return h;
+}
+
+function stopTimer(){ if(tid){ cancelAnimationFrame(tid); clearInterval(tid); tid = null; } }
+
+function tick(){
+  var left = TSEC - (Date.now() - t0) / 1000;
+  if(left < 0) left = 0;
+  $('c1bar').style.width = (left / TSEC * 100) + '%';
+  $('c1s').textContent = Math.ceil(left);
+  if(left <= 0){ stopTimer(); answer(null); return; }
+  if(!reduce) tid = requestAnimationFrame(tick);
+}
+
+function drawLvls(){
+  var h = '';
+  for(var i = 0; i < D.lv.length; i++)
+    h += '<button type="button" class="chip' + (i === S.c1.lvl ? ' on' : '') + '" data-l="' + i + '">' +
+         D.lv[i].mask + '</button>';
+  $('c1lvls').innerHTML = h;
+  var cs = $('c1lvls').querySelectorAll('.chip');
+  for(var j = 0; j < cs.length; j++) cs[j].addEventListener('click', function(){
+    S.c1.lvl = +this.getAttribute('data-l'); S.c1.at = 0;
+    $('c1fb').hidden = true; drawLvls(); paint(); save(); nextQ();
   });
-  var QR = (function(){
-    var ECL = [[7,1,19,0,0],[10,1,34,0,0],[15,1,55,0,0],[20,1,80,0,0],[26,1,108,0,0],[18,2,68,0,0],[20,2,78,0,0],[24,2,97,0,0],[30,2,116,0,0],[18,2,68,2,69],[20,4,81,0,0],[24,2,92,2,93],[26,4,107,0,0],[30,3,115,1,116],[22,5,87,1,88],[24,5,98,1,99],[28,1,107,5,108],[30,5,120,1,121],[28,3,113,4,114],[28,3,107,5,108],[28,4,116,4,117],[28,2,111,7,112],[30,4,121,5,122],[30,6,117,4,118],[26,8,106,4,107],[28,10,114,2,115],[30,8,122,4,123],[30,3,117,10,118],[30,7,116,7,117],[30,5,115,10,116],[30,13,115,3,116],[30,17,115,0,0],[30,17,115,1,116],[30,13,115,6,116],[30,12,121,7,122],[30,6,121,14,122],[30,17,122,4,123],[30,4,122,18,123],[30,20,117,4,118],[30,19,118,6,119]];
-    var ALIGN = [[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]];
-    var EXP = new Array(512), LOG = new Array(256);
-    (function(){ var x = 1;
-      for(var i = 0; i < 255; i++){ EXP[i] = x; LOG[x] = i; x <<= 1; if(x & 0x100) x ^= 0x11D; }
-      for(var j = 255; j < 512; j++) EXP[j] = EXP[j - 255];
-    })();
-    function mul(a, b){ return (a === 0 || b === 0) ? 0 : EXP[LOG[a] + LOG[b]]; }
-    function genPoly(n){
-      var p = [1];
-      for(var i = 0; i < n; i++){
-        var q = p.slice(); q.push(0);
-        for(var j = 0; j < p.length; j++) q[j + 1] ^= mul(p[j], EXP[i]);
-        p = q;
-      }
-      return p;
-    }
-    function ecc(data, n){
-      var g = genPoly(n), res = new Array(n);
-      for(var i = 0; i < n; i++) res[i] = 0;
-      for(var k = 0; k < data.length; k++){
-        var f = data[k] ^ res[0];
-        res.shift(); res.push(0);
-        for(var m = 0; m < n; m++) res[m] ^= mul(g[m + 1], f);
-      }
-      return res;
-    }
-    function capacityBits(v){
-      var t = ECL[v - 1];
-      return (t[1] * t[2] + t[3] * t[4]) * 8;
-    }
-    function encode(bytes){
-      var v = 0, cc, need;
-      for(var i = 1; i <= 40; i++){
-        cc = (i < 10) ? 8 : 16;
-        need = 4 + cc + bytes.length * 8;
-        if(need <= capacityBits(i)){ v = i; break; }
-      }
-      if(!v) return null;
-      cc = (v < 10) ? 8 : 16;
-      var bits = [];
-      function put(val, len){ for(var b = len - 1; b >= 0; b--) bits.push((val >> b) & 1); }
-      put(4, 4); put(bytes.length, cc);
-      for(var k = 0; k < bytes.length; k++) put(bytes[k], 8);
-      var cap = capacityBits(v);
-      for(var t0 = 0; t0 < 4 && bits.length < cap; t0++) bits.push(0);
-      while(bits.length % 8) bits.push(0);
-      var pads = [0xEC, 0x11], pi = 0;
-      while(bits.length < cap){ put(pads[pi], 8); pi ^= 1; }
-      var dataCw = [];
-      for(var c = 0; c < bits.length; c += 8){
-        var byte = 0;
-        for(var z = 0; z < 8; z++) byte = (byte << 1) | bits[c + z];
-        dataCw.push(byte);
-      }
-      var T = ECL[v - 1], ecn = T[0];
-      var blocks = [], eccs = [], pos = 0, bi;
-      for(bi = 0; bi < T[1]; bi++){ var d1 = dataCw.slice(pos, pos + T[2]); pos += T[2]; blocks.push(d1); eccs.push(ecc(d1, ecn)); }
-      for(bi = 0; bi < T[3]; bi++){ var d2 = dataCw.slice(pos, pos + T[4]); pos += T[4]; blocks.push(d2); eccs.push(ecc(d2, ecn)); }
-      var out = [], maxd = Math.max(T[2], T[4]), q;
-      for(q = 0; q < maxd; q++) for(bi = 0; bi < blocks.length; bi++) if(q < blocks[bi].length) out.push(blocks[bi][q]);
-      for(q = 0; q < ecn; q++) for(bi = 0; bi < eccs.length; bi++) out.push(eccs[bi][q]);
-      return { v: v, cw: out };
-    }
-    function build(v, cw){
-      var n = 17 + 4 * v, i, j;
-      var m = [], f = [];
-      for(i = 0; i < n; i++){ m.push(new Array(n).fill(0)); f.push(new Array(n).fill(0)); }
-      function finder(r, c){
-        for(i = -1; i <= 7; i++) for(j = -1; j <= 7; j++){
-          var rr = r + i, cc2 = c + j;
-          if(rr < 0 || rr >= n || cc2 < 0 || cc2 >= n) continue;
-          var on = (i >= 0 && i <= 6 && (j === 0 || j === 6)) || (j >= 0 && j <= 6 && (i === 0 || i === 6)) || (i >= 2 && i <= 4 && j >= 2 && j <= 4);
-          m[rr][cc2] = on ? 1 : 0; f[rr][cc2] = 1;
-        }
-      }
-      finder(0, 0); finder(0, n - 7); finder(n - 7, 0);
-      var ap = ALIGN[v - 1];
-      for(i = 0; i < ap.length; i++) for(j = 0; j < ap.length; j++){
-        var r0 = ap[i], c0 = ap[j];
-        if(f[r0][c0]) continue;
-        for(var dr = -2; dr <= 2; dr++) for(var dc = -2; dc <= 2; dc++){
-          m[r0 + dr][c0 + dc] = (Math.max(Math.abs(dr), Math.abs(dc)) !== 1) ? 1 : 0;
-          f[r0 + dr][c0 + dc] = 1;
-        }
-      }
-      for(i = 8; i < n - 8; i++){ var b = (i % 2 === 0) ? 1 : 0; m[6][i] = b; f[6][i] = 1; m[i][6] = b; f[i][6] = 1; }
-      m[n - 8][8] = 1; f[n - 8][8] = 1;
-      for(i = 0; i <= 8; i++){ if(!f[8][i]){ f[8][i] = 1; } if(!f[i][8]){ f[i][8] = 1; } }
-      for(i = 0; i < 8; i++){ f[8][n - 1 - i] = 1; f[n - 1 - i][8] = 1; }
-      if(v >= 7) for(i = 0; i < 6; i++) for(j = 0; j < 3; j++){ f[i][n - 11 + j] = 1; f[n - 11 + j][i] = 1; }
-      var bit = 0, total = cw.length * 8;
-      function nextBit(){ if(bit >= total) return 0; var b2 = (cw[bit >> 3] >> (7 - (bit & 7))) & 1; bit++; return b2; }
-      var up = true;
-      for(var col = n - 1; col > 0; col -= 2){
-        if(col === 6) col = 5;
-        for(var rc = 0; rc < n; rc++){
-          var row = up ? (n - 1 - rc) : rc;
-          for(var s = 0; s < 2; s++){
-            var cc3 = col - s;
-            if(f[row][cc3]) continue;
-            m[row][cc3] = nextBit();
-          }
-        }
-        up = !up;
-      }
-      return { m: m, f: f, n: n };
-    }
-    function maskFn(k, r, c){
-      switch(k){
-        case 0: return (r + c) % 2 === 0;
-        case 1: return r % 2 === 0;
-        case 2: return c % 3 === 0;
-        case 3: return (r + c) % 3 === 0;
-        case 4: return (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0;
-        case 5: return (r * c) % 2 + (r * c) % 3 === 0;
-        case 6: return ((r * c) % 2 + (r * c) % 3) % 2 === 0;
-        default: return ((r + c) % 2 + (r * c) % 3) % 2 === 0;
-      }
-    }
-    function fmtBits(mask){
-      var d = (1 << 3) | mask;
-      var rem = d;
-      for(var i = 0; i < 10; i++) rem = (rem << 1) ^ (((rem >> 9) & 1) * 0x537);
-      return ((d << 10) | rem) ^ 0x5412;
-    }
-    function verBits(v){
-      var rem = v;
-      for(var i = 0; i < 12; i++) rem = (rem << 1) ^ (((rem >> 11) & 1) * 0x1F25);
-      return (v << 12) | rem;
-    }
-    function penalty(m, n){
-      var p = 0, i, j, run, dark = 0;
-      for(i = 0; i < n; i++){
-        run = 1;
-        for(j = 1; j < n; j++){
-          if(m[i][j] === m[i][j - 1]) run++;
-          else { if(run >= 5) p += 3 + (run - 5); run = 1; }
-        }
-        if(run >= 5) p += 3 + (run - 5);
-        run = 1;
-        for(j = 1; j < n; j++){
-          if(m[j][i] === m[j - 1][i]) run++;
-          else { if(run >= 5) p += 3 + (run - 5); run = 1; }
-        }
-        if(run >= 5) p += 3 + (run - 5);
-      }
-      for(i = 0; i < n - 1; i++) for(j = 0; j < n - 1; j++){
-        var a = m[i][j];
-        if(a === m[i][j + 1] && a === m[i + 1][j] && a === m[i + 1][j + 1]) p += 3;
-      }
-      var pat1 = [1,0,1,1,1,0,1,0,0,0,0], pat2 = [0,0,0,0,1,0,1,1,1,0,1];
-      function match(get, len, at){
-        for(var q = 0; q < 11; q++) if(get(at + q) !== pat1[q]) return false;
-        return true;
-      }
-      function match2(get, at){
-        for(var q = 0; q < 11; q++) if(get(at + q) !== pat2[q]) return false;
-        return true;
-      }
-      for(i = 0; i < n; i++){
-        (function(row){
-          var g = function(x){ return (x < 0 || x >= n) ? 0 : m[row][x]; };
-          for(var x = 0; x <= n - 11; x++){ if(match(g, n, x)) p += 40; if(match2(g, x)) p += 40; }
-        })(i);
-        (function(col){
-          var g = function(x){ return (x < 0 || x >= n) ? 0 : m[x][col]; };
-          for(var x = 0; x <= n - 11; x++){ if(match(g, n, x)) p += 40; if(match2(g, x)) p += 40; }
-        })(i);
-      }
-      for(i = 0; i < n; i++) for(j = 0; j < n; j++) if(m[i][j]) dark++;
-      var pct = dark * 100 / (n * n);
-      p += Math.floor(Math.abs(pct - 50) / 5) * 10;
-      return p;
-    }
-    function place(base, v, mask){
-      var n = base.n, m = [], i, j;
-      for(i = 0; i < n; i++) m.push(base.m[i].slice());
-      for(i = 0; i < n; i++) for(j = 0; j < n; j++) if(!base.f[i][j] && maskFn(mask, i, j)) m[i][j] ^= 1;
-      var fb = fmtBits(mask);
-      for(i = 0; i <= 5; i++) m[i][8] = (fb >> i) & 1;
-      m[7][8] = (fb >> 6) & 1; m[8][8] = (fb >> 7) & 1; m[8][7] = (fb >> 8) & 1;
-      for(i = 9; i <= 14; i++) m[8][14 - i] = (fb >> i) & 1;
-      for(i = 0; i <= 7; i++) m[8][n - 1 - i] = (fb >> i) & 1;
-      for(i = 8; i <= 14; i++) m[n - 15 + i][8] = (fb >> i) & 1;
-      m[n - 8][8] = 1;
-      if(v >= 7){
-        var vb = verBits(v);
-        for(i = 0; i < 18; i++){
-          var b = (vb >> i) & 1, r = Math.floor(i / 3), c = i % 3;
-          m[r][n - 11 + c] = b; m[n - 11 + c][r] = b;
-        }
-      }
-      return m;
-    }
-    return {
-      make: function(bytes){
-        var e = encode(bytes);
-        if(!e) return null;
-        var base = build(e.v, e.cw), best = null, bestP = Infinity;
-        for(var k = 0; k < 8; k++){
-          var m = place(base, e.v, k), p = penalty(m, base.n);
-          if(p < bestP){ bestP = p; best = m; }
-        }
-        return { size: base.n, modules: best, version: e.v };
-      },
-      capacity: function(v){ return Math.floor((capacityBits(v) - 4 - ((v < 10) ? 8 : 16)) / 8); }
-    };
-  })();
-  var BASE = 'https://verifybot.github.io/packet-journey/lab2/farout.html';
-  var PROG = 'farout-progress.json';
-  var FS = 'https://firestore.googleapis.com/v1/projects/packet-journey-lab/databases/(default)/documents';
-  var AK = 'AIzaSyCtoOy6-aKA5qlYRyDVcH2_2rvxzu8EZ08';
-  var lastPayload = null, lastKey = null;
-  function toast(txt){
-    var el = document.getElementById('toast');
-    el.textContent = txt; el.classList.add('on');
-    setTimeout(function(){ el.classList.remove('on'); }, 2800);
+}
+
+function nextQ(){
+  var l = D.lv[S.c1.lvl];
+  cur = gen(l);
+  $('c1me').textContent = l.me + '   mask ' + l.mask;
+  $('c1t').textContent = cur.t;
+  t0 = Date.now();
+  $('c1bar').style.width = '100%';
+  $('c1s').textContent = TSEC;
+  stopTimer();
+  if(reduce) tid = setInterval(tick, 250); else tid = requestAnimationFrame(tick);
+}
+
+function answer(said){
+  if(!cur) return;
+  stopTimer();
+  var l = D.lv[S.c1.lvl], body = compare(l, cur.t), advanced = false;
+  if(said === null){
+    S.c1.at = 0;
+    fb($('c1fb'), 'hint', cur.yes ? 'נגמר הזמן. היא כן ברשת שלכם' : 'נגמר הזמן. היא לא ברשת שלכם', body);
+  } else if(said === 'idk'){
+    fb($('c1fb'), 'hint', cur.yes ? 'היא ברשת שלכם' : 'היא לא ברשת שלכם', body);
+  } else if(said === cur.yes){
+    S.c1.at++;
+    if(S.c1.at > S.c1.best) S.c1.best = S.c1.at;
+    if(S.c1.at >= l.need && S.c1.lvl < D.lv.length - 1){ S.c1.lvl++; S.c1.at = 0; advanced = true; }
+    fb($('c1fb'), 'ok', cur.yes ? 'נכון, ברשת שלכם' : 'נכון, מחוץ לרשת', body);
+  } else {
+    S.c1.at = 0;
+    fb($('c1fb'), 'no', cur.yes ? 'דווקא כן, היא ברשת שלכם' : 'לא, היא מחוץ לרשת',
+       '<p>' + l.tip + '</p>' + body);
   }
-  function collect(){
-    var a = [];
-    for(var i = 0; i < fields.length; i++) a.push(readField(fields[i]));
-    return a;
+  if(advanced){
+    $('c1fb').innerHTML += '<p style="color:var(--amber);font-weight:800">מחליפים מסכה. עכשיו ' +
+      D.lv[S.c1.lvl].mask + '</p>';
+    drawLvls();
   }
-  function apply(arr){
-    for(var i = 0; i < fields.length && i < arr.length; i++){
-      if(typeof arr[i] === 'string') fields[i].textContent = arr[i];
-    }
+  paint(); save();
+  setTimeout(nextQ, 60);
+}
+
+$('c1yes').addEventListener('click', function(){ answer(true); });
+$('c1no').addEventListener('click', function(){ answer(false); });
+$('c1idk').addEventListener('click', function(){ answer('idk'); });
+$('c1reset').addEventListener('click', function(){
+  S.c1 = {best: S.c1.best, lvl: 0, at: 0};
+  $('c1fb').hidden = true; drawLvls(); paint(); save(); nextQ();
+});
+
+
+var c2i = 0;
+for(var q0 = 0; q0 < D.dp.length; q0++) if(S.c2.done.indexOf(q0) < 0){ c2i = q0; break; }
+
+function c2rows(){ return $('c2dump').querySelectorAll('.drow'); }
+
+function drawDump(){
+  var d = D.dp[c2i];
+  var h = '<div class="dline cmdline">&gt; arp -a</div>';
+  h += '<div class="dline">' + d.iface + '</div>';
+  h += '<div class="dline dhead"><span class="c1">Internet Address</span>' +
+       '<span class="c2">Physical Address</span><span class="c3">Type</span></div>';
+  for(var i = 0; i < d.rows.length; i++){
+    var r = d.rows[i];
+    h += '<button type="button" class="drow" data-i="' + i + '" aria-pressed="false">' +
+         '<span class="c1">' + r[0] + '</span><span class="c2">' + r[1] + '</span>' +
+         '<span class="c3">' + r[2] + '</span></button>';
   }
-  function newKey(){
-    var abc = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    var raw = new Uint8Array(24);
-    crypto.getRandomValues(raw);
-    var s = '';
-    for(var i = 0; i < raw.length; i++) s += abc.charAt(raw[i] % abc.length);
-    return s;
-  }
-  async function share(){
-    var payload = JSON.stringify(collect());
-    if(payload === lastPayload && lastKey) return lastKey;
-    if(payload.length > 39000) throw new Error('too-big');
-    var key = newKey();
-    var res = await fetch(FS + '/p?documentId=' + key + '&key=' + AK, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({fields: {d: {stringValue: payload}, t: {integerValue: String(Date.now())}}})
-    });
-    if(!res.ok) throw new Error('http-' + res.status);
-    lastPayload = payload; lastKey = key;
-    return key;
-  }
-  function drawQR(text){
-    var q = QR.make(Array.from(new TextEncoder().encode(text)));
-    if(!q) return null;
-    var cv = document.getElementById('qrcv');
-    var quiet = 4, total = q.size + quiet * 2;
-    var scale = Math.max(3, Math.min(8, Math.round(260 / total)));
-    cv.width = total * scale; cv.height = total * scale;
-    var ctx = cv.getContext('2d');
-    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height);
-    ctx.fillStyle = '#000';
-    for(var r = 0; r < q.size; r++) for(var c = 0; c < q.size; c++)
-      if(q.modules[r][c]) ctx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
-    cv.hidden = false;
-    return q.version;
-  }
-  function saveFile(){
-    var blob = new Blob([JSON.stringify(collect())], {type: 'application/json'});
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url; a.download = PROG;
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
-  }
-  document.getElementById('qrsave').addEventListener('click', saveFile);
-  document.getElementById('qrload').addEventListener('click', function(){ document.getElementById('qrfile').click(); });
-  document.getElementById('qrfile').addEventListener('change', function(e){
-    var f = e.target.files[0];
-    if(!f) return;
-    var rd = new FileReader();
-    rd.onload = function(){
-      try{
-        var arr = JSON.parse(rd.result);
-        if(Object.prototype.toString.call(arr) !== '[object Array]') throw 0;
-        apply(arr); flush(); toast('שוחזר');
-      }catch(err){ toast('הקובץ לא נקרא'); }
-    };
-    rd.readAsText(f);
-    e.target.value = '';
+  $('c2dump').innerHTML = h;
+  var bs = c2rows();
+  for(var j = 0; j < bs.length; j++) bs[j].addEventListener('click', function(){
+    this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
   });
-  var dlg = document.getElementById('qrdlg');
-  var qrbtn = document.getElementById('qrbtn');
-  document.getElementById('qrclose').addEventListener('click', function(){ dlg.close(); });
-  dlg.addEventListener('click', function(e){
-    var r = dlg.getBoundingClientRect();
-    if(e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
+  $('c2n').textContent = 'טבלה ' + (c2i + 1) + ' מתוך ' + D.dp.length;
+  $('c2fb').hidden = true;
+  $('c2check').disabled = false;
+  $('c2dis').innerHTML =
+    '<details><summary>רמז</summary><div class="db"><p>' + d.h1 + '</p></div></details>' +
+    '<details id="c2d2"><summary>עוד רמז</summary><div class="db"><p>' + d.h2 + '</p></div></details>' +
+    '<details id="c2d3"><summary>התשובה</summary><div class="db"><p>' + d.ans + '</p>' +
+    '<p>החתימה, בשורה אחת: <b>אותו MAC מול שתי כתובות IP שונות</b>. מכשיר אחד מצהיר שהוא שניים.</p></div></details>';
+  $('c2d3').addEventListener('toggle', function(){ if(this.open) revealC2(); });
+}
+
+function revealC2(){
+  var d = D.dp[c2i], bs = c2rows();
+  for(var i = 0; i < bs.length; i++){
+    bs[i].classList.remove('hit');
+    if(d.bad.indexOf(i) >= 0) bs[i].classList.add('show');
+  }
+}
+
+$('c2check').addEventListener('click', function(){
+  var d = D.dp[c2i], picked = [], bs = c2rows(), i;
+  for(i = 0; i < bs.length; i++) if(bs[i].getAttribute('aria-pressed') === 'true') picked.push(i);
+  var ok = picked.length === d.bad.length;
+  if(ok) for(i = 0; i < d.bad.length; i++) if(picked.indexOf(d.bad[i]) < 0) ok = false;
+  if(ok){
+    for(i = 0; i < bs.length; i++){ bs[i].disabled = true; if(d.bad.indexOf(i) >= 0) bs[i].classList.add('hit'); }
+    $('c2check').disabled = true;
+    if(S.c2.done.indexOf(c2i) < 0) S.c2.done.push(c2i);
+    var tail = (S.c2.done.length >= D.dp.length)
+      ? '<p>עברתם על כל הארבע. החתימה שחיפשתם, אותו MAC מול שתי כתובות IP, היא בדיוק מה שבודקים בבית עם ' +
+        mono('arp -a') + '.</p>' : '';
+    fb($('c2fb'), 'ok', d.bad.length ? 'תפסתם' : 'נכון, הטבלה נקייה', '<p>' + d.done + '</p>' + tail);
+    paint(); save();
+    return;
+  }
+  var msg, extra = 0, miss = 0;
+  for(i = 0; i < picked.length; i++) if(d.bad.indexOf(picked[i]) < 0) extra++;
+  for(i = 0; i < d.bad.length; i++) if(picked.indexOf(d.bad[i]) < 0) miss++;
+  if(picked.length === 0) msg = 'לא סימנתם כלום. אם זאת הכוונה שלכם, שווה לעבור על העמודה האמצעית עוד פעם אחת.';
+  else if(extra && miss) msg = 'חלק ממה שסימנתם תקין לגמרי, וחלק ממה ששייך פספסתם.';
+  else if(extra) msg = 'סימנתם יותר מדי. חלק מהשורות האלה תקינות.';
+  else msg = 'הכיוון נכון, אבל פספסתם שורה. השקר הזה תמיד בא בזוגות.';
+  fb($('c2fb'), 'no', 'עוד לא', '<p>' + msg + '</p>' +
+     '<p style="color:var(--amber)">' + d.h1 + '</p>' +
+     '<p style="color:var(--dim)">ואם נמאס: הרמזים והתשובה פתוחים למטה, בלי שום מחיר.</p>');
+});
+
+$('c2next').addEventListener('click', function(){
+  c2i = (c2i + 1) % D.dp.length;
+  drawDump();
+});
+
+
+function parseMac(s){
+  var hex = (s || '').replace(/[^0-9a-fA-F]/g, '').toLowerCase();
+  if(hex.length !== 12) return null;
+  var b = [];
+  for(var i = 0; i < 12; i += 2) b.push(hex.slice(i, i + 2));
+  return b;
+}
+
+function drawMac(){
+  var b = parseMac($('c3in').value);
+  if(!b){
+    $('c3out').innerHTML = '<div class="fb no" style="margin-top:14px"><span class="head">זה עוד לא MAC</span>' +
+      '<p>צריך שתים עשרה ספרות הקסה. מפרידים אפשר נקודתיים, מקפים, נקודות או בכלל בלי.</p></div>';
+    return;
+  }
+  var f = parseInt(b[0], 16), bits = f.toString(2);
+  while(bits.length < 8) bits = '0' + bits;
+  var bcast = b.join('') === 'ffffffffffff';
+  var grp = !!(f & 1), loc = !!(f & 2);
+  var oui = b[0] + ':' + b[1] + ':' + b[2];
+  var v = D.vn[oui] || null;
+
+  var h = '<div class="bytes">';
+  for(var i = 0; i < 6; i++) h += '<span class="by' + (i < 3 ? (loc ? ' oui soft' : ' oui') : '') + '">' + b[i] + '</span>';
+  h += '</div><div class="bylab"><span>יצרן</span><span>יצרן</span><span>יצרן</span>' +
+       '<span>כרטיס</span><span>כרטיס</span><span>כרטיס</span></div>';
+
+  h += '<div class="bits">';
+  for(i = 0; i < 8; i++){
+    var on = (i === 6 && loc) || (i === 7 && grp);
+    h += '<i class="' + (on ? 'on' : '') + '">' + bits.charAt(i) + '</i>';
+  }
+  h += '<em>הקבוצה הראשונה, ' + b[0] + ', בבינארי</em></div>';
+  h += '<p class="secs">שני הביטים הימניים הם כל הסיפור. הימני: ליחיד או לקבוצה. השני מימין: מי קבע את הכתובת.</p>';
+
+  h += '<ul class="flags">';
+  h += '<li class="flag' + (bcast ? ' warn' : '') + '">' + (bcast ? 'כתובת שידור' : 'לא שידור') + '</li>';
+  h += '<li class="flag' + (grp ? ' warn' : '') + '">' + (bcast ? 'קבוצה' : (grp ? 'מולטיקאסט' : 'יוניקאסט')) + '</li>';
+  if(!bcast) h += '<li class="flag' + (loc ? ' warn' : ' on') + '">' + (loc ? 'הוגדרה בתוכנה' : 'יצאה ככה מהמפעל') + '</li>';
+  h += '</ul>';
+
+  if(bcast){
+    h += '<p class="vend">זאת הכתובת שאומרת <b>לכולם</b>. כל כרטיס רשת ברשת המקומית קולט אותה, וזה בדיוק מה שקורה בכל בקשת ARP.</p>';
+  } else if(loc){
+    h += '<p class="vend">הביט של "הוגדרה בתוכנה" דלוק, אז שלוש הקבוצות הראשונות לא מעידות פה על שום יצרן. ' +
+         'ככה נראית כתובת אקראית של טלפון, ככה נראית מכונה וירטואלית, וככה בדיוק נראית גם כתובת מזויפת.</p>';
+  } else if(v){
+    h += '<p class="vend">שלוש הקבוצות הראשונות, ' + mono(oui) + ', שייכות ל-<b>' + v + '</b>.</p>';
+  } else {
+    h += '<p class="vend un">את ' + mono(oui) + ' אין לי בטבלה, ואני לא הולך להמציא יצרן. הרשימה המלאה ציבורית ויושבת אצל ' +
+         '<a class="lk" href="https://standards-oui.ieee.org/" target="_blank" rel="noopener">IEEE</a>.</p>';
+  }
+  $('c3out').innerHTML = h;
+}
+
+$('c3in').addEventListener('input', drawMac);
+
+(function(){
+  var h = '';
+  for(var i = 0; i < D.ps.length; i++)
+    h += '<button type="button" class="chip" data-m="' + D.ps[i][1] + '">' + D.ps[i][0] + '</button>';
+  $('c3ps').innerHTML = h;
+  var cs = $('c3ps').querySelectorAll('.chip');
+  for(var j = 0; j < cs.length; j++) cs[j].addEventListener('click', function(){
+    $('c3in').value = this.getAttribute('data-m'); drawMac();
   });
-  dlg.addEventListener('close', function(){ setTimeout(function(){ qrbtn.focus(); }, 0); });
-  qrbtn.addEventListener('click', async function(){
-    flush();
-    var msg = document.getElementById('qrmsg'), cv = document.getElementById('qrcv');
-    var files = document.getElementById('qrfiles');
-    cv.hidden = true; files.hidden = true;
-    var lk0 = document.getElementById('qrlink'); if(lk0) lk0.hidden = true;
-    msg.textContent = 'רגע...';
-    if(!dlg.open) dlg.showModal();
-    try{
-      var url = BASE + '#k=' + (await share());
-      drawQR(url);
-      msg.textContent = 'תסרקו עם הטלפון ותמשיכו משם';
-      var lk = document.getElementById('qrlink');
-      if(lk){ lk.href = url; lk.textContent = url; lk.hidden = false; }
-    }catch(err){
-      cv.hidden = true; files.hidden = false;
-      msg.textContent = (String(err).indexOf('too-big') >= 0)
-        ? 'כתבתם ממש הרבה, יותר ממה שנכנס. תורידו קובץ, ובבית תטענו אותו.'
-        : 'לא הצלחתי לשמור, כנראה אין רשת. תורידו קובץ, ובבית תטענו אותו.';
+})();
+
+var CL = {factory: 'יצאה מהמפעל', local: 'הומצאה בתוכנה', group: 'מולטיקאסט או שידור'};
+var CLK = ['factory', 'local', 'group'];
+
+function drawQuiz(keep){
+  if(S.c3.i >= D.cl.length){
+    $('c3q').textContent = '';
+    $('c3btns').innerHTML = '<button type="button" class="chip" id="c3again">שוב מההתחלה</button>';
+    $('c3again').addEventListener('click', function(){ S.c3 = {i: 0, ok: 0}; save(); drawQuiz(); paint(); });
+    if(!keep) fb($('c3fb'), 'ok', 'סיימתם',
+      '<p>' + S.c3.ok + ' מתוך ' + D.cl.length + '. אותם שני ביטים מכריעים כל כתובת MAC בעולם.</p>');
+    return;
+  }
+  $('c3q').textContent = D.cl[S.c3.i][0];
+  var h = '';
+  for(var i = 0; i < CLK.length; i++) h += '<button type="button" class="chip" data-k="' + CLK[i] + '">' + CL[CLK[i]] + '</button>';
+  $('c3btns').innerHTML = h;
+  var cs = $('c3btns').querySelectorAll('.chip');
+  for(var j = 0; j < cs.length; j++) cs[j].addEventListener('click', function(){ guess(this.getAttribute('data-k')); });
+  if(!keep) $('c3fb').hidden = true;
+}
+
+function guess(k){
+  var row = D.cl[S.c3.i], right = (k === row[1]);
+  var b = parseMac(row[0]), f = parseInt(b[0], 16), bits = f.toString(2);
+  while(bits.length < 8) bits = '0' + bits;
+  var why = '<p>הקבוצה הראשונה היא ' + mono(b[0]) + ', ובבינארי ' + mono(bits) +
+            '. הביט הימני הוא ' + bits.charAt(7) + ' והשני מימין הוא ' + bits.charAt(6) + ', אז זאת ' + CL[row[1]] + '.</p>';
+  if(right){ S.c3.ok++; S.c3.i++; fb($('c3fb'), 'ok', 'כן', why); }
+  else { S.c3.i++; fb($('c3fb'), 'no', 'לא, וזאת התשובה', why); }
+  paint(); save();
+  drawQuiz(true);
+}
+
+
+var siteI = 0, gotIP = null;
+
+(function(){
+  var h = '';
+  for(var i = 0; i < D.st.length; i++)
+    h += '<button type="button" class="chip' + (i === 0 ? ' on' : '') + '" data-s="' + i + '">' + D.st[i][0] + '</button>';
+  $('c4sites').innerHTML = h;
+  var cs = $('c4sites').querySelectorAll('.chip');
+  for(var j = 0; j < cs.length; j++) cs[j].addEventListener('click', function(){
+    siteI = +this.getAttribute('data-s');
+    for(var k = 0; k < cs.length; k++) cs[k].classList.toggle('on', cs[k] === this);
+    $('c4site').textContent = D.st[siteI][1];
+    $('c4dns').hidden = true; $('c4nearfb').hidden = true;
+    $('c4near').disabled = true; gotIP = null;
+  });
+  $('c4site').textContent = D.st[0][1];
+})();
+
+$('c4ask').addEventListener('click', function(){
+  var st = D.st[siteI];
+  $('c4ask').disabled = true;
+  fb($('c4dns'), 'hint', 'שואל...', '<p>' + mono(st[1]) + '</p>');
+  var t = Date.now(), done = false;
+  var ctl = ('AbortController' in window) ? new AbortController() : null;
+  setTimeout(function(){ if(done) return; done = true; if(ctl) ctl.abort(); show(st[2], null, false); }, 4000);
+  fetch('https://dns.google/resolve?name=' + encodeURIComponent(st[1]) + '&type=A',
+        ctl ? {signal: ctl.signal} : {})
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(j){
+      var ips = [];
+      if(j.Answer) for(var i = 0; i < j.Answer.length; i++) if(j.Answer[i].type === 1) ips.push(j.Answer[i].data);
+      if(!ips.length) throw 0;
+      if(done) return;
+      done = true;
+      show(ips, Date.now() - t, true);
+    })
+    .catch(function(){ if(done) return; done = true; show(st[2], null, false); });
+});
+
+function show(ips, ms, live){
+  var st = D.st[siteI];
+  gotIP = ips[0];
+  var list = '';
+  for(var i = 0; i < ips.length && i < 4; i++) list += mono(ips[i]) + (i < Math.min(ips.length, 4) - 1 ? '  ' : '');
+  fb($('c4dns'), 'ok', live ? 'תשובה חזרה' : 'תשובה שמורה',
+    '<p>' + mono(st[1]) + ' הוא ' + list + '</p>' +
+    (live
+      ? '<p>זאת שאילתת DNS אמיתית שיצאה עכשיו מהדפדפן שלכם, וחזרה תוך ' + ms + ' אלפיות שנייה. תרעננו ותראו שלפעמים הכתובת אחרת לגמרי.</p>'
+      : '<p>הרשת פה חסמה את השאילתה, אז זאת תשובה ששמורה בדף. הרעיון זהה.</p>') +
+    '<p style="color:var(--dim)">שם באנגלית הוא בשביל בני אדם. לרשת יש רק מספרים.</p>');
+  $('c4near').disabled = false;
+  if(!S.c4.dns){ S.c4.dns = 1; paint(); save(); }
+  $('c4ask').disabled = false;
+}
+
+$('c4near').addEventListener('click', function(){
+  if(!gotIP) return;
+  var me = '192.168.1.37', mask = '255.255.255.0';
+  var near = same(gotIP, me, mask);
+  fb($('c4nearfb'), near ? 'ok' : 'no', near ? 'שכן' : 'לא שכן, ואפילו לא קרוב',
+    '<div class="cmp">' +
+    '<div class="cr"><span class="cl">אתם</span>' + octCells(me, mask, gotIP) + '</div>' +
+    '<div class="cr"><span class="cl">המסכה</span>' + octCells(mask, '0.0.0.0', null) + '</div>' +
+    '<div class="cr"><span class="cl">היעד</span>' + octCells(gotIP, mask, me) + '</div></div>' +
+    '<p>כבר המספר הראשון שונה, אז אין מה להמשיך לבדוק. המחשב שלכם לא ישלח לשם בקשת ARP ולא ינסה למצוא אותו ברשת המקומית.</p>' +
+    '<p style="color:var(--amber)">הוא פשוט מוסר את החבילה לשער, ומפסיק להתעניין. עכשיו הכל תלוי בשער.</p>');
+  if(!S.c4.near){ S.c4.near = 1; paint(); save(); }
+});
+
+(function(){
+  var h = '';
+  for(var i = 0; i < D.hp.length; i++){
+    var p = D.hp[i];
+    h += '<button type="button" class="hop" data-h="' + i + '" aria-expanded="false">' +
+         '<span class="hn">' + p[0] + '</span><span class="hi">' + p[1] + '</span>' +
+         '<span class="ht">' + p[2] + '</span><span class="hx">מי זה?</span></button>' +
+         '<p class="hopnote" id="hn' + i + '" hidden></p>';
+  }
+  $('c4hops').innerHTML = h;
+  var hs = $('c4hops').querySelectorAll('.hop');
+  for(var j = 0; j < hs.length; j++) hs[j].addEventListener('click', function(){
+    var i = +this.getAttribute('data-h'), n = $('hn' + i);
+    var open = this.getAttribute('aria-expanded') === 'true';
+    this.setAttribute('aria-expanded', open ? 'false' : 'true');
+    this.classList.toggle('open', !open);
+    this.querySelector('.hx').textContent = open ? 'מי זה?' : 'סגירה';
+    n.hidden = open;
+    n.textContent = D.hp[i][3];
+    var all = $('c4hops').querySelectorAll('.hop[aria-expanded="true"]');
+    if(all.length >= D.hp.length){
+      if(!S.c4.hops){ S.c4.hops = 1; paint(); save(); }
+      fb($('c4end'), 'hint', 'חמש מכונות, וזה מסלול קצר',
+        '<p>אף אחת מהן לא מכירה את המסלול המלא. כל אחת יודעת רק דבר אחד: לאן למסור הלאה.</p>' +
+        '<p>איך היא יודעת את זה? זה הנושא של המפגש הבא, יחד עם מה קרה בשלב 1.</p>');
+    } else {
+      $('c4end').hidden = true;
     }
   });
-  if(location.hash.indexOf('#k=') === 0){
-    (function(){
-      var key = location.hash.slice(3).replace(/[^A-Za-z0-9]/g, '');
-      fetch(FS + '/p/' + key + '?key=' + AK).then(function(r){
-        if(!r.ok) throw new Error('http-' + r.status);
-        return r.json();
-      }).then(function(j){
-        apply(JSON.parse(j.fields.d.stringValue));
-        flush();
-        history.replaceState(null, '', location.pathname + location.search);
-        toast('שוחזר');
-      }).catch(function(){ toast('לא הצלחתי לשחזר'); });
-    })();
+})();
+
+
+function nodeText(n){
+  if(n.nodeType === 3) return n.nodeValue;
+  if(n.nodeName === 'BR') return '\n';
+  var s = '', kids = n.childNodes;
+  for(var i = 0; i < kids.length; i++){
+    if(kids[i].nodeName === 'BR' && kids.length === 1) continue;
+    s += nodeText(kids[i]);
   }
+  return s;
+}
+function readField(el){
+  var out = '', kids = el.childNodes;
+  for(var i = 0; i < kids.length; i++){
+    var k = kids[i];
+    if(k.nodeType === 1 && (k.nodeName === 'DIV' || k.nodeName === 'P')) out += '\n' + nodeText(k);
+    else out += nodeText(k);
+  }
+  return out;
+}
+var F = {f_names: 'n', f_praise: 'p', f_note: 't'};
+for(var fid in F){ if(S[F[fid]]) $(fid).textContent = S[F[fid]]; }
+var ftimer = null;
+document.addEventListener('input', function(e){
+  if(!e.target.classList || !e.target.classList.contains('fill')) return;
+  S[F[e.target.id]] = readField(e.target);
+  clearTimeout(ftimer);
+  ftimer = setTimeout(save, 300);
+});
+document.addEventListener('paste', function(e){
+  if(!e.target.classList || !e.target.classList.contains('fill')) return;
+  e.preventDefault();
+  var text = (e.clipboardData || window.clipboardData).getData('text/plain');
+  document.execCommand('insertText', false, text);
+});
+window.addEventListener('beforeunload', function(){ clearTimeout(ftimer); save(); });
+
+function esc(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+
+function summary(){
+  var rows = [];
+  rows.push(['שכן או לא', S.c1.best
+    ? 'רצף הכי ארוך ' + S.c1.best + ', הגעתם עד המסכה ' + D.lv[S.c1.lvl].mask
+    : 'עוד לא נגעתם']);
+  rows.push(['תפסו את השקרן', S.c2.done.length
+    ? (S.c2.done.length === 1 ? 'טבלה אחת מתוך ' : S.c2.done.length + ' טבלאות מתוך ') + D.dp.length
+    : 'עוד לא נגעתם']);
+  rows.push(['MAC שמשקר', (S.c3.i || S.c3.ok)
+    ? (S.c3.ok === 1 ? 'אחת נכונה מתוך ' : S.c3.ok + ' נכונות מתוך ') + D.cl.length
+    : 'עוד לא נגעתם']);
+  var f4 = [];
+  if(S.c4.dns) f4.push('שאלתם שרת DNS');
+  if(S.c4.near) f4.push('בדקתם אם היעד שכן');
+  if(S.c4.hops) f4.push('פתחתם את כל הקפיצות');
+  rows.push(['לא שכן. אז לאן?', f4.length ? f4.join(', ') : 'עוד לא נגעתם']);
+  var h = '';
+  for(var i = 0; i < rows.length; i++) h += '<tr><th>' + rows[i][0] + '</th><td>' + esc(rows[i][1]) + '</td></tr>';
+  $('rsum').innerHTML = h;
+}
+
+function paint(){
+  $('r1').textContent = S.c1.at;
+  $('s1').textContent = 'רצף ' + S.c1.best;
+  $('s1').parentNode.classList.toggle('lit', S.c1.best > 0);
+  $('r2').textContent = S.c2.done.length;
+  $('s2').textContent = S.c2.done.length + ' / ' + D.dp.length;
+  $('s2').parentNode.classList.toggle('lit', S.c2.done.length > 0);
+  $('r3').textContent = S.c3.ok;
+  $('s3').textContent = S.c3.ok + ' / ' + D.cl.length;
+  $('s3').parentNode.classList.toggle('lit', S.c3.ok > 0);
+  var n4 = (S.c4.dns ? 1 : 0) + (S.c4.near ? 1 : 0) + (S.c4.hops ? 1 : 0);
+  $('r4').textContent = n4;
+  $('s4').textContent = n4 + ' / 3';
+  $('s4').parentNode.classList.toggle('lit', n4 > 0);
+  summary();
+}
+
+$('pdf').addEventListener('click', function(){
+  clearTimeout(ftimer); save(); summary();
+  var who = readField($('f_names')).trim();
+  var old = document.title;
+  document.title = 'מרחיקי לכת' + (who ? ' - ' + who : '');
+  window.print();
+  setTimeout(function(){ document.title = old; }, 1000);
+});
+
+
+drawLvls();
+drawDump();
+drawMac();
+drawQuiz();
+paint();
+nextQ();
 })();
 </script>
 </body>
