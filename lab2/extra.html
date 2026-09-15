@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#EFF2F5">
-<title>סיימתם מוקדם · חמישה אתגרים</title>
+<title>מה שלא נכנס לשעתיים · חמישה אתגרים</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;800&family=Suez+One&display=swap" rel="stylesheet">
@@ -103,7 +103,30 @@ code.out{background:#F4F6F8;border-style:dashed;border-color:#C3CCD6;color:var(-
 .ask .q{font-weight:800;color:var(--signal);font-size:12px;letter-spacing:.04em;display:block;margin:0 0 5px}
 .ask ul{margin:0 0 7px;padding-inline-start:18px}
 .ask li{margin:0 0 3px}
+.ask li.hasHints{margin:0 0 11px}
+.ask li.hasHints:last-child{margin:0 0 4px}
 .ask .fill{margin:0}
+.qt{margin:0 0 5px}
+
+.hints{margin:0}
+.hints details{border:1px solid var(--line);border-radius:7px;margin:0 0 4px;background:#FAFBFC}
+.hints details:last-child{margin:0}
+.hints details[open]{background:#fff}
+.hints summary{cursor:pointer;padding:5px 10px;font-weight:800;font-size:13.5px;list-style:none;color:var(--soft)}
+.hints summary::-webkit-details-marker{display:none}
+.hints summary::before{content:"+ ";color:var(--signal);font-weight:800}
+.hints details[open] summary{border-bottom:1px solid var(--line)}
+.hints details[open] summary::before{content:"\2212 "}
+.hints details.ans summary{color:var(--str)}
+.hints details.ans summary::before,.hints details.ans[open] summary::before{content:"\25B8 ";color:var(--str)}
+.hints .body{padding:8px 10px 10px;font-size:14.5px;line-height:1.5}
+.hints .body p{margin:0 0 6px}
+.hints .body p:last-child{margin:0}
+.deal{border:1px solid var(--signal);border-radius:8px;padding:9px 12px;margin:0 0 12px;
+  font-size:14.5px;background:#F2F8F6}
+.deal b{font-weight:800}
+.note{border-inline-start:3px solid var(--line);padding:1px 10px;margin:8px 0 0;font-size:14px;color:var(--soft)}
+.note b{font-weight:800;color:var(--ink)}
 
 .warn{border:1px solid var(--warn);border-radius:8px;padding:9px 12px;margin:10px 0 0;font-size:14.5px;
   background:#FCF4F3;color:#7A1F18}
@@ -164,7 +187,7 @@ details[open] summary{border-bottom:1px solid var(--line)}
   body{padding:0;font-size:10.8pt;line-height:1.36;
     -webkit-print-color-adjust:exact;print-color-adjust:exact}
   .w{max-width:none}
-  .noprint,.start,.sample,#saved,#toast,.nostore,.qrdlg,details{display:none !important}
+  .noprint,.start,.sample,#saved,#toast,.nostore,.qrdlg,details,.hints,.deal{display:none !important}
   h1{font-size:20pt;margin-bottom:3px}
   .lede{margin-bottom:8px;font-size:10pt}
   .who{padding:7px 12px;margin-bottom:8px;border-color:#141C26;border-width:1.5px;gap:5px 16px;break-inside:avoid}
@@ -200,8 +223,8 @@ details[open] summary{border-bottom:1px solid var(--line)}
 <body>
 <div class="w">
 
-  <h1>סיימתם מוקדם</h1>
-  <p class="lede">אותן פקודות, שאלות יותר מעניינות</p>
+  <h1>מה שלא נכנס לשעתיים</h1>
+  <p class="lede">אותן פקודות, הדברים שנגענו בהם ולא הספקנו להסביר</p>
 
   <div class="who">
     <div><label>השמות שלכם</label><div class="fill" id="f_names" contenteditable="true" data-ph="מי ומי בזוג"></div></div>
@@ -209,51 +232,59 @@ details[open] summary{border-bottom:1px solid var(--line)}
   </div>
   <div class="card start">
     <h2 class="sec">מה הולך פה</h2>
-    <p>סיימתם את החקירה ונשאר זמן? קול. הדף הזה ממשיך מאותן פקודות בדיוק, רק שהפעם לא מסתכלים על מספר אחד אלא משווים בין שניים ומנסים להבין מה ההבדל אומר.</p>
+    <p>הדף הזה הוא לא "הגרסה הקשה". הוא לא לחזקים בכיתה ואין בו שום דבר שאתם לא יכולים לעשות. הוא פשוט <b>רחב יותר</b>: חלק מהדברים פה נגענו בהם בכיתה ולא היה זמן להסביר עד הסוף, וחלק מהם הם טעימה ממה שנדבר עליו במפגש הבא.</p>
+    <p>הכל ממשיך מאותן פקודות שכבר הרצתם בחקירה. ההבדל הוא שהפעם לא מסתכלים על מספר אחד, אלא משווים בין שניים ומנסים להבין מה ההבדל ביניהם אומר.</p>
     <p>אפשר להיעזר בחבר, באינטרנט וב-AI. רק תוודאו עם עצמכם שבאמת הבנתם, זה אך ורק בשבילכם :)</p>
-    <div class="warn"><b>אתגרים 3 ו-4 צריכים cmd כמנהל, ולכן כנראה לא יעבדו על מחשב של בית הספר.</b> זה בסדר גמור, הם מיועדים לבית. פותחים cmd כמנהל ככה: כותבים <code>cmd</code>&rlm; בחיפוש של ווינדוס, לוחצים על התוצאה עם הכפתור הימני ובוחרים <code>Run as administrator</code>&rlm;. אם אין לכם הרשאה, תדלגו עליהם עכשיו ותעשו בבית. אתגרים 1, 2 ו-5 עובדים בכל מקום.</div>
+    <div class="warn"><b>אתגרים 3 ו-4 צריכים חלון cmd שנפתח כמנהל, ולכן כנראה לא יעבדו על מחשב של בית הספר.</b> זה בסדר גמור, הם בנויים לבית. פותחים cmd כמנהל ככה: כותבים <code>cmd</code>&rlm; בחיפוש של ווינדוס, לוחצים על התוצאה עם הכפתור הימני של העכבר, ובוחרים <code>Run as administrator</code>&rlm;. אם אין לכם הרשאה, תדלגו עליהם ותעשו אותם בבית. אתגרים 1, 2 ו-5 עובדים בכל מקום ובלי שום הרשאה.</div>
   </div>
+  <div class="deal"><b>נתקעתם? תפתחו רמז.</b> ואם הרמז לא הספיק, תפתחו את התשובה. ברצינות, בשביל זה הן שם. אף אחד לא סופר כמה פתחתם ואין על זה שום עונש. המטרה פה היא להבין, לא לסבול. רק תנסו לכתוב משהו משלכם לפני שאתם פותחים, כי ההשוואה בין מה שחשבתם למה שיצא היא כל העניין.</div>
   <div class="card">
     <div class="top"><div class="num">1</div><h2 class="ttl">מי בכלל שכן שלכם</h2></div>
-    <p class="sub">המסכה היא לא קישוט. היא קו גבול, ואפשר לחשב אותו</p>
+    <p class="sub">את המסכה ראיתם בחקירה ולא אמרנו מה עושים איתה. אז זה מה שעושים איתה</p>
     <span class="k first">מה עושים</span>
     <ol class="steps">
-      <li>תשימו את ה-<code>IPv4 Address</code>&rlm; ואת ה-<code>Subnet Mask</code>&rlm; שלכם ליד אלה של הזוג שיושב לידכם.</li>
-      <li>תסמנו בשתי הכתובות את החלק שזהה. המסכה אומרת בדיוק עד איפה לסמן: כל מקום שבו במסכה כתוב 255 הוא חלק מהרשת, וכל מקום שבו כתוב 0 הוא המספר של המכשיר הבודד.</li>
-      <li>עכשיו תחליטו על כל אחת מהכתובות למטה: היא ברשת שלכם או לא.</li>
+      <li>קחו את ה-<code>IPv4 Address</code>&rlm; ואת ה-<code>Subnet Mask</code>&rlm; שרשמתם בשלב 1 של החקירה, ושימו אותם ליד אלה של הזוג שיושב לידכם.</li>
+      <li>המסכה אומרת בדיוק איפה עובר הגבול: <b>כל מקום שבמסכה כתוב בו 255 הוא חלק מכתובת הרשת, וכל מקום שכתוב בו 0 הוא המספר של המכשיר הבודד.</b> אז במסכה <code>255.255.255.0</code>&rlm;, שלושת המספרים הראשונים הם הרשת והאחרון הוא המכשיר.</li>
+      <li>תסמנו בשתי הכתובות את החלק שזהה, ותמלאו את השדות.</li>
     </ol>
+    <div class="note"><b>לא באותה כיתה ואין ליד מי לשאול?</b> תשוו במקום זה בין המחשב לבין הטלפון שלכם על אותה רשת wifi. בטלפון: הגדרות, wifi, לוחצים על הרשת המחוברת, ורואים שם IP address ו-Subnet mask.</div>
     <span class="k">מה רושמים</span>
     <div class="vals">
       <div class="v"><label>ה-IPv4 והמסכה שלכם</label><div class="fill val" id="e1a" contenteditable="true" data-ph="address / mask"></div></div>
       <div class="v"><label>ה-IPv4 והמסכה של השכן</label><div class="fill val" id="e1b" contenteditable="true" data-ph="address / mask"></div></div>
-      <div class="v"><label>החלק הזהה בשתיהן</label><div class="fill val" id="e1c" contenteditable="true" data-ph="למשל 192.168.1"></div></div>
+      <div class="v"><label>החלק שזהה בשתי הכתובות</label><div class="fill val" id="e1c" contenteditable="true" data-ph="למשל 192.168.1"></div></div>
       <div class="v"><label>הכתובת הראשונה והאחרונה ברשת שלכם</label><div class="fill val" id="e1d" contenteditable="true" data-ph="from / to"></div></div>
     </div>
-    <div class="do"><p>ועכשיו על אלה, כן או לא. תניחו שהמסכה היא <code>255.255.255.0</code>&rlm; ושהכתובת שלכם היא <code>192.168.1.37</code>&rlm;:</p></div>
+    <div class="do"><p>ועכשיו על ארבע הכתובות האלה: כל אחת מהן ברשת שלכם או לא? תניחו לצורך התרגיל שהמסכה היא <code>255.255.255.0</code>&rlm; ושהכתובת שלכם היא <code>192.168.1.37</code>&rlm;.</p></div>
     <div class="vals">
       <div class="v"><label>192.168.1.200</label><div class="fill val" id="e1e" contenteditable="true" data-ph="שכן? כן / לא"></div></div>
       <div class="v"><label>192.168.2.5</label><div class="fill val" id="e1f" contenteditable="true" data-ph="שכן? כן / לא"></div></div>
       <div class="v"><label>192.168.1.1</label><div class="fill val" id="e1g" contenteditable="true" data-ph="שכן? כן / לא"></div></div>
       <div class="v"><label>10.0.0.4</label><div class="fill val" id="e1h" contenteditable="true" data-ph="שכן? כן / לא"></div></div>
     </div>
+    <div class="hints noprint" style="margin:8px 0 0"><details><summary>רמז לארבע האלה</summary><div class="body"><p>תשוו כל כתובת לשלכם, מספר מול מספר. המסכה <code>255.255.255.0</code>&rlm; אומרת ששלושת המספרים הראשונים חייבים להיות זהים לחלוטין.</p></div></details><details><summary>עוד רמז</summary><div class="body"><p>כלומר כל מה שמתחיל ב-<code>192.168.1.</code>&rlm; הוא שכן, וכל מה שלא מתחיל בזה איננו, גם אם הוא נראה דומה.</p></div></details><details class="ans"><summary>התשובה</summary><div class="body"><p><code>192.168.1.200</code>&rlm; כן. <code>192.168.2.5</code>&rlm; לא (המספר השלישי שונה). <code>192.168.1.1</code>&rlm; כן, וזה השער, שחייב להיות שכן אחרת לא הייתם יכולים לצאת לשום מקום. <code>10.0.0.4</code>&rlm; לא, זאת רשת אחרת לגמרי.</p><p>הרשת שלכם היא <code>192.168.1.0</code>&rlm;, והכתובות שאפשר לתת בה למכשיר הן <code>.1</code>&rlm; עד <code>.254</code>&rlm;.</p></div></details></div>
     <div class="ask"><span class="q">שאלות לעצמכם</span>
       <ul>
-        <li>מה קורה במחשב כשהוא רוצה לשלוח משהו לכתובת שהיא <b>לא</b> ברשת שלו? למי הוא מוסר את החבילה במקום?</li>
-        <li>וההמשך של זה: על אילו כתובות המחשב ישאל בכלל שאלת ARP, ועל אילו לא יטרח? תבדקו את זה מול הטבלה שלכם.</li>
-        <li>אם למישהו ברשת הייתה מסכה אחרת משלכם, למשל <code>255.255.0.0</code>&rlm;, הוא היה חושב שאתם שכנים שלו והוא של מישהו אחר. מה זה היה שובר?</li>
+        <li class="hasHints"><div class="qt">מה קורה במחשב כשהוא רוצה לשלוח משהו לכתובת שהיא <b>לא</b> ברשת שלו? למי הוא מוסר את החבילה במקום?</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">תסתכלו על טבלת ה-<code>arp -a</code>&rlm; שלכם. יש בה בכלל כתובות של אתרים באינטרנט? לא. אז כנראה שהמחשב אף פעם לא שואל עליהן.</div></details><details><summary>עוד רמז</summary><div class="body">הוא מוסר את החבילה למכשיר אחד קבוע, ואת הכתובת שלו רשמתם בשדה <code>Default Gateway</code>&rlm;.</div></details><details class="ans"><summary>התשובה</summary><div class="body">לשער. על יעד רחוק המחשב לא שואל ARP בכלל. הוא שואל ARP רק על <b>השער</b>, ואז מוסר לו את החבילה כשבתוכה כתוב ה-IP של היעד הרחוק. מכאן זאת כבר בעיה של השער. בגלל זה כתובת של אתר לעולם לא תופיע ב-<code>arp -a</code>&rlm; שלכם.</div></details></div></li>
+        <li class="hasHints"><div class="qt">אז על אילו כתובות המחשב ישאל שאלת ARP, ועל אילו לא יטרח בכלל? תבדקו את זה מול הטבלה שלכם.</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">תריצו את חישוב המסכה על כמה מהכתובות שבטבלה שלכם ותראו מה משותף לכולן.</div></details><details><summary>עוד רמז</summary><div class="body">כולן בתוך הגבול שחישבתם. אין בטבלה אפילו כתובת אחת מחוץ לרשת שלכם.</div></details><details class="ans"><summary>התשובה</summary><div class="body">רק על כתובות שנמצאות ברשת שלכם לפי המסכה. על כל השאר הוא ישאל רק על השער. לכן בטבלה שלכם יש רק כתובות מקומיות, ואף פעם לא כתובת של גוגל או של ynet.</div></details></div></li>
+        <li class="hasHints"><div class="qt">נניח שלמישהו ברשת שלכם הוגדרה בטעות מסכה אחרת, למשל <code>255.255.0.0</code>&rlm;. הוא היה חושב שאתם שכנים שלו והוא של מישהו אחר. מה זה היה שובר אצלו?</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">תעקבו אחריו צעד צעד: הוא רוצה לשלוח ל-<code>192.168.2.5</code>&rlm;. לפי המסכה שלו זה שכן. אז מה הוא עושה?</div></details><details><summary>עוד רמז</summary><div class="body">הוא ישאל ARP על כתובת שלא באמת נמצאת ברשת שלו, במקום לפנות לשער.</div></details><details class="ans"><summary>התשובה</summary><div class="body">הוא ישאל ARP, אף אחד לא יענה, והחבילה פשוט לא תצא לשום מקום. מבחינתו "האינטרנט נפל", בלי שום הודעת שגיאה מובנת ובלי שום סימן שמשהו לא בסדר בהגדרות. מסכה שגויה היא אחת התקלות הכי מבלבלות ברשתות בדיוק בגלל זה.</div></details></div></li>
       </ul>
       <div class="fill" id="e1q" contenteditable="true" data-ph="מה יצא לכם"></div>
     </div>
   </div>
   <div class="card">
     <div class="top"><div class="num">2</div><h2 class="ttl">למפות את החדר לפי כתובות MAC</h2></div>
-    <p class="sub">בחקירה חיפשתם יצרן אחד. עכשיו תחפשו את כולם</p>
+    <p class="sub">בחקירה חיפשתם יצרן אחד. פה תראו מה קורה כשמחפשים את כולם</p>
     <span class="k first">מה עושים</span>
     <ol class="steps">
-      <li>תריצו <code>arp -a</code>&rlm; ותיקחו את שלושת הזוגות הראשונים של <b>כל</b> שורת <code>dynamic</code>&rlm; שיש לכם.</li>
-      <li>תחפשו כל אחד מהם ב-<code>MAC address OUI lookup</code>&rlm; ותרשמו את היצרנים.</li>
-      <li>תעשו את זה גם לשורה של השער.</li>
+      <li>תריצו <code>arp -a</code>&rlm;, ומתוך הטבלה קחו רק את השורות שכתוב להן <code>dynamic</code>&rlm;. השורות של <code>static</code>&rlm; הן לא מכשירים אמיתיים, אז אותן מדלגים.</li>
+      <li>מכל שורה כזאת קחו את <b>שלושת הזוגות הראשונים</b> של ה-MAC, למשל <code>30-b5-c2</code>&rlm;.</li>
+      <li>תחפשו בגוגל <code>MAC address OUI lookup</code>&rlm;, ותדביקו כל אחד מהם בתורו.</li>
     </ol>
+    <div class="note"><b>לעשות את זה בבית, לא בבית הספר.</b> בכיתה הטבלה תהיה כמעט ריקה ולא יהיה מה למפות. ברשת הביתית יהיו שם הראוטר, טלפונים, טלוויזיה ואולי מכשיר חכם או שניים, וזה בדיוק העניין.</div>
     <span class="k">מה רושמים</span>
     <div class="vals">
       <div class="v"><label>היצרן של השער</label><div class="fill val" id="e2a" contenteditable="true" data-ph="שם חברה"></div></div>
@@ -263,10 +294,14 @@ details[open] summary{border-bottom:1px solid var(--line)}
     </div>
     <div class="ask"><span class="q">שאלות לעצמכם</span>
       <ul>
-        <li>מהרשימה הזאת לבד, בלי לראות שום תוכן, מה אפשר להגיד על מה שמחובר לרשת הזאת? כמה מכשירים, ומאיזה סוג?</li>
-        <li>ה-MAC אמור להיות קבוע מהמפעל. תחפשו האם בכלל אפשר לשנות אותו, ומה זה עושה לכל הרעיון של "זהות שלא משתנה".</li>
-        <li>בטלפונים חדשים יש הגדרה בשם "כתובת wifi פרטית" או <code>Private Address</code>&rlm;. תבדקו בטלפון שלכם אם היא דלוקה, ותנסו להבין ממה בדיוק היא מגנה.</li>
-        <li>אם ה-MAC של הטלפון מתחלף בכל רשת, מה זה עושה לטבלת ה-ARP של הראוטר בבית?</li>
+        <li class="hasHints"><div class="qt">מהרשימה הזאת לבד, בלי לראות שום תוכן ואף הודעה, מה אפשר להגיד על מה שמחובר לרשת הזאת?</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">תסתכלו על השמות שיצאו ותנסו לנחש איזה מכשיר עומד מאחורי כל אחד.</div></details><details><summary>עוד רמז</summary><div class="body">Apple זה אייפון או מק. Espressif זה כמעט תמיד מכשיר חכם זול. TP-Link, Huawei או Sagemcom זה בדרך כלל הראוטר עצמו.</div></details><details class="ans"><summary>התשובה</summary><div class="body">אפשר לספור כמה מכשירים מחוברים ולנחש די טוב מה כל אחד מהם. ברשת ביתית טיפוסית יוצא ראוטר אחד, שניים שלושה טלפונים, לפטופ, טלוויזיה ולפעמים משהו חכם. כל זה בלי לפענח אפילו אות אחת של מה שנשלח.</div></details></div></li>
+        <li class="hasHints"><div class="qt">ה-MAC אמור להיות קבוע מהמפעל ולא ניתן לשינוי. תחפשו האם זה באמת ככה, ומה זה עושה לכל הרעיון של "זהות שלא משתנה".</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">חיפוש טוב: <code>MAC address spoofing</code>&rlm;.</div></details><details><summary>עוד רמז</summary><div class="body">זאת הגדרה של כרטיס הרשת, ושינוי שלה לוקח פקודה אחת.</div></details><details class="ans"><summary>התשובה</summary><div class="body">אפשר לשנות. ה-MAC אמנם צרוב בחומרה, אבל מה שנשלח בפועל הוא מה שמערכת ההפעלה אומרת לשלוח, ואפשר להגיד לה לשלוח מה שרוצים. כלומר "זהות שלא משתנה" נכון רק כל עוד אף אחד לא מנסה. לכן כל הגנה שמבוססת רק על MAC היא הגנה חלשה.</div></details></div></li>
+        <li class="hasHints"><div class="qt">בטלפונים חדשים יש הגדרה בשם "כתובת wifi פרטית" או <code>Private Address</code>&rlm;. תבדקו בטלפון שלכם אם היא דלוקה, ותנסו להבין ממה בדיוק היא מגנה.</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">מחפשים אותה בהגדרות של <b>הרשת הספציפית</b> שאתם מחוברים אליה, לא בהגדרות הכלליות של הטלפון.</div></details><details><summary>עוד רמז</summary><div class="body">היא דלוקה כברירת מחדל באייפון מ-iOS 14 ובאנדרואיד מ-10, והיא מייצרת MAC אחר לכל רשת.</div></details><details class="ans"><summary>התשובה</summary><div class="body">הטלפון מגריל MAC שונה לכל רשת שהוא מתחבר אליה. ככה בית קפה, קניון ומסעדה לא יכולים לחבר בין כמה ביקורים שלכם לאותו מכשיר ולעקוב אחריכם לאורך זמן. זאת בדיוק התשובה לשאלה האחרונה של החקירה, רק מהצד של ההגנה.</div></details></div></li>
+        <li class="hasHints"><div class="qt">ואם ה-MAC של הטלפון מתחלף בכל רשת, מה זה עושה לראוטר שבבית?</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">הראוטר מזהה מכשירים לפי MAC ולא לפי שם.</div></details><details><summary>עוד רמז</summary><div class="body">אז כל כתובת מוגרלת נראית לו כמו מכשיר חדש שהוא לא ראה מעולם.</div></details><details class="ans"><summary>התשובה</summary><div class="body">רשימת המכשירים שלו מתמלאת בשמות שנראים זרים, וכל הגדרה שקשורה ל-MAC מסוים (חסימת זמן מסך לילד, כתובת קבועה למדפסת, סינון) פשוט מפסיקה לתפוס. בגלל זה נהוג להשאיר את ההגדרה כבויה דווקא לרשת הביתית, ודלוקה לכל השאר.</div></details></div></li>
       </ul>
       <div class="fill" id="e2q" contenteditable="true" data-ph="מה יצא לכם"></div>
     </div>
@@ -274,12 +309,13 @@ details[open] summary{border-bottom:1px solid var(--line)}
   <div class="card">
     <div class="top"><div class="num">3</div><h2 class="ttl">למחוק את הפנקס</h2></div>
     <p class="sub">בחקירה ראיתם שורה אחת נולדת. פה תראו את כל הטבלה נבנית מאפס</p>
-    <div class="warn"><b>צריך cmd כמנהל.</b> בלי זה תקבלו <code>The ARP entry deletion failed: Access is denied</code>&rlm;, וזה לא אתם. לא נשבר כלום מהפקודה הזאת: הטבלה נבנית לבד תוך שניות.</div>
-    <span class="k">מה מריצים, אחת אחרי השנייה</span>
+    <div class="warn"><b>צריך חלון cmd שנפתח כמנהל.</b> בלי זה תקבלו <code>The ARP entry deletion failed: Access is denied</code>&rlm;, וזה לא טעות שלכם. ולא נשבר כלום מהפקודה הזאת: הטבלה נבנית מחדש לבד תוך שניות, והאינטרנט לא ייפול לרגע.</div>
+    <span class="k">מה מריצים, ארבע פקודות לפי הסדר</span>
     <code class="blk cmd">arp -d *</code>
     <code class="blk cmd">arp -a</code>
     <code class="blk cmd">ping 192.168.1.1</code>
     <code class="blk cmd">arp -a</code>
+    <div class="note">בפקודה השלישית תשימו את <b>השער שלכם</b> במקום המספר הזה. וכדאי להריץ את השתיים הראשונות ברצף מהיר, כי הטבלה מתחילה להתמלא מחדש לבד תוך שניות בודדות.</div>
     <div class="sample noprint"><div class="cap">ככה זה נראה בערך</div>
       <code class="blk out">C:\&gt;arp -d *
 
@@ -296,24 +332,28 @@ Interface: 192.168.1.37 --- 0xc
     <span class="k">מה רושמים</span>
     <div class="vals">
       <div class="v"><label>כמה שורות היו לפני המחיקה</label><div class="fill val" id="e3a" contenteditable="true" data-ph="מספר"></div></div>
-      <div class="v"><label>מה הופיע ב-arp -a מיד אחרי</label><div class="fill val" id="e3b" contenteditable="true" data-ph="הטקסט שיצא"></div></div>
+      <div class="v"><label>מה הופיע ב-arp -a מיד אחרי המחיקה</label><div class="fill val" id="e3b" contenteditable="true" data-ph="העתיקו מה שיצא"></div></div>
       <div class="v"><label>כמה שורות אחרי הפינג לשער</label><div class="fill val" id="e3c" contenteditable="true" data-ph="מספר"></div></div>
       <div class="v"><label>כמה שורות אחרי חמש דקות של גלישה רגילה</label><div class="fill val" id="e3d" contenteditable="true" data-ph="מספר"></div></div>
     </div>
     <div class="ask"><span class="q">שאלות לעצמכם</span>
       <ul>
-        <li>מחקתם את כל הידע של המחשב על השכנים שלו, והאינטרנט לא נפל אפילו לרגע. איך זה ייתכן?</li>
-        <li>מיד אחרי המחיקה הטבלה כבר לא ריקה לגמרי אצל רוב האנשים. תבדקו מה חזר לשם הכי מהר, ותנסו להבין מה גרם לזה.</li>
-        <li>תעשו את זה שוב, ובין המחיקה לפינג תפתחו אתר כלשהו. איזו שורה נכנסה ראשונה, ולמה דווקא היא?</li>
-        <li>תחשבו על תוקף שיודע לזייף תשובות ARP. למה דווקא הרגע שאחרי מחיקת הטבלה נוח לו?</li>
+        <li class="hasHints"><div class="qt">מחקתם את כל מה שהמחשב ידע על השכנים שלו, והאינטרנט לא נפל אפילו לרגע. איך זה ייתכן?</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">תשאלו את עצמכם מה בדיוק מחקתם: ידע, או חיבור?</div></details><details><summary>עוד רמז</summary><div class="body">אם המחשב לא יודע משהו, הוא תמיד יכול פשוט לשאול שוב.</div></details><details class="ans"><summary>התשובה</summary><div class="body">מחקתם זיכרון, לא קישוריות. בפעם הבאה שהמחשב צריך לשלוח משהו הוא שואל ARP מחדש, מקבל תשובה תוך מילישניות, וממשיך כאילו כלום. בדיוק לזה קוראים מטמון (cache): משהו ששומרים כדי לחסוך שאלה, ואם הוא נעלם פשוט שואלים שוב.</div></details></div></li>
+        <li class="hasHints"><div class="qt">מיד אחרי המחיקה הטבלה כבר לא ריקה לגמרי אצל רוב האנשים. תבדקו מה חזר לשם הכי מהר, ותנסו להבין למה דווקא זה.</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">תסתכלו אילו שורות חזרו בלי שעשיתם בכלל משהו.</div></details><details><summary>עוד רמז</summary><div class="body">תסתכלו על עמודת <code>Type</code>&rlm; של השורות שחזרו.</div></details><details class="ans"><summary>התשובה</summary><div class="body">השורות של <code>static</code>&rlm; (ה-broadcast שמסתיים ב-255 וה-multicast שמתחיל ב-224) חוזרות מיד, כי הן בכלל לא נלמדות מאף אחד. המחשב מחשב אותן לבד מהכתובת והמסכה שלו. השורה הראשונה שבאמת <b>נלמדת</b> מחדש היא של השער.</div></details></div></li>
+        <li class="hasHints"><div class="qt">תעשו את זה שוב, ובין המחיקה לפינג תפתחו אתר כלשהו בדפדפן במקום להריץ פינג. איזו שורה נכנסה ראשונה, ולמה דווקא היא?</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">כדי להגיע לאתר החבילה צריכה קודם לצאת מהרשת שלכם.</div></details><details><summary>עוד רמז</summary><div class="body">וכדי לצאת מהרשת שלכם היא עוברת דרך מכשיר אחד קבוע.</div></details><details class="ans"><summary>התשובה</summary><div class="body">השער נכנס ראשון, כמעט תמיד. כל חבילה שיוצאת מהרשת שלכם עוברת דרכו, אז הוא הדבר הראשון שהמחשב חייב למצוא מחדש. שימו לב שזה נכון לא משנה לאיזה אתר פניתם.</div></details></div></li>
+        <li class="hasHints"><div class="qt">ועכשיו תחשבו כמו תוקף שיודע לזייף תשובות ARP. למה דווקא הרגע שאחרי מחיקת הטבלה נוח לו?</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">תשאלו את עצמכם מתי בכלל קל יותר לשקר: כששואלים אותך, או כשאתה מתפרץ מעצמך?</div></details><details><summary>עוד רמז</summary><div class="body">אחרי מחיקה הקורבן <b>שואל</b>, והתוקף רק צריך להיות מהיר.</div></details><details class="ans"><summary>התשובה</summary><div class="body">כי עכשיו הקורבן שואל בעצמו, והתוקף רק צריך להיות הראשון שעונה. בלי זה הוא צריך לדחוף תשובות שאף אחד לא ביקש ולקוות שיאמינו לו. בדיוק בגלל זה כלים אמיתיים של ARP spoofing מתחילים דווקא בלהכריח את הרשת לשאול מחדש.</div></details></div></li>
       </ul>
       <div class="fill" id="e3q" contenteditable="true" data-ph="מה יצא לכם"></div>
     </div>
   </div>
   <div class="card">
     <div class="top"><div class="num">4</div><h2 class="ttl">להחזיר את הכתובת ולבקש חדשה</h2></div>
-    <p class="sub">התהליך שקרה ברקע כשהתחברתם, הפעם בהילוך איטי</p>
-    <div class="warn"><b>צריך cmd כמנהל, וזה מנתק אתכם מהרשת לכמה שניות.</b> זה חוזר לבד אחרי הפקודה השנייה. אל תריצו את זה באמצע הורדה או שיחה, ואם אתם על מחשב של מישהו אחר תשאלו קודם.</div>
+    <p class="sub">התהליך שרץ ברקע כשהתחברתם לרשת, הפעם בהילוך איטי</p>
+    <div class="warn"><b>צריך cmd כמנהל, וזה מנתק אתכם מהרשת לכמה שניות.</b> הכל חוזר לבד אחרי הפקודה השנייה. אל תריצו את זה באמצע הורדה או שיחה, ואם אתם על מחשב של מישהו אחר תשאלו קודם.</div>
     <span class="k">מה מריצים</span>
     <code class="blk cmd">ipconfig /release</code>
     <div class="sample noprint"><div class="cap">אחרי release</div>
@@ -331,7 +371,7 @@ Interface: 192.168.1.37 --- 0xc
    IPv4 Address. . . . . . . . . . . : 192.168.1.37
    Subnet Mask . . . . . . . . . . . : 255.255.255.0
    Default Gateway . . . . . . . . . : 192.168.1.1</code></div>
-    <div class="do"><p>ובין השתיים, אם אתם זריזים, שווה להריץ גם <code>arp -a</code>&rlm; ולראות מה קרה לטבלה.</p></div>
+    <div class="note"><b>לפני שאתם מתחילים, תרשמו את הכתובת הנוכחית שלכם.</b> אחרי <code>release</code>&rlm; היא תיעלם מהמסך ולא תוכלו לחזור אליה. ובין שתי הפקודות, אם אתם זריזים, שווה להריץ גם <code>arp -a</code>&rlm; ולראות מה קרה לטבלה בינתיים.</div>
     <span class="k">מה רושמים</span>
     <div class="vals">
       <div class="v"><label>הכתובת שהייתה לכם לפני</label><div class="fill val" id="e4a" contenteditable="true" data-ph="IP"></div></div>
@@ -343,23 +383,28 @@ Interface: 192.168.1.37 --- 0xc
     </div>
     <div class="ask"><span class="q">שאלות לעצמכם</span>
       <ul>
-        <li>קיבלתם בחזרה את אותה כתובת או אחרת? תחשבו למה כל אחת משתי התוצאות הגיונית.</li>
-        <li>בזמן שהיה לכם <code>0.0.0.0</code>&rlm; לא הייתה לכם שום כתובת ברשת. אז איך בכלל הצלחתם לבקש כתובת חדשה? למי פנינו, ומה כתבנו בשדה "מאת"?</li>
-        <li>זאת אותה בעיה בדיוק כמו ב-ARP: צריך לדבר עם מישהו שעוד לא מכירים. תנסו לנסח מה משותף לשני הפתרונות.</li>
-        <li>אם לשני מכשירים ברשת תהיה במקרה אותה כתובת, מה יישבר? מי אמור לדאוג שזה לא יקרה?</li>
+        <li class="hasHints"><div class="qt">קיבלתם בחזרה את אותה כתובת או אחרת? ואיך בכלל השרת בצד השני ידע מי אתם, אם הכתובת שלכם התאפסה?</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">תחשבו מה עוד יש למחשב שלכם שמזהה אותו, חוץ מכתובת ה-IP.</div></details><details><summary>עוד רמז</summary><div class="body">ה-MAC. הוא לא השתנה לרגע בכל התהליך.</div></details><details class="ans"><summary>התשובה</summary><div class="body">ברוב המקרים תקבלו את <b>אותה</b> כתובת, כי שרת ה-DHCP שומר שיוך לפי MAC ומעדיף לתת לכם את מה שכבר היה שלכם. תקבלו כתובת אחרת אם עבר הרבה זמן, אם בינתיים מישהו אחר תפס אותה, או אם התחברתם לרשת אחרת לגמרי.</div></details></div></li>
+        <li class="hasHints"><div class="qt">בזמן שבשדה IPv4 היה כתוב <code>0.0.0.0</code>&rlm; לא הייתה לכם שום כתובת ברשת. אז איך בכלל הצלחתם לבקש כתובת חדשה? למי פניתם, ומה היה כתוב בשדה "מאת"?</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">זאת אותה בעיה בדיוק כמו ב-ARP: צריך לדבר עם מישהו שעוד לא מכירים, בלי שיש לכם זהות.</div></details><details><summary>עוד רמז</summary><div class="body">ואותו פתרון בדיוק. תחשבו על המשחק בכיתה, על הסיבוב הראשון.</div></details><details class="ans"><summary>התשובה</summary><div class="body">שידור. הבקשה יוצאת מ-<code>0.0.0.0</code>&rlm; (אין לי כתובת) אל <code>255.255.255.255</code>&rlm; (כולם), וההזדהות היחידה שיש בה היא ה-MAC שלכם. שוב צעקה לכל החדר, בדיוק כמו ARP.</div></details></div></li>
+        <li class="hasHints"><div class="qt">אז מה משותף ל-ARP ול-DHCP? תנסו לנסח את זה במשפט אחד.</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">תסתכלו מה בדיוק היה חסר בכל אחד משני המקרים ברגע שהם התחילו.</div></details><details><summary>עוד רמז</summary><div class="body">בשניהם חסר "למי לפנות", ובשניהם הפתרון הוא לא לפנות לאף אחד מסוים.</div></details><details class="ans"><summary>התשובה</summary><div class="body">שניהם פותרים את אותה בעיה: איך פונים למישהו כשעוד לא יודעים מי הוא. ובשניהם הפתרון הוא לצעוק לכולם ולסמוך על זה שהנכון יענה. וכמובן, בשניהם <b>כל אחד</b> יכול לענות, וזה בדיוק המקום שבו שניהם שבירים.</div></details></div></li>
+        <li class="hasHints"><div class="qt">ואם לשני מכשירים ברשת תהיה במקרה אותה כתובת IP, מה יישבר? ומי בכלל אמור לדאוג שזה לא יקרה?</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">תחשבו מה יקרה בטבלת ה-ARP של השכנים כשהם ישאלו על הכתובת הזאת.</div></details><details><summary>עוד רמז</summary><div class="body">שתי המכונות יענו על אותה שאלה, ולמדתם כבר שהאחרונה תמיד מנצחת.</div></details><details class="ans"><summary>התשובה</summary><div class="body">שתיהן יענו, הטבלאות של כל מי שברשת יתחלפו ביניהן חליפות, והחיבורים של שתיהן ייפלו לסירוגין. ווינדוס בדרך כלל מזהה את זה ומדפיס הודעה על התנגשות כתובות. אמור לשמור על זה שרת ה-DHCP, שמנהל מי קיבל מה, וזה נשבר בדרך כלל כשמישהו הגדיר לעצמו כתובת ידנית בתוך הטווח שה-DHCP מחלק.</div></details></div></li>
       </ul>
       <div class="fill" id="e4q" contenteditable="true" data-ph="מה יצא לכם"></div>
     </div>
   </div>
   <div class="card">
     <div class="top"><div class="num">5</div><h2 class="ttl">שתי כתובות, ורק אחת מהן העולם רואה</h2></div>
-    <p class="sub">הכתובת ש-ipconfig מראה היא לא הכתובת שהאתרים רואים</p>
+    <p class="sub">טעימה ממפגש 4. הכתובת ש-ipconfig מראה היא לא הכתובת שהאתרים רואים</p>
     <span class="k first">מה עושים</span>
     <ol class="steps">
-      <li>תפתחו דפדפן ותחפשו בגוגל <code>what is my ip</code>&rlm;. הכתובת שיוצאת שם היא הכתובת הציבורית שלכם.</li>
-      <li>תשימו אותה ליד ה-<code>IPv4 Address</code>&rlm; מ-<code>ipconfig</code>&rlm;.</li>
-      <li>תבדקו גם את הכתובת הציבורית של הזוג לידכם, ואת זאת של הטלפון שלכם כשהוא על סלולר ולא על ה-wifi.</li>
+      <li>תפתחו דפדפן ותחפשו בגוגל <code>what is my ip</code>&rlm;. המספר שיוצא למעלה הוא הכתובת הציבורית שלכם.</li>
+      <li>תשימו אותו ליד ה-<code>IPv4 Address</code>&rlm; שרשמתם בשלב 1 של החקירה.</li>
+      <li>תבדקו את אותו דבר אצל הזוג שלידכם, ואז בטלפון שלכם כשהוא על הרשת הסלולרית ולא על ה-wifi.</li>
     </ol>
+    <div class="note">כדי לבדוק בטלפון על סלולר, צריך באמת לכבות לו את ה-wifi. אם ה-wifi דלוק תקבלו את אותה כתובת של המחשב, וזה כשלעצמו ממצא מעניין.</div>
     <span class="k">מה רושמים</span>
     <div class="vals">
       <div class="v"><label>הכתובת מ-ipconfig</label><div class="fill val" id="e5a" contenteditable="true" data-ph="IP"></div></div>
@@ -369,17 +414,21 @@ Interface: 192.168.1.37 --- 0xc
     </div>
     <div class="ask"><span class="q">שאלות לעצמכם</span>
       <ul>
-        <li>הכתובת הציבורית שלכם ושל השכן: זהה או שונה? ואז תחשבו למה זה הגיוני שיצא ככה.</li>
-        <li>כתובת פנימית מתחילה בדרך כלל ב-192.168 או ב-10 או ב-172. תחפשו למה דווקא המספרים האלה.</li>
-        <li>אם חבר שגר בעיר אחרת ינסה להתחבר לכתובת מ-<code>ipconfig</code>&rlm; שלכם, מה יקרה אצלו? ואם לכתובת הציבורית?</li>
-        <li>איזו משתי הכתובות יכולה בכלל להופיע אצל מישהו ב-<code>arp -a</code>&rlm;, ואצל מי?</li>
+        <li class="hasHints"><div class="qt">הכתובת הציבורית שלכם ושל השכן: זהה או שונה? ולמה זה הגיוני שיצא ככה?</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">תשאלו את עצמכם מי בפועל מדבר עם האתר, אתם או הראוטר.</div></details><details><summary>עוד רמז</summary><div class="body">לכם ולשכן יש ראוטר אחד משותף, ודרכו יוצא הכל.</div></details><details class="ans"><summary>התשובה</summary><div class="body">זהה. כל מי שברשת שלכם יוצא לעולם דרך כתובת ציבורית אחת, זאת של הראוטר. מבחוץ כל הבית או כל הכיתה נראים כמו מכשיר אחד. לתרגום הזה בין הכתובת הפנימית לחיצונית קוראים NAT, ועליו נדבר במפגש 4.</div></details></div></li>
+        <li class="hasHints"><div class="qt">כתובת פנימית מתחילה כמעט תמיד ב-192.168, או ב-10, או ב-172. תחפשו למה דווקא המספרים האלה ולא אחרים.</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">חיפוש טוב: <code>RFC 1918</code>&rlm;.</div></details><details><summary>עוד רמז</summary><div class="body">מישהו החליט מראש ששלושת הטווחים האלה לא ינותבו באינטרנט הפתוח.</div></details><details class="ans"><summary>התשובה</summary><div class="body">שלושה טווחים הוקצו רשמית לשימוש פנימי בלבד: <code>10.x.x.x</code>&rlm;, <code>172.16</code>&rlm; עד <code>172.31</code>&rlm;, ו-<code>192.168.x.x</code>&rlm;. אף ראוטר באינטרנט לא מעביר תעבורה אליהם, ולכן כל אחד בעולם יכול להשתמש בהם אצלו בבית בלי להתנגש באף אחד. בגלל זה <code>192.168.1.1</code>&rlm; הוא הראוטר גם אצלכם וגם אצל השכן וגם אצל חצי מהמדינה.</div></details></div></li>
+        <li class="hasHints"><div class="qt">אם חבר שגר בעיר אחרת ינסה להתחבר לכתובת שרשמתם בשדה "הכתובת מ-ipconfig", מה יקרה אצלו? ואם לכתובת הציבורית?</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">תשאלו את עצמכם אם הכתובת הפרטית שלכם קיימת גם ברשת שלו.</div></details><details><summary>עוד רמז</summary><div class="body">כנראה שכן, וזאת בדיוק הבעיה.</div></details><details class="ans"><summary>התשובה</summary><div class="body">לכתובת הפרטית הוא לא יגיע אליכם בכלל. אם אותה כתובת קיימת גם ברשת שלו, הוא פשוט יגיע למכשיר של עצמו. לכתובת הציבורית הוא יגיע עד הראוטר שלכם, ושם זה ייעצר, אלא אם מישהו הגדיר במפורש להעביר את הפורט הזה פנימה (port forwarding).</div></details></div></li>
+        <li class="hasHints"><div class="qt">ואיזו משתי הכתובות יכולה בכלל להופיע אצל מישהו ב-<code>arp -a</code>&rlm;, ואצל מי?</div>
+          <div class="hints noprint"><details><summary>רמז</summary><div class="body">ARP עובד רק בתוך הרשת המקומית. הוא לא חוצה ראוטר.</div></details><details><summary>עוד רמז</summary><div class="body">אז רק כתובת שנמצאת על אותה רשת מקומית יכולה להופיע שם.</div></details><details class="ans"><summary>התשובה</summary><div class="body">רק הפרטית, ורק אצל מי שמחובר לאותה רשת בדיוק. הכתובת הציבורית שלכם לא תופיע לעולם בטבלת ARP של אף אחד, כי היא בכלל לא כתובת של כרטיס רשת שלכם. היא הכתובת של הראוטר מול הספק.</div></details></div></li>
       </ul>
       <div class="fill" id="e5q" contenteditable="true" data-ph="מה יצא לכם"></div>
     </div>
   </div>
   <div class="send">
     <h2>וזהו</h2>
-    <p>הדף הזה בונוס. אף אחד לא חייב כלום. אבל אם עשיתם, גם חלק, תייצאו ותשלחו לי בוואטסאפ. בא לי לראות.</p>
+    <p>הדף הזה רשות. אף אחד לא חייב כלום, וגם חצי ממנו זה מעולה. אם עשיתם, תייצאו ותשלחו לי בוואטסאפ. בא לי לראות.</p>
     <div class="tools">
       <button class="btn" id="pdf">ייצוא כ-PDF</button>
       <button class="btn2" id="qrbtn">להמשיך בבית</button>
@@ -540,7 +589,7 @@ Interface: 192.168.1.37 --- 0xc
     clearTimeout(timer); flush();
     var who = readField(document.getElementById('f_names')).trim();
     var old = document.title;
-    document.title = 'סיימתם מוקדם' + (who ? ' - ' + who : '');
+    document.title = 'מה שלא נכנס לשעתיים' + (who ? ' - ' + who : '');
     window.print();
     setTimeout(function(){ document.title = old; }, 1000);
   });
