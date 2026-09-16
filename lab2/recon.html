@@ -125,8 +125,9 @@ code.out{background:#F4F6F8;border-style:dashed;border-color:#C3CCD6;color:var(-
 .deal{border:1px solid var(--signal);border-radius:8px;padding:9px 12px;margin:0 0 12px;
   font-size:14.5px;background:#F2F8F6}
 .deal b{font-weight:800}
-.note{border-inline-start:3px solid var(--line);padding:1px 10px;margin:8px 0 0;font-size:14px;color:var(--soft)}
+.note{border-inline-start:3px solid var(--line);padding:1px 10px;margin:8px 0 0;font-size:13.5px;color:var(--soft)}
 .note b{font-weight:800;color:var(--ink)}
+.start .tag,p.tag{font-size:13px;color:var(--soft);margin:6px 0 0}
 
 .warn{border:1px solid var(--warn);border-radius:8px;padding:9px 12px;margin:10px 0 0;font-size:14.5px;
   background:#FCF4F3;color:#7A1F18}
@@ -224,241 +225,176 @@ details[open] summary{border-bottom:1px solid var(--line)}
 <div class="w">
 
   <h1>מי יושב לידכם ברשת</h1>
-  <p class="lede">פנקס הטלפונים הסודי שהמחשב שלכם מנהל בלי לספר לכם</p>
+  <p class="lede">פנקס הטלפונים הסודי של המחשב שלכם</p>
 
   <div class="who">
     <div><label>השמות שלכם</label><div class="fill" id="f_names" contenteditable="true" data-ph="מי ומי בזוג"></div></div>
     <div><label>מחמאה אהובה</label><div class="fill" id="f_praise" contenteditable="true"></div></div>
   </div>
   <div class="card start">
-    <h2 class="sec">לפני שמתחילים</h2>
-    <p>הפעם לא שוברים כלום. אין קוד, אין שגיאות אדומות, ואי אפשר להרוס שום דבר. כל הפקודות פה רק <b>מסתכלות</b>, וכולן עובדות על מחשב רגיל בלי הרשאות מיוחדות.</p>
-    <p><b>פותחים cmd ככה:</b> לוחצים <code>Win</code>&rlm; ו-<code>R</code>&rlm; ביחד, כותבים <code>cmd</code>&rlm; ולוחצים אנטר. נפתח חלון שחור. הוא לא מפחיד. <b>כל שישה השלבים רצים באותו חלון אחד.</b> אל תסגרו אותו באמצע.</p>
-    <p>שני השלבים הראשונים הם חימום על פקודות שאתם כבר מכירים, ורק כדי להסתכל על שורה שכנראה לא שמתם לב אליה בפעם הקודמת. כל השאר זה <code>arp</code>&rlm;, וזה החלק שבאמת מעניין.</p>
-    <p><b>מעתיקים מ-cmd ככה:</b> מסמנים עם העכבר ולוחצים <code>Ctrl+C</code>&rlm;. מדביקים לדף עם <code>Ctrl+V</code>&rlm;.</p>
-    <p><b>ומשהו שחשוב להגיד מראש:</b> המספרים שלכם לא יהיו זהים לדוגמאות שבדף, ולא יהיו זהים לאלה של הזוג שלידכם. זה לא אומר שמשהו אצלכם שבור, זה בדיוק הפוך. הדוגמאות פה הן רק כדי שתדעו איך נראית השורה שאתם מחפשים.</p>
-  </div>
-  <div class="rules">
-    <ol>
-      <li><b>רושמים תוך כדי, לא בסוף.</b> הפלט של cmd נעלם ברגע שתריצו את הפקודה הבאה.</li>
-      <li>אין פה תשובה נכונה אחת. מה שאצלכם על המסך זאת התשובה שלכם.</li>
-      <li><b>נתקעתם או שמשהו לא נראה כמו בדף? תרימו יד.</b> אני בחדר בדיוק בשביל זה, ואת הדף הזה עוברים ביחד. לא צריך להתייסר על שאלה.</li>
-      <li>אפשר גם להיעזר בחבר, באינטרנט וב-AI. רק תוודאו עם עצמכם שבאמת הבנתם, זה אך ורק בשבילכם :)</li>
-      <li>לא הספקתם בשיעור? ממשיכים בבית. כל הפקודות פה עובדות על כל מחשב ווינדוס, והרשת הביתית אפילו יותר מעניינת.</li>
-    </ol>
+    <p><b>פותחים cmd:</b> <code>Win</code>&rlm;+<code>R</code>&rlm;, כותבים <code>cmd</code>&rlm;, אנטר. כל השלבים באותו חלון.</p>
+    <p>מעתיקים מ-cmd עם <code>Ctrl+C</code>&rlm;, מדביקים לפה עם <code>Ctrl+V</code>&rlm;. <b>תקועים? תרימו יד.</b></p>
+    <p class="tag">המספרים שלכם יהיו שונים מהדוגמאות ומהשכן, וזה בסדר גמור.</p>
   </div>
   <div class="card">
-    <div class="top"><div class="num">1</div><h2 class="ttl">שתי שורות שלא שמתם לב אליהן</h2></div>
-    <p class="sub">חימום. אותה פקודה מהפעם הקודמת, מסתכלים על משהו אחר</p>
-    <span class="k first">מה מריצים</span>
+    <div class="top"><div class="num">1</div><h2 class="ttl">מי אני</h2></div>
     <code class="blk cmd">ipconfig /all</code>
-    <div class="do">
-      <p>יוצא המון טקסט, וזה תקין. הרשימה מחולקת למקטעים, מקטע לכל כרטיס רשת שיש במחשב. <b>אתם צריכים מקטע אחד בלבד:</b> זה של הכרטיס שדרכו אתם מחוברים עכשיו.</p>
-      <p><b>איך מזהים אותו:</b> יש בו שורת <code>IPv4 Address</code>&rlm; עם מספר. מקטע שכתוב בו <code>Media disconnected</code>&rlm; הוא כרטיס שלא מחובר לכלום, ואותו מדלגים.</p>
-      <p>מצאתם? יופי. עכשיו מתוך המקטע הזה אנחנו לוקחים ארבע שורות, ושתיים מהן הן החדשות: <code>Physical Address</code>&rlm; ו-<code>Default Gateway</code>&rlm;.</p>
-    </div>
-    <div class="note"><b>איפה להסתכל:</b> אצל חלק מכם יהיה מקטע אחד ואצל חלק שישה (Wi-Fi, כבל, בלוטות', VPN, מכונה וירטואלית). שניהם תקינים לגמרי. ואם ליד <code>Default Gateway</code>&rlm; יש שתי שורות, קחו את זאת שנראית כמו ארבעה מספרים עם נקודות. השנייה היא IPv6 ואנחנו לא צריכים אותה עכשיו.</div>
-    <div class="sample noprint"><div class="cap">ככה נראה מקטע אחד (אצלכם המספרים אחרים)</div>
-      <code class="blk out">Wireless LAN adapter Wi-Fi:
+    <div class="note">קחו את המקטע של <code>Ethernet</code>&rlm; (זה עם כתובת IP, לא זה עם <code>Media disconnected</code>&rlm;).</div>
+    <div class="sample noprint"><div class="cap">ככה נראה מקטע אחד</div>
+      <code class="blk out">Ethernet adapter Ethernet:
 
-   Description . . . . . . . . . . . : Intel(R) Wi-Fi 6 AX201
-   Physical Address. . . . . . . . . : 9C-B6-D0-3F-1A-7E
-   DHCP Enabled. . . . . . . . . . . : Yes
+   Description . . . . . . . . . . . : Realtek PCIe GbE Family Controller
+   Physical Address. . . . . . . . . : 1C-1B-0D-77-A2-04
    IPv4 Address. . . . . . . . . . . : 192.168.1.37(Preferred)
    Subnet Mask . . . . . . . . . . . : 255.255.255.0
    Default Gateway . . . . . . . . . : 192.168.1.1
-   DHCP Server . . . . . . . . . . . : 192.168.1.1
    DNS Servers . . . . . . . . . . . : 192.168.1.1</code></div>
-    <span class="k">מה רושמים</span>
+    <span class="k first">רשמו מהמקטע הזה</span>
     <div class="vals">
-      <div class="v"><label>Physical Address (ה-MAC שלכם)</label><div class="fill val" id="r1a" contenteditable="true" data-ph="XX-XX-XX-XX-XX-XX"></div></div>
-      <div class="v"><label>Default Gateway</label><div class="fill val" id="r1b" contenteditable="true" data-ph="ארבעה מספרים עם נקודות"></div></div>
-      <div class="v"><label>IPv4 Address</label><div class="fill val" id="r1c" contenteditable="true" data-ph="הכתובת שלכם"></div></div>
+      <div class="v"><label>Physical Address (ה-MAC)</label><div class="fill val" id="r1a" contenteditable="true" data-ph="XX-XX-XX-XX-XX-XX"></div></div>
+      <div class="v"><label>Default Gateway</label><div class="fill val" id="r1b" contenteditable="true" data-ph="IP"></div></div>
+      <div class="v"><label>IPv4 Address</label><div class="fill val" id="r1c" contenteditable="true" data-ph="IP"></div></div>
       <div class="v"><label>Subnet Mask</label><div class="fill val" id="r1d" contenteditable="true" data-ph="המסכה"></div></div>
     </div>
-    <div class="note">אם ליד ה-<code>IPv4 Address</code>&rlm; כתוב <code>(Preferred)</code>&rlm;, זה לא חלק מהכתובת. תרשמו רק את המספרים.</div>
-    <div class="ask"><span class="q">שאלות לעצמכם</span>
-      <ul>
-        <li>שתי הכתובות שרשמתם בשדה <b>Physical Address</b> ובשדה <b>IPv4 Address</b> בנויות אחרת לגמרי זו מזו: אחת היא ארבעה מספרים עם נקודות, והשנייה שישה זוגות של אותיות וספרות. תכתבו לכל אחת מהן מה היא מזהה ומי נתן אותה.</li>
-      </ul>
-      <div class="fill" id="r1q" contenteditable="true" data-ph="שתי שורות, אחת לכל כתובת"></div>
+    <div class="ask"><span class="q">שאלה</span>
+      <div class="qt">ה-MAC וה-IP בנויים אחרת לגמרי. מה כל אחד מזהה, ומי נתן אותו?</div>
+      <div class="fill" id="r1q" contenteditable="true" data-ph="שורה לכל אחד"></div>
     </div>
   </div>
   <div class="card">
-    <div class="top"><div class="num">2</div><h2 class="ttl">לדפוק בדלת של השער</h2></div>
-    <p class="sub">חימום שני. הכי קצר פה, וצריך אותו לשלב 4</p>
-    <span class="k first">מה מריצים</span>
+    <div class="top"><div class="num">2</div><h2 class="ttl">פינג לשער</h2></div>
     <code class="blk cmd">ping 192.168.1.1</code>
-    <div class="do"><p>באותו חלון cmd, ועם <b>המספר שרשמתם בשדה Default Gateway בשלב 1</b> במקום זה שכתוב פה. השער כמעט תמיד עונה, אז אמורות לחזור ארבע שורות שמתחילות ב-<code>Reply from</code>&rlm;.</p></div>
-    <div class="sample noprint"><div class="cap">ככה זה נראה בערך</div>
+    <div class="note">עם ה-<code>Default Gateway</code>&rlm; שלכם משלב 1.</div>
+    <div class="sample noprint"><div class="cap">ככה זה נראה</div>
       <code class="blk out">Pinging 192.168.1.1 with 32 bytes of data:
 Reply from 192.168.1.1: bytes=32 time=2ms TTL=64
-Reply from 192.168.1.1: bytes=32 time=1ms TTL=64
-Reply from 192.168.1.1: bytes=32 time=3ms TTL=64
-Reply from 192.168.1.1: bytes=32 time=1ms TTL=64
-
-Ping statistics for 192.168.1.1:
-    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)</code></div>
-    <div class="note"><b>אם חזרו לכם ארבע שורות <code>Request timed out</code>&rlm;:</b> כנראה הקלדתם כתובת אחרת מהשער. תבדקו מול מה שרשמתם בשלב 1. ואם זה בכל זאת אותו מספר, תעשו במקום זה <code>ping 8.8.8.8</code>&rlm; ותמשיכו, זה לא יעצור אתכם.</div>
-    <span class="k">מה רושמים</span>
+Reply from 192.168.1.1: bytes=32 time=1ms TTL=64</code></div>
     <div class="vals">
-      <div class="v"><label>הזמן מהשער (המספר אחרי time=)</label><div class="fill val" id="r2a" contenteditable="true" data-ph="למשל 2ms"></div></div>
-      <div class="v"><label>ה-TTL מהשער (המספר אחרי TTL=)</label><div class="fill val" id="r2b" contenteditable="true" data-ph="למשל 64"></div></div>
+      <div class="v"><label>הזמן מהשער (time=)</label><div class="fill val" id="r2a" contenteditable="true" data-ph="למשל 2ms"></div></div>
+      <div class="v"><label>ה-TTL מהשער</label><div class="fill val" id="r2b" contenteditable="true" data-ph="למשל 64"></div></div>
     </div>
-    <div class="do"><p>ועכשיו, באותו חלון, פינג לאתר באינטרנט:</p></div>
     <code class="blk cmd">ping www.google.com</code>
     <div class="vals">
       <div class="v"><label>הזמן מהאתר</label><div class="fill val" id="r2c" contenteditable="true" data-ph="למשל 18ms"></div></div>
       <div class="v"><label>ה-TTL מהאתר</label><div class="fill val" id="r2d" contenteditable="true" data-ph="למשל 115"></div></div>
     </div>
-    <div class="ask"><span class="q">שאלות לעצמכם</span>
-      <ul>
-        <li>תשוו את ארבעת המספרים שרשמתם עכשיו: הזמן מהשער מול הזמן מהאתר, וה-TTL מהשער מול ה-TTL מהאתר. פי כמה גדול ההבדל בזמן, וכמה נקודות ההבדל ב-TTL? תכתבו את שני ההפרשים, ואז תנסו להסביר כל אחד מהם.</li>
-      </ul>
-      <div class="fill" id="r2q" contenteditable="true" data-ph="שני ההפרשים, ואז ההסבר שלכם"></div>
+    <div class="ask"><span class="q">שאלה</span>
+      <div class="qt">פי כמה הזמן גדול יותר לאתר, וכמה ירד ה-TTL? ולמה?</div>
+      <div class="fill" id="r2q" contenteditable="true" data-ph="שני ההפרשים ואז למה"></div>
     </div>
   </div>
   <div class="card">
     <div class="top"><div class="num">3</div><h2 class="ttl">הפנקס</h2></div>
-    <p class="sub">מפה מתחיל החלק החדש. פקודה שכנראה לא ראיתם בחיים</p>
-    <span class="k first">מה מריצים</span>
     <code class="blk cmd">arp -a</code>
-    <div class="do">
-      <p>אותו חלון cmd, ושימו לב שזה מקף ואחריו <code>a</code>&rlm; קטנה.</p>
-      <p>מה שיצא זאת טבלה עם שלוש עמודות: <code>Internet Address</code>&rlm; (כתובת IP), <code>Physical Address</code>&rlm; (ה-MAC שיושב מאחוריה) ו-<code>Type</code>&rlm;. זה מה שהמחשב שלכם יודע על השכנים שלו ברשת.</p>
-      <p>ועכשיו הדבר שכדאי לעצור עליו רגע. <b>אתם לא הקלדתם אף אחת מהשורות האלה.</b> אף אחד לא נתן לכם רשימה של כתובות MAC של השכנים. אתם בכלל לא ידעתם שהטבלה הזאת קיימת עד לפני דקה. ובכל זאת היא מלאה.</p>
-    </div>
-    <div class="note"><b>כמה שורות אמורות להיות?</b> אין מספר נכון. אצל חלק מכם יהיו שתיים ואצל חלק חמש עשרה, תלוי כמה זמן המחשב דלוק וכמה מכשירים ברשת. גם טבלה קצרה היא טבלה תקינה.</div>
-    <div class="sample noprint"><div class="cap">ככה זה נראה בערך</div>
+    <div class="note">טבלה של IP ← MAC של השכנים. אתם לא הקלדתם אותה, והיא מלאה.</div>
+    <div class="sample noprint"><div class="cap">ככה זה נראה</div>
       <code class="blk out">Interface: 192.168.1.37 --- 0xc
   Internet Address      Physical Address      Type
   192.168.1.1           30-b5-c2-1a-4f-0e     dynamic
   192.168.1.52          a4-83-e7-09-bb-21     dynamic
   192.168.1.255         ff-ff-ff-ff-ff-ff     static
-  224.0.0.22            01-00-5e-00-00-16     static
-  239.255.255.250       01-00-5e-7f-ff-fa     static</code></div>
-    <span class="k">מה רושמים</span>
+  224.0.0.22            01-00-5e-00-00-16     static</code></div>
+    <span class="k first">רשמו</span>
     <div class="vals">
-      <div class="v"><label>כמה שורות יש בטבלה (בלי שורת הכותרת)</label><div class="fill val" id="r3a" contenteditable="true" data-ph="מספר"></div></div>
-      <div class="v"><label>השורה של השער: ה-IP וה-MAC שלו</label><div class="fill val" id="r3b" contenteditable="true" data-ph="העתיקו את השורה השלמה"></div></div>
+      <div class="v"><label>כמה שורות (בלי הכותרת)</label><div class="fill val" id="r3a" contenteditable="true" data-ph="מספר"></div></div>
+      <div class="v"><label>שורת השער (IP + MAC)</label><div class="fill val" id="r3b" contenteditable="true" data-ph="העתיקו את השורה"></div></div>
     </div>
-    <div class="note"><b>איך מוצאים את שורת השער:</b> תחפשו בעמודת <code>Internet Address</code>&rlm; את המספר שרשמתם בשדה Default Gateway בשלב 1.</div>
-    <span class="k">הטבלה שלכם</span>
-    <div class="fill out" id="r3out" contenteditable="true" data-ph="תדביקו פה את כל הטבלה, משורת Interface ועד הסוף"></div>
+    <span class="k">הדביקו את כל הטבלה</span>
+    <div class="fill out" id="r3out" contenteditable="true" data-ph="מ-Interface ועד הסוף"></div>
     <div class="ask"><span class="q">שאלות לעצמכם</span>
       <ul>
-        <li>תעברו על עמודת <b>Internet Address</b> ותשוו אותה לארבעת הערכים שרשמתם בשלב 1. איזו מהכתובות בטבלה מוכרת לכם, ובאיזו שורה היא יושבת?</li>
-        <li>ה-MAC של השער מופיע בטבלה, אבל אתם לא הקלדתם אותו ולא קיבלתם אותו באימייל. תנסו לכתוב איך לדעתכם הוא הגיע לשם.</li>
-        <li>תסתכלו על שורה אחת שמתחילה ב-<b>224</b> ועל השורה שמסתיימת ב-<b>255</b>, ותקראו את ה-MAC שלהן. מה שונה בו לעומת ה-MAC של השער?</li>
+        <li>איזו כתובת בטבלה מוכרת לכם משלב 1, ובאיזו שורה?</li>
+        <li>לא הקלדתם את ה-MAC של השער. איך הוא הגיע לטבלה?</li>
+        <li>תסתכלו על השורה עם 224 ועל זו שנגמרת ב-255. מה שונה ב-MAC שלהן?</li>
       </ul>
-      <div class="fill" id="r3q" contenteditable="true" data-ph="אפשר לענות בנקודות, שורה לכל שאלה"></div>
+      <div class="fill" id="r3q" contenteditable="true" data-ph="שורה לכל שאלה"></div>
     </div>
   </div>
   <div class="card">
-    <div class="top"><div class="num">4</div><h2 class="ttl">הטבלה גדלה מול העיניים</h2></div>
-    <p class="sub">לפני, פעולה, אחרי. זה הניסוי האמיתי היחיד פה</p>
-    <span class="k first">מה עושים, לפי הסדר</span>
+    <div class="top"><div class="num">4</div><h2 class="ttl">שורה שנולדת</h2></div>
+    <p class="sub">לפני, פינג, אחרי</p>
     <ol class="steps">
-      <li>הטבלה של <b>לפני</b> כבר אצלכם, זאת שהדבקתם בשלב 3. תספרו כמה שורות יש בה ותרשמו בצד.</li>
-      <li><b>תבחרו כתובת לנסות.</b> קחו את ה-<code>IPv4 Address</code>&rlm; שלכם משלב 1, השאירו את שלושת המספרים הראשונים בדיוק כמו שהם, ותחליפו רק את המספר האחרון. אם אתם <code>192.168.1.37</code>&rlm;, תנסו <code>192.168.1.2</code>&rlm;, ואז <code>192.168.1.10</code>&rlm;, ואז <code>192.168.1.20</code>&rlm;.</li>
-      <li>פינג לכתובת שבחרתם: <code>ping 192.168.1.20</code>&rlm; (עם המספר שלכם).</li>
-      <li>ומיד אחרי זה, באותו חלון, <code>arp -a</code>&rlm; שוב.</li>
-      <li>תשוו את הטבלה החדשה לזאת שהדבקתם בשלב 3, שורה מול שורה. מחפשים שורה שלא הייתה שם קודם.</li>
+      <li>סופרים כמה שורות בטבלה משלב 3.</li>
+      <li>פינג לכתובת ברשת שלכם ש<b>לא</b> בטבלה. קחו את ה-IP שלכם ותחליפו את המספר האחרון: <code>ping 192.168.1.20</code>&rlm;.</li>
+      <li>מיד אחריו <code>arp -a</code>&rlm; שוב, ומחפשים שורה חדשה.</li>
     </ol>
-    <code class="blk cmd">arp -a</code>
-    <div class="note"><b>שתי טעויות שקל ליפול בהן.</b> אל תעשו פינג לכתובת של עצמכם, היא תמיד תענה ולא ילמד אתכם כלום. ואל תעשו פינג לשער, כי הוא כבר בטבלה מראש ולא תראו שום שורה חדשה. צריך כתובת <b>שלא</b> מופיעה בטבלה שלכם.</div>
-    <div class="warn">לא כל כתובת שתנסו קיימת, ולא כל מחשב עונה לפינג (חומת האש של ווינדוס חוסמת פינג כברירת מחדל). תנסו שלוש או ארבע כתובות שונות. <b>וגם אם לא חזרה אף תשובה, תריצו <code>arp -a</code>&rlm; בכל זאת ותבדקו מה קרה לטבלה.</b> דווקא המקרה הזה הוא הכי מעניין פה, אז שווה לרשום אותו ולא לוותר עליו.</div>
-    <span class="k">מה רושמים</span>
+    <div class="note">לא לפינג את עצמכם ולא את השער, הם כבר שם. נסו 3 או 4 כתובות.</div>
+    <div class="warn">גם אם לא חזר <code>Reply</code>&rlm; (חומת אש חוסמת פינג), תריצו <code>arp -a</code>&rlm; ותבדקו. זה דווקא המקרה הכי מעניין.</div>
+    <span class="k">רשמו</span>
     <div class="vals">
-      <div class="v"><label>הכתובת שאליה עשיתם פינג</label><div class="fill val" id="r4a" contenteditable="true" data-ph="IP"></div></div>
-      <div class="v"><label>חזרו שורות Reply?</label><div class="fill val" id="r4b" contenteditable="true" data-ph="כן / לא"></div></div>
-      <div class="v"><label>השורה החדשה בטבלה: ה-IP וה-MAC</label><div class="fill val" id="r4c" contenteditable="true" data-ph="העתיקו את השורה, או "לא נוספה""></div></div>
-      <div class="v"><label>כמה שורות יש עכשיו</label><div class="fill val" id="r4d" contenteditable="true" data-ph="מספר"></div></div>
+      <div class="v"><label>הכתובת שפינגתם</label><div class="fill val" id="r4a" contenteditable="true" data-ph="IP"></div></div>
+      <div class="v"><label>חזר Reply?</label><div class="fill val" id="r4b" contenteditable="true" data-ph="כן / לא"></div></div>
+      <div class="v"><label>השורה החדשה (IP + MAC)</label><div class="fill val" id="r4c" contenteditable="true" data-ph="העתיקו, או "אין""></div></div>
+      <div class="v"><label>כמה שורות עכשיו</label><div class="fill val" id="r4d" contenteditable="true" data-ph="מספר"></div></div>
     </div>
     <div class="ask"><span class="q">שאלות לעצמכם</span>
       <ul>
-        <li>ה-MAC שרשמתם בשדה <b>השורה החדשה</b> לא היה קיים בטבלה לפני דקה, ואתם לא הקלדתם אותו בשום מקום. תכתבו מה לדעתכם קרה בין רגע הפינג לבין רגע ה-<code>arp -a</code>&rlm;.</li>
-        <li>נסו לפרק את זה לצעדים: כדי לשאול "מי מחזיק בכתובת 192.168.1.20" צריך לשלוח הודעה. אבל כדי לשלוח הודעה ברשת המקומית צריך כבר לדעת את ה-MAC של הנמען, וזה בדיוק מה שאנחנו מנסים לגלות. אז למי לדעתכם נשלחה השאלה?</li>
-        <li>אם רשמתם <b>לא</b> בשדה "חזרו שורות Reply" אבל <b>כן</b> נוספה שורה חדשה: מישהו ענה ומישהו לא ענה. תכתבו מי לדעתכם כן ומי לא.</li>
-        <li>תחכו שתיים שלוש דקות בלי לגעת בכלום, ואז תריצו <code>arp -a</code>&rlm; שוב. השורה שנוספה עדיין שם או נעלמה? תרשמו מה קרה.</li>
+        <li>את ה-MAC החדש לא הקלדתם. מאיפה המחשב השיג אותו בין הפינג ל-<code>arp -a</code>&rlm;?</li>
+        <li>כדי לשאול "מי זה 192.168.1.20" צריך לשלוח הודעה, אבל צריך MAC כדי לשלוח, וזה מה שמחפשים. אז למי נשלחה השאלה?</li>
+        <li>אם לא חזר <code>Reply</code>&rlm; אבל כן נוספה שורה: מי ענה ומי לא?</li>
       </ul>
-      <div class="fill" id="r4q" contenteditable="true" data-ph="שורה או שתיים לכל שאלה"></div>
+      <div class="fill" id="r4q" contenteditable="true" data-ph="שורה לכל שאלה"></div>
     </div>
-    <div class="ask"><span class="q">רשות, ובבית</span>
-      <ul>
-        <li>ברשת של בית הספר מחשבים לא תמיד יכולים לדבר אחד עם השני, אז פינג לחבר מהכיתה עלול פשוט לא לעבוד, בלי שום קשר למה שעשיתם. בבית או על נקודה חמה מהפלאפון אין את החסימה הזאת.</li>
-        <li>אז בבית: תבקשו מהטלפון של מישהו את הכתובת שלו (הגדרות, wifi, הרשת שאתם מחוברים אליה), תעשו לה פינג, ותראו את השורה שלו נכנסת לטבלה שלכם. תרשמו איזה MAC יצא לו.</li>
-      </ul>
-      <div class="fill" id="r4x" contenteditable="true" data-ph="מה יצא לכם בבית"></div>
+    <div class="ask"><span class="q">רשות, בבית</span>
+      <div class="qt">פינג לטלפון של מישהו (הכתובת בהגדרות ה-wifi שלו), ותראו את השורה שלו נכנסת. איזה MAC יצא?</div>
+      <div class="fill" id="r4x" contenteditable="true" data-ph="מה יצא בבית"></div>
     </div>
   </div>
   <div class="card">
     <div class="top"><div class="num">5</div><h2 class="ttl">dynamic ו-static</h2></div>
-    <p class="sub">אין פקודה חדשה. תסתכלו שוב על הטבלה שכבר יש לכם</p>
-    <div class="do">
-      <p>בטבלה של <code>arp -a</code>&rlm; יש עמודה שלישית בשם <code>Type</code>&rlm;, והיא הצרה משלושתן. ליד כל שורה כתוב בה <code>dynamic</code>&rlm; או <code>static</code>&rlm;.</p>
-      <p><code>dynamic</code>&rlm; זה מה שהמחשב למד לבד תוך כדי תנועה, בדיוק כמו השורה שראיתם נולדת בשלב 4. <code>static</code>&rlm; זה מה שקבוע מראש ולא נלמד מאף אחד.</p>
-      <p>ולשורות ה-<code>dynamic</code>&rlm; יש תאריך תפוגה. הן חיות כמה עשרות שניות ואז נמחקות מעצמן, וזה מה שראיתם (או לא ראיתם) בשאלה האחרונה של שלב 4.</p>
-    </div>
-    <div class="note">בגרסאות ווינדוס מסוימות כתוב <code>dynamic</code>&rlm; באותיות קטנות ובאחרות <code>Dynamic</code>&rlm;. זה אותו דבר.</div>
-    <span class="k">מה רושמים</span>
+    <p class="sub">אותה טבלה, העמודה השלישית</p>
+    <div class="note"><code>dynamic</code>&rlm; = נלמד לבד ופג תוך דקות. <code>static</code>&rlm; = קבוע.</div>
+    <span class="k first">רשמו</span>
     <div class="vals">
-      <div class="v"><label>כמה שורות dynamic</label><div class="fill val" id="r5a" contenteditable="true" data-ph="מספר"></div></div>
-      <div class="v"><label>כמה שורות static</label><div class="fill val" id="r5b" contenteditable="true" data-ph="מספר"></div></div>
+      <div class="v"><label>כמה dynamic</label><div class="fill val" id="r5a" contenteditable="true" data-ph="מספר"></div></div>
+      <div class="v"><label>כמה static</label><div class="fill val" id="r5b" contenteditable="true" data-ph="מספר"></div></div>
     </div>
     <div class="ask"><span class="q">שאלות לעצמכם</span>
       <ul>
-        <li>למה בכלל למחוק שורה שכבר למדנו? תחשבו על תרחיש מוחשי: מישהו מכבה מחשב, ומחר מכשיר אחר מקבל בדיוק את אותה כתובת IP. מה היה קורה אם השורה הישנה הייתה נשארת לנצח?</li>
-        <li>ועכשיו הצד השני של אותו מטבע: כל שורה שנמחקת אומרת שבפעם הבאה המחשב יצטרך לשאול שוב, ולקבל תשובה ממי שבמקרה עונה. תחפשו בגוגל <code>ARP cache timeout Windows</code>&rlm; ותרשמו בערך כמה זמן שורה שורדת אצלכם.</li>
-        <li>ועכשיו השאלה שבשבילה כל הדף הזה. אין בתשובת ARP שום שדה של סיסמה, חתימה או אימות. אז אם על שאלה אחת חוזרות <b>שתי</b> תשובות שונות, למי לדעתכם המחשב יאמין? תנסו לנחש ואז לחפש.</li>
+        <li>מישהו כיבה מחשב ומכשיר אחר קיבל את אותו IP. מה היה קורה אם השורה הישנה נשארה לנצח?</li>
+        <li>תחפשו <code>ARP cache timeout Windows</code>&rlm;. כמה זמן שורה שורדת?</li>
+        <li>אין ב-ARP סיסמה ולא חתימה. אם על שאלה חוזרות שתי תשובות שונות, למי המחשב יאמין?</li>
       </ul>
-      <div class="fill" id="r5q" contenteditable="true" data-ph="שורה או שתיים לכל שאלה"></div>
+      <div class="fill" id="r5q" contenteditable="true" data-ph="שורה לכל שאלה"></div>
     </div>
   </div>
   <div class="card">
-    <div class="top"><div class="num">6</div><h2 class="ttl">לכל כרטיס יש MAC משלו</h2></div>
-    <p class="sub">לא למחשב יש MAC. לכרטיס.</p>
-    <span class="k first">מה מריצים</span>
+    <div class="top"><div class="num">6</div><h2 class="ttl">MAC לכל כרטיס</h2></div>
     <code class="blk cmd">getmac /v</code>
-    <div class="do"><p>ה-<code>/v</code>&rlm; חשוב, בלעדיו תקבלו רשימה חסרה. מה שיוצא זאת שורה לכל כרטיס רשת שיש במחשב, עם השם שלו ועם ה-MAC שלו.</p></div>
-    <div class="note"><b>איזו שורה היא "המתאם המחובר"?</b> זאת שבעמודה האחרונה שלה כתוב משהו שמתחיל ב-<code>\Device\Tcpip</code>&rlm;. שורות שכתוב בהן <code>Media disconnected</code>&rlm; הן כרטיסים שלא מחוברים לכלום. וכמה שורות יהיו לכם? בין אחת לשמונה, תלוי מה מותקן על המחשב. גם אחת זה תקין.</div>
-    <div class="sample noprint"><div class="cap">ככה זה נראה בערך</div>
+    <div class="note">שורה לכל כרטיס. המחובר = זה עם <code>\Device\Tcpip</code>&rlm;, לא <code>Media disconnected</code>&rlm;.</div>
+    <div class="sample noprint"><div class="cap">ככה זה נראה</div>
       <code class="blk out">Connection Name  Network Adapter          Physical Address    Transport Name
-===============  =======================  ==================  ================
-Wi-Fi            Intel(R) Wi-Fi 6 AX201   9C-B6-D0-3F-1A-7E   \Device\Tcpip_{3A1C4E77}
-Ethernet         Realtek PCIe GbE Family  1C-1B-0D-77-A2-04   Media disconnected
-Bluetooth        Bluetooth Device (PAN)   9C-B6-D0-3F-1A-82   Media disconnected</code></div>
-    <span class="k">מה רושמים</span>
+Ethernet         Realtek PCIe GbE Family  1C-1B-0D-77-A2-04   \Device\Tcpip_{3A1C4E77}
+Wi-Fi            Intel(R) Wi-Fi 6 AX201   9C-B6-D0-3F-1A-7E   Media disconnected</code></div>
+    <span class="k first">רשמו</span>
     <div class="vals">
-      <div class="v"><label>כמה שורות יצאו לכם</label><div class="fill val" id="r6a" contenteditable="true" data-ph="מספר"></div></div>
-      <div class="v"><label>ה-MAC של המתאם המחובר</label><div class="fill val" id="r6b" contenteditable="true" data-ph="MAC"></div></div>
-      <div class="v"><label>שם החיבור שלו (עמודת Connection Name)</label><div class="fill val" id="r6c" contenteditable="true" data-ph="Wi-Fi / Ethernet"></div></div>
-      <div class="v"><label>עוד MAC אחד מהרשימה</label><div class="fill val" id="r6d" contenteditable="true" data-ph="MAC"></div></div>
+      <div class="v"><label>כמה שורות</label><div class="fill val" id="r6a" contenteditable="true" data-ph="מספר"></div></div>
+      <div class="v"><label>ה-MAC של המחובר</label><div class="fill val" id="r6b" contenteditable="true" data-ph="MAC"></div></div>
+      <div class="v"><label>שם החיבור</label><div class="fill val" id="r6c" contenteditable="true" data-ph="Wi-Fi / Ethernet"></div></div>
+      <div class="v"><label>עוד MAC מהרשימה</label><div class="fill val" id="r6d" contenteditable="true" data-ph="MAC"></div></div>
     </div>
     <div class="ask"><span class="q">שאלות לעצמכם</span>
       <ul>
-        <li>ה-MAC שרשמתם בשדה <b>המתאם המחובר</b> וזה שרשמתם בשלב 1: זהים או שונים? תבדקו תו מול תו ותרשמו.</li>
-        <li>קחו את שני ה-MACים שרשמתם בשדות האחרונים והשוו רק את <b>שלושת הזוגות הראשונים</b> של כל אחד (למשל <code>9C-B6-D0</code>&rlm;). זהים או שונים?</li>
-        <li>שלושת הזוגות הראשונים נקראים OUI והם מזהים את יצרן הכרטיס. תחפשו בגוגל <code>MAC address OUI lookup</code>&rlm;, תדביקו <b>רק את שלושת הזוגות הראשונים</b> שלכם, ותרשמו איזו חברה יצאה. ואם לא יצא כלום, גם זה ממצא מעניין ושווה לרשום.</li>
-        <li>נניח שמישהו יושב בבית קפה ורואה רק את כתובות ה-MAC שבאוויר. שום תוכן, אף הודעה, אף אתר. תכתבו שלושה דברים שהוא בכל זאת יודע על מי שיושב שם.</li>
+        <li>ה-MAC של המחובר זהה לזה משלב 1?</li>
+        <li>קחו שני MACים ותשוו רק את 3 הזוגות הראשונים. זהים?</li>
+        <li>3 הזוגות הראשונים (OUI) = היצרן. תחפשו <code>MAC address OUI lookup</code>&rlm; ותרשמו איזו חברה. (לא יצא כלום? גם מעניין.)</li>
+        <li>בבית קפה רואים רק MACים, בלי תוכן. 3 דברים שעדיין יודעים על מי שיושב שם.</li>
       </ul>
-      <div class="fill" id="r6q" contenteditable="true" data-ph="שורה או שתיים לכל שאלה"></div>
+      <div class="fill" id="r6q" contenteditable="true" data-ph="שורה לכל שאלה"></div>
     </div>
   </div>
   <div class="card">
     <div class="top"><h2 class="ttl">שורה תחתונה</h2></div>
-    <div class="do"><p>ראיתם טבלה שהמחשב שלכם בנה לבד, משורות שהוא למד מתשובות ששאל עליהן בקול רם, בלי שום בדיקה של מי ענה. תכתבו את זה במשפט או שניים במילים שלכם, כאילו אתם מסבירים לחבר שלא היה פה.</p></div>
+    <div class="qt" style="font-size:15px">המחשב בנה טבלה לבד, מתשובות ששאל בקול רם, בלי לבדוק מי ענה. תסבירו את זה לחבר שלא היה פה, במשפט.</div>
     <div class="fill" id="r7" contenteditable="true" data-ph="מה זה arp, במילים שלכם"></div>
-    <div class="ask"><span class="q">ומשהו אחד שנתקע לכם</span>
-      <ul>
-        <li>משהו שראיתם ולא הבנתם, או שדווקא כן הבנתם ולא ציפיתם. תביאו את זה למפגש הבא.</li>
-      </ul>
+    <div class="ask"><span class="q">ומשהו שנתקע לכם</span>
+      <div class="qt">משהו שראיתם ולא הבנתם. תביאו למפגש הבא.</div>
       <div class="fill" id="r8" contenteditable="true" data-ph="שאלה אחת"></div>
     </div>
   </div>
   <div class="send">
     <h2>וזהו, שולחים</h2>
-    <p>מילאתם? יופי. תייצאו לקובץ ותשלחו לי אותו בוואטסאפ.</p>
+    <p>תייצאו לקובץ ותשלחו לי אותו בוואטסאפ.</p>
     <div class="tools">
       <button class="btn" id="pdf">ייצוא כ-PDF</button>
       <button class="btn2" id="qrbtn">להמשיך בבית</button>
