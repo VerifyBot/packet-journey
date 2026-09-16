@@ -86,7 +86,7 @@ code.out{background:#F4F6F8;border-style:dashed;border-color:#C3CCD6;color:var(-
   border-radius:7px;padding:7px 9px;font-size:15px;line-height:1.5;outline:none;
   white-space:pre-wrap;overflow-wrap:anywhere}
 .fill:focus{border-color:var(--signal);border-bottom-color:var(--signal);background:#fff}
-.fill:empty::before{content:attr(data-ph);color:#9AA4B0}
+.fill:empty::before{content:attr(data-ph);color:#9AA4B0;pointer-events:none}
 .fill:focus:empty::before{content:""}
 .who .fill{min-height:0;padding:5px 9px;font-weight:800;white-space:pre-wrap;overflow-wrap:anywhere}
 .fill.val{min-height:0;padding:5px 9px;direction:ltr;text-align:left;font-family:var(--mono);
@@ -287,8 +287,7 @@ Reply from 192.168.1.1: bytes=32 time=1ms TTL=64</code></div>
     <div class="top"><div class="num">3</div><h2 class="ttl">הפנקס</h2></div>
     <code class="blk cmd">arp -a</code>
     <div class="note">טבלה של IP ← MAC של השכנים. אתם לא הקלדתם אותה, והיא מלאה.</div>
-    <div class="sample noprint"><div class="cap">ככה זה נראה</div>
-      <code class="blk out">Interface: 192.168.1.37 --- 0xc
+    <div class="sample noprint"><code class="blk out">Interface: 192.168.1.37 --- 0xc
   Internet Address      Physical Address      Type
   192.168.1.1           30-b5-c2-1a-4f-0e     dynamic
   192.168.1.52          a4-83-e7-09-bb-21     dynamic
