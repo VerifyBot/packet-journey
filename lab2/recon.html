@@ -252,7 +252,7 @@ details[open] summary{border-bottom:1px solid var(--line)}
     <span class="k first">רשמו מהמקטע הזה</span>
     <div class="vals">
       <div class="v"><label>Physical Address (ה-MAC)</label><div class="fill val" id="r1a" contenteditable="true" data-ph="XX-XX-XX-XX-XX-XX"></div></div>
-      <div class="v"><label>Default Gateway <span style="font-weight:400;color:#5A6775">(השער, הראוטר שלכם)</span></label><div class="fill val" id="r1b" contenteditable="true" data-ph="IP"></div></div>
+      <div class="v"><label>Default Gateway <span style="font-weight:400;color:#5A6775">(הראוטר שלכם)</span></label><div class="fill val" id="r1b" contenteditable="true" data-ph="IP"></div></div>
       <div class="v"><label>IPv4 Address</label><div class="fill val" id="r1c" contenteditable="true" data-ph="IP"></div></div>
       <div class="v"><label>Subnet Mask</label><div class="fill val" id="r1d" contenteditable="true" data-ph="המסכה"></div></div>
     </div>
@@ -262,7 +262,7 @@ details[open] summary{border-bottom:1px solid var(--line)}
     </div>
   </div>
   <div class="card">
-    <div class="top"><div class="num">2</div><h2 class="ttl">פינג לשער</h2></div>
+    <div class="top"><div class="num">2</div><h2 class="ttl">פינג ל-Default Gateway</h2></div>
     <code class="blk cmd">ping 192.168.1.1</code>
     <div class="note">עם ה-<code>Default Gateway</code>&rlm; שלכם משלב 1.</div>
     <div class="sample noprint"><div class="cap">ככה זה נראה</div>
@@ -270,8 +270,8 @@ details[open] summary{border-bottom:1px solid var(--line)}
 Reply from 192.168.1.1: bytes=32 time=2ms TTL=64
 Reply from 192.168.1.1: bytes=32 time=1ms TTL=64</code></div>
     <div class="vals">
-      <div class="v"><label>הזמן מהשער (time=)</label><div class="fill val" id="r2a" contenteditable="true" data-ph="למשל 2ms"></div></div>
-      <div class="v"><label>ה-TTL מהשער</label><div class="fill val" id="r2b" contenteditable="true" data-ph="למשל 64"></div></div>
+      <div class="v"><label>הזמן מה-Default Gateway (time=)</label><div class="fill val" id="r2a" contenteditable="true" data-ph="למשל 2ms"></div></div>
+      <div class="v"><label>ה-TTL מה-Default Gateway</label><div class="fill val" id="r2b" contenteditable="true" data-ph="למשל 64"></div></div>
     </div>
     <code class="blk cmd">ping www.google.com</code>
     <div class="vals">
@@ -303,8 +303,8 @@ Reply from 192.168.1.1: bytes=32 time=1ms TTL=64</code></div>
     <div class="ask"><span class="q">שאלות לעצמכם</span>
       <ul>
         <li>איזו כתובת בטבלה מוכרת לכם משלב 1, ובאיזו שורה?</li>
-        <li>לא הקלדתם את ה-MAC של השער. איך הוא הגיע לטבלה?</li>
-        <li>תסתכלו על השורה עם 224 ועל זו שנגמרת ב-255. מה שונה ב-MAC שלהן?</li>
+        <li>לא הקלדתם את ה-MAC של ה-Default Gateway. איך הוא הגיע לטבלה?</li>
+        <li>בדוגמה שלמעלה: מה שונה ב-MAC של השורה עם 224 לעומת זו שנגמרת ב-255?</li>
       </ul>
       <div class="fill" id="r3q" contenteditable="true" data-ph="שורה לכל שאלה"></div>
     </div>
@@ -317,7 +317,7 @@ Reply from 192.168.1.1: bytes=32 time=1ms TTL=64</code></div>
       <li>פינג לכתובת ברשת שלכם ש<b>לא</b> בטבלה. קחו את ה-IP שלכם ותחליפו את המספר האחרון: <code>ping 192.168.1.20</code>&rlm;.</li>
       <li>מיד אחריו <code>arp -a</code>&rlm; שוב, ומחפשים שורה חדשה.</li>
     </ol>
-    <div class="note">לא לפינג את עצמכם ולא את השער, הם כבר שם. נסו 3 או 4 כתובות.</div>
+    <div class="note">לא לפינג את עצמכם ולא את ה-Default Gateway, הם כבר שם. נסו 3 או 4 כתובות.</div>
     <div class="warn">גם אם לא חזר <code>Reply</code>&rlm; (חומת אש חוסמת פינג), תריצו <code>arp -a</code>&rlm; ותבדקו. זה דווקא המקרה הכי מעניין.</div>
     <span class="k">רשמו</span>
     <div class="vals">
